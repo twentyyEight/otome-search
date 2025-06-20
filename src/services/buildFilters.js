@@ -21,20 +21,18 @@ export default function buildFilters(formValues) {
     if (voice) {
         voice.forEach(v => { voiced[2].push(['voiced', '=', v]) })
 
-        if (voiced.length > 3) {
+        if (voiced[2].length > 1) {
             filters.push(voiced)
         } else {
             filters.filter(i => JSON.stringify(i) != JSON.stringify(voice))
         }
     }
 
-    if (lang) {
-        lang.forEach(l => { filters.push(['lang', '=', l]) })
-    }
+    if (lang) lang.forEach(l => { filters.push(['lang', '=', l]) })
+    
 
-    if (olang) {
-        olang.forEach(l => { filters.push(['olang', '=', l]) })
-    }
+    if (olang) olang.forEach(l => { filters.push(['olang', '=', l]) })
+    
 
     return filters
 }

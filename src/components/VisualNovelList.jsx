@@ -1,12 +1,14 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form"
-import useFetch from "../hooks/useFetch";
+import { useNavigate } from "react-router-dom";
+import useVisualNovels from "../hooks/useVisualNovels";
 
-export default function Test() {
+export default function VisualNovelList() {
 
     const [page, setPage] = useState(1)
-    const { vns, limiter, loading, addFilters } = useFetch(page)
+    const { vns, limiter, loading, addFilters, error } = useVisualNovels(page)
     const { register, handleSubmit } = useForm()
+    const navigate = useNavigate();
 
     const onSubmit = (data) => {
         addFilters(data)
@@ -310,18 +312,21 @@ export default function Test() {
                 <button type="submit">search</button>
             </form>
 
-            {
-                loading ?
-                    <>
-                        <h3>Loading...</h3>
-                    </>
-                    :
+            {loading && <h3>Loading...</h3>}
+
+            {error && <h3>Server Error</h3>}
+
+            {!loading && !error && (
+                vns.length > 0 ?
                     <ul>
-                        {vns.map(vn =>
-                            <li key={vn.id}>{vn.title}</li>
-                        )}
+                        {vns.map(vn => (
+                            <li key={vn.id} onClick={() => navigate(`/vn/${vn.id}`)}>{vn.title}</li>
+                        ))}
                     </ul>
-            }
+                    :
+                    <h3>No results found</h3>
+            )}
+
 
             <button onClick={() => { if (page > 1) setPage(page - 1) }}>Prev</button>
             <button onClick={() => { if (limiter) setPage(page + 1) }}>Next</button>
