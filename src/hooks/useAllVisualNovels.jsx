@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import buildFilters from "../services/buildFilters.js";
 import { getAllVisualNovels } from "../services/api.js"
 
-export default function useVisualNovels(page) {
+export default function useAllVisualNovels(page) {
 
     const [vns, setVNs] = useState([])
     const [limiter, setLimiter] = useState(true)
@@ -20,7 +20,7 @@ export default function useVisualNovels(page) {
 
         async function fetchVisualNovels() {
 
-            const res = await getAllVisualNovels(filters, "title, id", page)
+            const res = await getAllVisualNovels(filters, page)
 
             if (res.status == 200) {
                 setVNs(res.data.results)

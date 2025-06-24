@@ -1,1 +1,21 @@
+@import "tailwindcss";
+
+.no-scrollbar-arrows::-webkit-scrollbar {
+  width: 7px;
+}
+
+.no-scrollbar-arrows::-webkit-scrollbar-track {
+  background: transparent;
+  border-radius: 10px;
+}
+
+.no-scrollbar-arrows::-webkit-scrollbar-thumb {
+  background-color: rgb(236, 3, 186);
+  border-radius: 10px;
+}
+
+.no-scrollbar-arrows::-webkit-scrollbar-button {
+  display: none; 
+}
+
 
