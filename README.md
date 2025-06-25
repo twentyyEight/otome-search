@@ -1,12 +1,11 @@
-# React + Vite
+# Otome Search
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Aplicación web que permite visualizar y buscar 'otomes' (novelas visuales dirigidas al público femenino). El contenido es extraido desde la [API GraphQL](https://api.vndb.org/kana) de la página [Visual Novel Database](https://vndb.org/v), la cual recopila novelas visuales de múltiples géneros y contenidos.
 
-Currently, two official plugins are available:
+- APP AÚN EN DESARROLLO -
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## DESARROLLADO CON
+- Vite + React
+- Tailwind CSS
+- Axios
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
