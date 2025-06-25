@@ -4,7 +4,7 @@ Aplicación web que permite visualizar y buscar 'otomes' (novelas visuales dirig
 
 - APP AÚN EN DESARROLLO -
 
-## DESARROLLADO CON
+## Desarrollado con
 - Vite + React
 - Tailwind CSS
 - Axios
