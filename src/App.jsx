@@ -1,11 +1,11 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
-import VisualNovelList from './components/VisualNovelList'
-import VisualNovelPage from './components/VisualNovelPage'
+import VisualNovelList from './pages/VisualNovelList'
+import VisualNovelPage from './pages/VisualNovelPage'
 
 function App() {
 
   return (
-    <BrowserRouter>
+    <BrowserRouter basename="/vndbapi">
       <Routes>
         <Route path='/' element={<VisualNovelList />}/>
         <Route path='/vn/:id' element={<VisualNovelPage />}/>

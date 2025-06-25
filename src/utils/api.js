@@ -17,7 +17,7 @@ export const getAllVisualNovels = async (filters, page) => {
 export const getVisualNovel = async (id) => {
 
     query.filters = ['id', '=', id]
-    query.fields = "title, id, description, image.url"
+    query.fields = "title, id, description, image.url, developers.name"
     const vn = await axios.post(`${API}/vn`, query)
 
     const releases = await getReleases(id)
@@ -29,7 +29,7 @@ export const getVisualNovel = async (id) => {
 const getReleases = async (id) => {
 
     query.filters = ["vn", "=", ["id", "=", id]]
-    query.fields = "id, title, languages.lang, platforms, released, voiced, extlinks.url, extlinks.name, notes, patch, freeware"
+    query.fields = "id, title, languages.lang, platforms, released, voiced, extlinks.url, extlinks.name, notes"
     const releases_list = await axios.post(`${API}/release`, query)
 
     return releases_list.data.results

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import buildFilters from "../services/buildFilters.js";
-import { getAllVisualNovels } from "../services/api.js"
+import buildFilters from "../utils/buildFilters.js";
+import { getAllVisualNovels } from "../utils/api.js"
 
 export default function useAllVisualNovels(page) {
 

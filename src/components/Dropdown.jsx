@@ -13,15 +13,14 @@ export default function Dropdown({ title, obj, register }) {
 
     return (
         <>
-            <div className="w-xs border-2 border-gray-300 rounded-md py-2 px-3 flex flex-col mt-3">
+            <div className="w-xs border-2 border-gray-300 rounded-md py-2 px-3 flex flex-col mt-3 cursor-pointer" onClick={() => setShowList(!showList)}>
 
                 <div className="flex w-full items-center justify-between">
                     <h1 className="font-semibold">{title}</h1>
                     <div className="bg-pink-200 rounded-xl p-0.5">
                         <FaAngleDown
                             color="D100A4"
-                            className={`cursor-pointer ${showList && 'scale-y-[-1]'}`}
-                            onClick={() => setShowList(!showList)} />
+                            className={`${showList && 'scale-y-[-1]'}`} />
                     </div>
                 </div>
             </div>

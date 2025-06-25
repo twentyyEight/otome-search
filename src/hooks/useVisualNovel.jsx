@@ -1,4 +1,4 @@
-import { getVisualNovel } from "../services/api"
+import { getVisualNovel } from "../utils/api"
 import { useEffect, useState } from "react"
 import { useParams } from 'react-router-dom';
 
