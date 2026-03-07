@@ -1,4 +1,4 @@
-export default async function apiFetch(filters, fields) {
+export default async function apiFetch(query) {
 
     try {
         const res = await fetch("https://api.vndb.org/kana/vn", {
@@ -6,12 +6,7 @@ export default async function apiFetch(filters, fields) {
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify({
-                filters,
-                fields,
-                "results": 100,
-                "page": 1,
-            }),
+            body: JSON.stringify(query),
         });
 
         const data = await res.json()

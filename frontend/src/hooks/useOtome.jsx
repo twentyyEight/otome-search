@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom";
-import apiFetch from "../api"
+import apiFetch from "../utils/api"
 
 export default function useOtome() {
 
@@ -10,21 +10,31 @@ export default function useOtome() {
     useEffect(() => {
 
         async function fetchOtome(id_otome) {
-
-            // Busca por ID y con el tag "otome"
-            let filters = ['and', ["tag", "=", "g542"], ["id", "=", id_otome]]
             
             try {
-                const data = await apiFetch(filters, "title, image.url")
+
+                const query = {
+
+                    "filters": [
+                        'and',
+                        ["tag", "=", "g542"], // tag "otome"
+                        ["id", "=", id_otome], // ID del juego
+                        ['devstatus', "!=", "2"] // Que el juego no esté cancelado
+                    ],
+                    "fields": "title, image.url",
+                }
+
+                const data = await apiFetch(query)
                 setOtome(data.results)
 
             } catch (error) {
-                
+
                 console.log(error)
             }
         }
 
         fetchOtome(id)
+
     }, [id])
 
     return otome

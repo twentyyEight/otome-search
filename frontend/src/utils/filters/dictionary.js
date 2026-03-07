@@ -1,0 +1,61 @@
+export const platforms = {
+    "win": "Windows",
+    "mac": "macOS",
+    "lin": 'Linux',
+    "and": "Android",
+    "ios": "iOS",
+    "swi": "Nintendo Switch",
+    "nds": "Nintendo DS",
+    "n3d": "Nintendo 3DS",
+    "web": "Website",
+    "psp": "Playstation Portable",
+    "psv": "Playstation Vita",
+    "ps1": "Playstation",
+    "ps2": "Playstation 2",
+    "ps3": "Playstation 3",
+    "ps4": "Playstation 4",
+    "xbox": "Xbox One",
+    "xxs": "Xbox X/S"
+}
+
+export const languages = {
+    "ja": 'Japonés',
+    'en': 'Inglés',
+    'es': 'Español',
+    'fr': 'Francés',
+    'ko': 'Coreano',
+    'zh-Hans': 'Chino simplificado',
+    'zh-Hant': 'Chino tradicional',
+    'ru': 'Ruso',
+    'de': 'Alemán',
+    'pt-br': 'Portugués (Brasil)',
+    'pt-pt': 'Portugués (Portugal)',
+    'uk': 'Ucraniano',
+    'vi': 'Vietnamita',
+    'ar': 'Árabe',
+    'eu': 'Euskera',
+    'be': 'Bielorruso',
+    'bg': 'Búlgaro',
+    'ca': 'Catalán',
+    'cs': 'Checo',
+    'nl': 'Neerlandés',
+    'fi': 'Finlandés',
+    'el': 'Griego',
+    'hi': 'Hindi',
+    'id': 'Indonesio',
+    'it': 'Italiano',
+    'mk': 'Macedonio',
+    'ms': 'Malayo',
+    'no': 'Noruego',
+    'pl': 'Polaco',
+    'ro': 'Rumano',
+    'ta': 'Tagalo',
+    'th': 'Tailandés',
+    'tr': 'Turco'
+}
+
+export const voiced = { 
+    1: 'Sin doblaje', 
+    3: 'Parcial', 
+    4: 'Completo' 
+}
