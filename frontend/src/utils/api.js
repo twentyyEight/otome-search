@@ -1,7 +1,7 @@
-export default async function apiFetch(query) {
+export default async function apiFetch(param, query) {
 
     try {
-        const res = await fetch("https://api.vndb.org/kana/vn", {
+        const res = await fetch(`https://api.vndb.org/kana/${param}`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -14,5 +14,6 @@ export default async function apiFetch(query) {
 
     } catch (error) {
         console.error(error)
+        return error
     }
 }

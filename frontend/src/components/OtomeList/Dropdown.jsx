@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export default function Dropdown({ data, setData }) {
+export default function Dropdown({ data, setData, label }) {
 
     // Buscar opciones por su nombre
     const [searchTerm, setSearchTerm] = useState("");
@@ -20,12 +20,16 @@ export default function Dropdown({ data, setData }) {
 
     return <div>
 
+        <label>{label}</label>
+
         {/* Búsqueda de las opciones */}
-        <input
-            type="search"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-        />
+        {label !== 'Doblaje' &&
+            <input
+                type="search"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+            />
+        }
 
         {/* Opciones */}
         <div>
@@ -33,13 +37,13 @@ export default function Dropdown({ data, setData }) {
 
                 <div key={crypto.randomUUID()}>
 
-                        <label htmlFor={alias}>{name}</label>
+                    <label htmlFor={alias}>{name}</label>
 
-                        <input type="checkbox"
-                            value={alias}
-                            name={alias}
-                            onChange={() => toggle(alias)} 
-                        />
+                    <input type="checkbox"
+                        value={alias}
+                        name={alias}
+                        onChange={() => toggle(alias)}
+                    />
                 </div>
             ))}
         </div>

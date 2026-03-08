@@ -4,32 +4,46 @@ import apiFetch from "../utils/api"
 
 export default function useOtome() {
 
+    const [loading, setLoading] = useState(true)
+    const [error, setError] = useState(null)
+
     const [otome, setOtome] = useState(null)
     const { id } = useParams()
 
     useEffect(() => {
 
-        async function fetchOtome(id_otome) {
-            
+        async function fetchOtome(id) {
+
             try {
 
-                const query = {
+                const query_otome = {
 
                     "filters": [
                         'and',
                         ["tag", "=", "g542"], // tag "otome"
-                        ["id", "=", id_otome], // ID del juego
-                        ['devstatus', "!=", "2"] // Que el juego no esté cancelado
+                        ["id", "=", id], // ID otome
+                        ['devstatus', "!=", "2"], // Que el juego no esté cancelado
                     ],
-                    "fields": "title, image.url",
+                    "fields": "title, image.url, olang, devstatus, description, developers.name, developers.id, tags.name, released, rating"
                 }
 
-                const data = await apiFetch(query)
-                setOtome(data.results)
+                const query_releases = {
+                    "filters": ["vn", "=", ["id", "=", "v1715"]],
+                    "fields": "title, languages.lang, platforms, released, minage, patch, freeware, official, voiced, notes, extlinks.url, extlinks.name",
+                    "results": 100
+                }
+
+                const data_otome = await apiFetch('vn', query_otome)
+                const data_releases = await apiFetch('release', query_releases)
+
+                setOtome({ ...data_otome.results[0], releases: data_releases.results })
+
+                setLoading(false)
 
             } catch (error) {
 
-                console.log(error)
+                setError(error)
+                setLoading(false)
             }
         }
 
@@ -37,5 +51,5 @@ export default function useOtome() {
 
     }, [id])
 
-    return otome
+    return { otome, error, loading }
 }

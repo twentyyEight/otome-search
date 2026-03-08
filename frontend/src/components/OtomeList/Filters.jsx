@@ -12,10 +12,11 @@ export default function Filters({ setFilters }) {
     const [lang, setLang] = useState([]) // Lenguaje
     const [originalLang, setOriginalLang] = useState([]) // Lenguaje original
     const [voice, setVoice] = useState([]) // Doblaje
+    const [age, setAge] = useState(0)
 
     useEffect(() => {
-        setFilters({ sort, reverse, plat, lang, originalLang, voice, name })
-    }, [sort, reverse, plat, lang, originalLang, voice, name, setFilters])
+        setFilters({ sort, reverse, plat, lang, originalLang, voice, name, age })
+    }, [sort, reverse, plat, lang, originalLang, voice, name, setFilters, age])
 
     return <div>
 
@@ -35,16 +36,22 @@ export default function Filters({ setFilters }) {
         </select>
         <PiSortAscendingBold onClick={() => setReverse(!reverse)} />
 
-        <label>Plataformas</label>
-        <Dropdown data={platforms} setData={setPlat} />
+        <Dropdown data={platforms} setData={setPlat} label={'Plataformas'} />
 
-        <label>Lenguaje</label>
-        <Dropdown data={languages} setData={setLang} />
+        <Dropdown data={languages} setData={setLang} label={'Lenguajes'} />
 
-        <label>Lenguaje original</label>
-        <Dropdown data={languages} setData={setOriginalLang} />
+        <Dropdown data={languages} setData={setOriginalLang} label={'Lenguaje Original'} />
 
-        <label>Doblaje</label>
-        <Dropdown data={voiced} setData={setVoice} />
+        <Dropdown data={voiced} setData={setVoice} label={'Doblaje'} />
+
+        <label>Edad</label>
+        <p>{age}</p>
+        <input
+            type="range"
+            min={0}
+            max={18}
+            value={age}
+            onChange={(e) => setAge(e.target.value)}
+        />
     </div>
 }

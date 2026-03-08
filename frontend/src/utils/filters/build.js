@@ -1,6 +1,6 @@
 export default function buildFilters(values) {
 
-    const { name, plat, voice, lang, originalLang } = values
+    const { name, plat, voice, lang, originalLang, age } = values
 
     const filters = ['and', ["tag", "=", "g542"]]
 
@@ -24,6 +24,9 @@ export default function buildFilters(values) {
 
     // Lenguaje original
     if (originalLang.length > 0) originalLang.forEach(l => filters.push(['olang', '=', l]))
+
+    // Edad
+    if (age) filters.push(['release', '=', ['minage', '=', age]])
 
     return filters
 }
