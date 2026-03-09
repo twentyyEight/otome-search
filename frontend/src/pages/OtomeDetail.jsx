@@ -6,6 +6,13 @@ export default function OtomeDetail() {
 
     const { otome, error, loading } = useOtome()
 
+    const characters_roles = [
+        { key: 'main', label: 'Protagonista(s)' },
+        { key: 'primary', label: 'Principales' },
+        { key: 'side', label: 'Secundarios' },
+        { key: 'appears', label: 'Terciarios' },
+    ]
+
     return (
         !error ?
             <>
@@ -24,7 +31,7 @@ export default function OtomeDetail() {
                             {otome.tags.flat().map((tag) => (<p key={tag.id}>{tag.name}</p>))}
 
                             <h2>Lanzamientos</h2>
-                            {otome.releases.map(release => 
+                            {otome.releases.map(release =>
 
                                 <div key={release.id}>
                                     <h3>{release.title}</h3>
@@ -42,6 +49,31 @@ export default function OtomeDetail() {
                                     {release.extlinks.map(link => <a key={crypto.randomUUID()} href={link.url}>{link.name}</a>)}
                                 </div>
                             )}
+
+                            <h2>Personajes</h2>
+                            {characters_roles.map(({ key, label }) => (
+
+                                otome.characters[key] &&
+
+                                <div key={key}>
+
+                                    <h3>{label}</h3>
+                                    {otome.characters[key].map(char => (
+
+                                        <div key={char.id}>
+                                            <img src={char.image?.url} alt={char.name} />
+                                            <h4>{char.name}</h4>
+                                            <p>{char.voice_actor && 'Actor de voz: ' + char.voice_actor}</p>
+                                            <p>Sexo: {char.sex[0]}</p>
+
+                                            {char.traits.map(trait => <p key={trait.id}>{trait.name}</p>)}
+
+                                            <p>{char.description}</p>
+                                        </div>
+                                    ))}
+
+                                </div>
+                            ))}
                         </>
                         :
                         <Loading />
