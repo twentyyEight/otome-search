@@ -1,9 +1,23 @@
+import { Link } from 'react-router-dom'
+import { useAuth } from '../contexts/useAuth'
+
 export default function Navbar() {
 
-    return <nav>
-        <ul>
-            <li>Iniciar sesión</li>
-            <li>Registrarse</li>
-        </ul>
-    </nav>
+    const { isAuth, logout } = useAuth()
+
+    return (
+        <nav>
+            {isAuth ? (
+                <>
+                    <Link to='/profile'>Perfil</Link>
+                    <button onClick={logout}>Cerrar sesión</button>
+                </>
+            ) : (
+                <>
+                    <Link to='/login'>Login</Link>
+                    <Link to='/register'>Registrarse</Link>
+                </>
+            )}
+        </nav>
+    )
 }
