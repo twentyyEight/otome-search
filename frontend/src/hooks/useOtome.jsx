@@ -57,6 +57,7 @@ export default function useOtome() {
                     role: char.vns.find(vn => vn.id == id)?.role
                 }))
 
+                // Separa los personajes por roles
                 const characters_by_role = characters.reduce((res, char) => {
                     const role = char.role
                     if (!res[role]) res[role] = []
