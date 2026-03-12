@@ -1,9 +1,9 @@
 import mongoose from "mongoose";
 
-const userOtomesSchema = new mongoose.Schema({
+const userCollectionSchema = new mongoose.Schema({
 
     user_id: {
-        type: ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         required: true 
     },
 
@@ -23,9 +23,9 @@ const userOtomesSchema = new mongoose.Schema({
 
     state: {
         type: Number,
-        enum: [0,1,2],
+        enum: [0,1,2,3],
         required: true
     }
 })
 
-export default mongoose.model('userOtomes', userOtomesSchema)
+export default mongoose.model('userCollection', userCollectionSchema)

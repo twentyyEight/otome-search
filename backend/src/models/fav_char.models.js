@@ -1,11 +1,9 @@
 import mongoose from "mongoose"
 
-const { Schema } = mongoose
-
-const favoriteCharactersSchema = new mongoose.Schema({
+const favoriteCharacterSchema = new mongoose.Schema({
 
     user_id: {
-        type: ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         require: true
     },
 
@@ -24,4 +22,4 @@ const favoriteCharactersSchema = new mongoose.Schema({
     }
 })
 
-export default mongoose.model('favoriteCharacter', favoriteCharactersSchema)
+export default mongoose.model('favoriteCharacter', favoriteCharacterSchema)

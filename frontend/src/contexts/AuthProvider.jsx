@@ -5,6 +5,7 @@ export function AuthProvider({ children }) {
 
     const [isAuth, setIsAuth] = useState(false)
     const [loading, setLoading] = useState(true)
+    const [user, setUser] = useState(null)
 
     const signup = async (user) => {
 
@@ -21,7 +22,7 @@ export function AuthProvider({ children }) {
 
             if (!res.ok) throw { status: res.status, message: data.message }
 
-            console.log(data.message)
+            setUser(data.user)
             setIsAuth(true)
 
         } catch (error) {
@@ -46,13 +47,14 @@ export function AuthProvider({ children }) {
 
             if (!res.ok) throw { status: res.status, message: data.message }
 
-            console.log(data.message)
+            setUser(data.user)
             setIsAuth(true)
 
         } catch (error) {
 
             setIsAuth(false)
             console.error(error.message)
+
         }
     }
 
@@ -66,7 +68,7 @@ export function AuthProvider({ children }) {
 
             if (!res.ok) throw { status: res.status, message: data.message }
 
-            console.log(data.message)
+            setUser(null)
             setIsAuth(false)
 
         } catch (error) {
@@ -90,13 +92,14 @@ export function AuthProvider({ children }) {
                 if (!res.ok) throw { status: res.status, message: data.message }
 
                 setIsAuth(true)
-                setLoading(false)
 
             } catch (error) {
 
                 setIsAuth(false)
-                setLoading(false)
                 console.error(error)
+
+            } finally {
+                setLoading(false);
             }
         }
 
@@ -104,7 +107,7 @@ export function AuthProvider({ children }) {
     }, [])
 
     return (
-        <AuthContext.Provider value={{ signup, login, logout, isAuth, loading }}>
+        <AuthContext.Provider value={{ signup, login, logout, isAuth, loading, user }}>
             {children}
         </AuthContext.Provider>
     );

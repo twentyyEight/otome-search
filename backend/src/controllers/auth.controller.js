@@ -1,6 +1,8 @@
 import User from "../models/user.models.js"
 import bcrypt from 'bcryptjs'
 import { createToken } from '../libs/jwt.js'
+import jwt from "jsonwebtoken";
+import { TOKEN_SECRET } from "../config.js";
 
 export const register = async (req, res) => {
 
@@ -25,7 +27,7 @@ export const register = async (req, res) => {
             sameSite: "lax"
         });
 
-        res.status(200).json({ message: 'Usuario registrado correctamente' })
+        res.status(200).json({ user: { id: user._id, name: user.name, email: user.email } })
 
     } catch (error) {
 
@@ -52,7 +54,7 @@ export const login = async (req, res) => {
             maxAge: 86400000
         });
 
-        res.status(200).json({ message: 'Login exitoso' });
+        res.status(200).json({ user: { id: user._id, name: user.name, email: user.email } });
 
     } catch (err) {
         res.status(err.status || 500).json({ message: err.message || 'Error interno' });
@@ -70,5 +72,22 @@ export const logout = (req, res) => {
 
     } catch (err) {
         res.status(500).json({ message: 'Error al cerrar sesión' });
+    }
+}
+
+export const verifyToken = async (req, res) => {
+
+    try {
+        const { token } = req.cookies;
+
+        if (!token) return res.status(401).json({ message: "Sin token" });
+
+        jwt.verify(token, TOKEN_SECRET);
+
+        return res.status(200).json({ message: 'Token valido' })
+
+    } catch (error) {
+
+        return res.status(500).json({ message: error.message });
     }
 }
