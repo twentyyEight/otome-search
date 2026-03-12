@@ -19,7 +19,11 @@ export const register = async (req, res) => {
         const saved_user = await new_user.save()
 
         const token = await createToken({ id: saved_user._id })
-        res.cookie('token', token)
+        res.cookie('token', token, {
+            httpOnly: true,
+            secure: true,
+            sameSite: "lax"
+        });
 
         res.status(200).json({ message: 'Usuario registrado correctamente' })
 
@@ -41,7 +45,12 @@ export const login = async (req, res) => {
         if (!isMatch) throw { status: 400, message: 'Contraseña incorrecta' };
 
         const token = await createToken({ id: user._id });
-        res.cookie('token', token);
+        res.cookie('token', token, {
+            httpOnly: true,
+            secure: false, // CAMBIAR A TRUE EN PRODUCCION
+            sameSite: "lax",
+            maxAge: 86400000
+        });
 
         res.status(200).json({ message: 'Login exitoso' });
 

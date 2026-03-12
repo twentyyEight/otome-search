@@ -81,9 +81,9 @@ export function AuthProvider({ children }) {
         async function checkToken() {
 
             try {
-                const res = await fetch(`http://localhost:3000/api/verify`, {
-                    credentials: 'include'
-                })
+                const res = await fetch("http://localhost:3000/api/verify", {
+                    credentials: "include"
+                });
 
                 const data = await res.json()
 

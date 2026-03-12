@@ -23,7 +23,7 @@ export default function useOtome() {
                         ["id", "=", id], // ID otome
                         ['devstatus', "!=", "2"], // Que el juego no esté cancelado
                     ],
-                    "fields": "title, image.url, olang, devstatus, description, developers.name, developers.id, tags.name, released, rating, va.character.name, va.staff.name"
+                    "fields": "title, image.url, olang, devstatus, description, developers.name, developers.id, released, rating, va.character.name, va.staff.name"
                 }
 
                 // Query para los lanzamientos del otome
