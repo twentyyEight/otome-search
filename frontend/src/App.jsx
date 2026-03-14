@@ -5,7 +5,8 @@ import Register from './pages/Register'
 import Login from './pages/Login'
 import Profile from './pages/Profile'
 import Navbar from './components/Navbar'
-import { AuthProvider } from './contexts/AuthProvider'
+import { AuthProvider } from './contexts/auth/AuthProvider'
+import { CollectionProvider } from './contexts/collection/CollectionProvider'
 import ProtectedRoute from './routes/ProtectedRoute'
 
 function App() {
@@ -13,19 +14,21 @@ function App() {
   return (
     <BrowserRouter>
       <AuthProvider>
-        <Navbar />
-        <Routes>
-          <Route path='/register' element={<Register />} />
-          <Route path='/login' element={<Login />} />
-          
-          <Route path='/otomes' element={<OtomeList />} />
-          <Route path='/otomes/:id' element={<OtomeDetail />} />
+        <CollectionProvider>
+          <Navbar />
+          <Routes>
+            <Route path='/register' element={<Register />} />
+            <Route path='/login' element={<Login />} />
 
-          <Route element={<ProtectedRoute />}>
-            <Route path='/profile' element={<Profile />} />
-          </Route>
+            <Route path='/otomes' element={<OtomeList />} />
+            <Route path='/otomes/:id' element={<OtomeDetail />} />
 
-        </Routes>
+            <Route element={<ProtectedRoute />}>
+              <Route path='/profile' element={<Profile />} />
+            </Route>
+
+          </Routes>
+        </CollectionProvider>
       </AuthProvider>
     </BrowserRouter>
   )

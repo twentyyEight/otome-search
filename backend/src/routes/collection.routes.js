@@ -1,10 +1,11 @@
 import { Router } from 'express'
-import { saveOtome, saveCharacter } from '../controllers/collections.controller.js'
+import { saveOtome, saveCharacter, profile } from '../controllers/collections.controller.js'
 import { auth } from '../middlewares/auth.middleware.js'
 
 const router = Router()
 
-router.post('/otome/save', auth, saveOtome)
-router.post('/character/save', auth, saveCharacter)
+router.post('/otome', auth, saveOtome)
+router.post('/character', auth, saveCharacter)
+router.post('/profile', auth, profile)
 
 export default router

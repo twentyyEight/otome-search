@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { useAuth } from '../contexts/useAuth'
+import { useAuth } from '../contexts/auth/useAuth'
 
 export default function Navbar() {
 

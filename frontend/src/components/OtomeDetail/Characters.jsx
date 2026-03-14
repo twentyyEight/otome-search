@@ -1,8 +1,10 @@
-import { useAuth } from "../../contexts/useAuth.jsx"
+import { useAuth } from "../../contexts/auth/useAuth"
+import { useCollection } from '../../contexts/collection/useCollection'
 
 export default function Characters({ characters }) {
 
-    const { isAuth, user } = useAuth()
+    const { isAuth, userId } = useAuth()
+    const { saveCharacter } = useCollection()
 
     const characters_roles = [
         { key: 'main', label: 'Protagonista(s)' },
@@ -11,13 +13,17 @@ export default function Characters({ characters }) {
         { key: 'appears', label: 'Terciarios' },
     ]
 
-    const onSubmitCharacters = (id, name, img) => console.log({
+    const onSubmitCharacters = (id, name, img) => {
 
-        user_id: user.id,
-        character_id: id,
-        character_name: name,
-        character_img: img
-    })
+        const data = {
+            user_id: userId,
+            id,
+            name,
+            img
+        }
+
+        saveCharacter(data)
+    }
 
     return <>
         <h2>Personajes</h2>

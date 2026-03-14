@@ -27,7 +27,7 @@ export const register = async (req, res) => {
             sameSite: "lax"
         });
 
-        res.status(200).json({ user: { id: user._id, name: user.name, email: user.email } })
+        return res.status(200).json({ id: saved_user._id });
 
     } catch (error) {
 
@@ -54,7 +54,7 @@ export const login = async (req, res) => {
             maxAge: 86400000
         });
 
-        res.status(200).json({ user: { id: user._id, name: user.name, email: user.email } });
+        return res.status(200).json({ id: user._id });
 
     } catch (err) {
         res.status(err.status || 500).json({ message: err.message || 'Error interno' });
@@ -82,9 +82,17 @@ export const verifyToken = async (req, res) => {
 
         if (!token) return res.status(401).json({ message: "Sin token" });
 
-        jwt.verify(token, TOKEN_SECRET);
+        jwt.verify(token, TOKEN_SECRET, async (error, user) => {
 
-        return res.status(200).json({ message: 'Token valido' })
+            if (error) return res.status(401).json({ message: 'Token no autorizado' })
+
+            const userFound = await User.findById(user.id)
+            if (!userFound) return res.status(401).json({ message: 'Usuario no encontrado' })
+
+            return res.status(200).json({
+                id: userFound._id
+            });
+        });
 
     } catch (error) {
 

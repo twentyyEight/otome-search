@@ -1,30 +1,35 @@
 import { useForm } from 'react-hook-form'
-import { useAuth } from "../../contexts/useAuth.jsx"
+import { useAuth } from "../../contexts/auth/useAuth"
+import { useCollection } from '../../contexts/collection/useCollection'
 
 export default function Info({ otome }) {
 
     const { register, handleSubmit } = useForm()
-    const { isAuth, user } = useAuth()
+    const { isAuth, userId } = useAuth()
+    const { saveOtome } = useCollection()
 
-    const onSubmitStates = (state) => {
+    const onSubmitState = (state) => {
 
         const data = {
-            user_id: user.id,
-            game_id: otome.id,
-            game_name: otome.title,
-            state
+            user_id: userId,
+            otome_id: otome.id,
+            otome_title: otome.title,
+            otome_img: otome.image?.url,
+            ...state
         }
 
-        console.log(data)
+        saveOtome(data)
     }
 
     return <>
         <img src={otome.image?.url} alt={otome.title} />
 
         {isAuth &&
-            <select {...register('status', {
-                onChange: handleSubmit(onSubmitStates)
+            <select {...register('state', {
+                valueAsNumber: true,
+                onChange: handleSubmit(onSubmitState)
             })}>
+                <option value="">Estado</option>
                 <option value={0}>Jugando</option>
                 <option value={1}>Completado</option>
                 <option value={2}>En pausa</option>

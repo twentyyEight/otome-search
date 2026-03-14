@@ -8,6 +8,5 @@ router.post('/register', register)
 router.post('/login', login)
 router.get('/logout', logout)
 router.get('/verify', verifyToken)
-router.post('/profile', auth, (req, res) => res.send('Perfil'))
 
 export default router

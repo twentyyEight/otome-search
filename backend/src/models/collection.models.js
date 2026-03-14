@@ -1,23 +1,23 @@
 import mongoose from "mongoose";
 
-const userCollectionSchema = new mongoose.Schema({
+const collectionSchema = new mongoose.Schema({
 
     user_id: {
         type: mongoose.Schema.Types.ObjectId,
         required: true 
     },
 
-    game_id: {
+    otome_id: {
         type: String,
         required: true
     },
 
-    game_name: {
+    otome_title: {
         type: String,
         required: true
     },
 
-    game_img: {
+    otome_img: {
         type: String
     },
 
@@ -28,4 +28,4 @@ const userCollectionSchema = new mongoose.Schema({
     }
 })
 
-export default mongoose.model('userCollection', userCollectionSchema)
+export default mongoose.model('collection', collectionSchema)
