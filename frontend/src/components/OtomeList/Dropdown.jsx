@@ -40,7 +40,6 @@ export default function Dropdown({ data, setData, label }) {
                     <label htmlFor={alias}>{name}</label>
 
                     <input type="checkbox"
-                        value={alias}
                         name={alias}
                         onChange={() => toggle(alias)}
                     />

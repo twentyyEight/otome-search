@@ -1,5 +1,5 @@
 import { useForm } from 'react-hook-form'
-import { useAuth } from '../contexts/auth/useAuth'
+import { useAuth } from '../../contexts/auth/useAuth'
 
 export default function Login() {
 

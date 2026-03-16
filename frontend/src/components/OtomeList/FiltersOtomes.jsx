@@ -3,7 +3,7 @@ import { platforms, languages, voiced } from "../../utils/filters/dictionary";
 import Dropdown from "./Dropdown"
 import { useState, useEffect } from "react";
 
-export default function Filters({ setFilters }) {
+export default function FiltersOtomes({ setFilters }) {
 
     const [sort, setSort] = useState('votecount') // Ordenar por
     const [reverse, setReverse] = useState(true) // Cambia orden de los resultados

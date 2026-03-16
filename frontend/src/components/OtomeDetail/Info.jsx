@@ -1,6 +1,7 @@
 import { useForm } from 'react-hook-form'
 import { useAuth } from "../../contexts/auth/useAuth"
 import { useCollection } from '../../contexts/collection/useCollection'
+import { Link } from 'react-router-dom'
 
 export default function Info({ otome }) {
 
@@ -40,9 +41,17 @@ export default function Info({ otome }) {
         <h1>{otome.title}</h1>
         {otome.released && <p>{otome.released}</p>}
         {otome.olang}
-        {otome.developers.map((dev) => <p key={dev.id}>{dev.name}</p>)}
+
+        {otome.developers.map((dev) => (
+            <Link to='/devs' key={dev.id}>{dev.name}</Link>
+        ))}
+
         <p>{otome.devstatus}</p>
         <p>{otome.rating}</p>
         <p>{otome.description}</p>
+
+        {otome.tags.map((tag) => (
+            <Link to='/tags' key={tag.id}>{tag.name}</Link>
+        ))}
     </>
 }

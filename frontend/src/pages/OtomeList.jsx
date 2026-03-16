@@ -1,6 +1,6 @@
 import useAllOtomes from "../hooks/useAllOtomes"
-import Pagination from "../components/OtomeList/Pagination";
-import Filters from "../components/OtomeList/Filters";
+import Pagination from "../components/Pagination";
+import FiltersOtomes from "../components/OtomeList/FiltersOtomes";
 import Loading from '../components/Loading'
 import Error from "../components/Error";
 import { useSearchParams, useNavigate } from 'react-router-dom'
@@ -31,7 +31,7 @@ export default function OtomeList() {
       <h1>Otomes</h1>
 
       {/* FILTROS */}
-      <Filters setFilters={setFilters} />
+      <FiltersOtomes setFilters={setFilters} />
 
       {!error ?
          <>

@@ -1,7 +1,7 @@
-import { useAuth } from "../contexts/auth/useAuth"
-import useProfile from "../hooks/useProfile"
-import Error from "../components/Error"
-import Loading from "../components/Loading"
+import { useAuth } from "../../contexts/auth/useAuth"
+import useProfile from "../../hooks/useProfile"
+import Error from "../../components/Error"
+import Loading from "../../components/Loading"
 import { Link } from 'react-router-dom'
 
 export default function Profile() {
