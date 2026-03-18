@@ -1,32 +1,30 @@
-export default function buildFilters(values) {
+export default function buildFilters(values, base) {
 
-    const { name, plat, voice, lang, originalLang, age } = values
-
-    const filters = ['and', ["tag", "=", "g542"]]
+    const { name, platforms, voice, languages, original_languages, age } = values
 
     // Nombre
-    if (name) filters.push(["search", "=", name]);
+    if (name) base.push(["search", "=", name]);
 
     // Plataformas
-    if (plat.length > 0) {
-        const platforms = ['or', ...plat.map(p => ['platform', '=', p])];
-        filters.push(platforms);
+    if (platforms.length > 0) {
+        const plats = ['or', ...platforms.map(p => ['platform', '=', p])];
+        base.push(plats);
     }
 
     // Doblaje
     if (voice.length > 0) {
         const voiced = ['release', '=', ['or', ...voice.map(v => ['voiced', '=', v])]];
-        filters.push(voiced);
+        base.push(voiced);
     }
 
     // Lenguaje
-    if (lang.length > 0) lang.forEach(l => filters.push(['lang', '=', l]))
+    if (languages.length > 0) languages.forEach(l => base.push(['lang', '=', l]))
 
     // Lenguaje original
-    if (originalLang.length > 0) originalLang.forEach(l => filters.push(['olang', '=', l]))
+    if (original_languages.length > 0) original_languages.forEach(l => base.push(['olang', '=', l]))
 
     // Edad
-    if (age) filters.push(['release', '=', ['minage', '=', age]])
+    if (age) base.push(['release', '=', ['minage', '=', age]])
 
-    return filters
+    return base
 }

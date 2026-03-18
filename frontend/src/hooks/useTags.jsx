@@ -1,7 +1,7 @@
 import apiFetch from "../utils/api.js"
 import { useEffect, useState } from "react"
 
-export default function useTags(page, filters) {
+export default function useTags(page, name, category) {
 
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState(false)
@@ -15,16 +15,12 @@ export default function useTags(page, filters) {
             
             try {
 
-                let name = filters.name
-                let category = filters.category
+                let filters = ["and", ["category", "!=", "ero"], ['search', '=', name]]
 
-                let filtros = ["and", ["category", "!=", "ero"], ['search', '=', name]]
-
-                if (category != '') filtros.push(['category', '=', category])
-                else filtros.pop()
+                if (category != '') filters.push(['category', '=', category])
 
                 const query = {
-                    "filters": filtros,
+                    "filters": filters,
                     "fields": "name",
                     "results": 100,
                     "sort": "name",
@@ -35,7 +31,7 @@ export default function useTags(page, filters) {
                 const res = await apiFetch('tag', query)
 
                 setTags(res.results)
-                setTotal(res.count)
+                setTotal(Math.ceil(res.count / 100))
 
             } catch (error) {
 
@@ -48,7 +44,7 @@ export default function useTags(page, filters) {
         }
 
         fetchTags()
-    }, [page, filters])
+    }, [page, name, category])
 
     return { tags, total, loading, error }
 }

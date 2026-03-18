@@ -1,48 +1,42 @@
-import { PiSortAscendingBold } from "react-icons/pi";
 import { platforms, languages, voiced } from "../../utils/filters/dictionary";
 import Dropdown from "./Dropdown"
-import { useState, useEffect } from "react";
 
-export default function FiltersOtomes({ setFilters }) {
+export default function FiltersOtomes({ setSearchParams, searchParams }) {
 
-    const [sort, setSort] = useState('votecount') // Ordenar por
-    const [reverse, setReverse] = useState(true) // Cambia orden de los resultados
-    const [name, setName] = useState('') // Nombre del otome 
-    const [plat, setPlat] = useState([]) // Plataformas
-    const [lang, setLang] = useState([]) // Lenguaje
-    const [originalLang, setOriginalLang] = useState([]) // Lenguaje original
-    const [voice, setVoice] = useState([]) // Doblaje
-    const [age, setAge] = useState(0)
+    const age = Number(searchParams.get('age') ?? 0)
 
-    useEffect(() => {
-        setFilters({ sort, reverse, plat, lang, originalLang, voice, name, age })
-    }, [sort, reverse, plat, lang, originalLang, voice, name, setFilters, age])
+    const setParam = (key, value) => setSearchParams(prev => {
+        prev.set(key, value)
+        return prev
+    })
 
     return <div>
 
         <input
             type="text"
             placeholder="Buscar por nombre..."
-            value={name}
-            onChange={(e) => setName(e.target.value)}
+            onChange={(e) => setParam('name', e.target.value)}
         />
 
         <label>Ordenar por</label>
-        <select onChange={(e) => setSort(e.target.value)}>
-            <option value="votecount">Popularidad</option>
-            <option value="title">Título</option>
-            <option value="released">Fecha de lanzamiento</option>
-            <option value="rating">Evaluación</option>
+        <select onChange={(e) => setParam('sort', e.target.value)}>
+            <option value="votecount reverse">Más populares</option>
+            <option value="votecount">Menos populares</option>
+            <option value="title">Título (A-Z)</option>
+            <option value="title reverse">Título (Z-A)</option>
+            <option value="released reverse">Recientes</option>
+            <option value="released">Antiguos</option>
+            <option value="rating reverse">Mejor evaluados</option>
+            <option value="rating">Peor evaluados</option>
         </select>
-        <PiSortAscendingBold onClick={() => setReverse(!reverse)} />
 
-        <Dropdown data={platforms} setData={setPlat} label={'Plataformas'} />
+        <Dropdown data={platforms} setSearchParams={setSearchParams} label={'Plataformas'} param={'platform'} />
 
-        <Dropdown data={languages} setData={setLang} label={'Lenguajes'} />
+        <Dropdown data={languages} setSearchParams={setSearchParams} label={'Lenguajes'} param={'language'} />
 
-        <Dropdown data={languages} setData={setOriginalLang} label={'Lenguaje Original'} />
+        <Dropdown data={languages} setSearchParams={setSearchParams} label={'Lenguaje Original'} param={'original_language'} />
 
-        <Dropdown data={voiced} setData={setVoice} label={'Doblaje'} />
+        <Dropdown data={voiced} setSearchParams={setSearchParams} label={'Doblaje'} param={'voice'} />
 
         <label>Edad</label>
         <p>{age}</p>
@@ -51,7 +45,7 @@ export default function FiltersOtomes({ setFilters }) {
             min={0}
             max={18}
             value={age}
-            onChange={(e) => setAge(e.target.value)}
+            onChange={(e) => setParam('age', e.target.value)}
         />
     </div>
 }

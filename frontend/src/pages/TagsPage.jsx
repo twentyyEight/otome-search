@@ -5,19 +5,15 @@ import Pagination from "../components/Pagination";
 import FiltersTags from "../components/TagsPage/FiltersTags";
 import { Link } from 'react-router-dom'
 import { useSearchParams } from 'react-router-dom'
-import { useState } from "react";
 
-export default function Tags() {
+export default function TagsPage() {
 
     const [searchParams, setSearchParams] = useSearchParams() // Obtiene y modifica parametros URL
     const page = Number(searchParams.get('page') ?? 1) // Obtiene 'page' del parametro de la URL
+    const name = searchParams.get('name') ?? ''
+    const category = searchParams.get('category') ?? ''
 
-    const [filters, setFilters] = useState({
-        name: '',
-        category: ''
-    })
-
-    const { tags, total, loading, error } = useTags(page, filters)
+    const { tags, total, loading, error } = useTags(page, name, category)
 
     return <>
         {!error ?
@@ -25,13 +21,13 @@ export default function Tags() {
                 {
                     !loading ?
                         <>
-                            <FiltersTags setFilters={setFilters} />
+                            <FiltersTags setSearchParams={setSearchParams} />
 
                             {tags.map((tag) => (
                                 <Link key={tag.id} to={`/tags/${tag.id}`}>{tag.name}</Link>
                             ))}
 
-                            <Pagination page={page} total={total} setSearchParams={setSearchParams} />
+                            {total > 1 && <Pagination page={page} total={total} setSearchParams={setSearchParams} />}
                         </>
                         :
                         <Loading />

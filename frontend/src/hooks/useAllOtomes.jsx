@@ -6,16 +6,20 @@ export default function useAllOtomes(page, filters) {
 
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState(null)
-    
+
     const [otomes, setOtomes] = useState([])
     const [total, setTotal] = useState(1)
-    const { sort, reverse } = filters
+    let { sort } = filters
+
+    const reverse = sort.includes('reverse') ? true : false
+    sort = sort.replace("reverse", "")
 
     useEffect(() => {
 
         async function fetchAllOtomes() {
 
-            const filtros = buildFilters(filters)
+            const base = ['and', ["tag", "=", "g542"]]
+            const filtros = buildFilters(filters, base)
 
             try {
 
@@ -41,7 +45,7 @@ export default function useAllOtomes(page, filters) {
                 setLoading(false)
 
             } catch (error) {
-                
+
                 setError(error)
                 setLoading(false)
             }

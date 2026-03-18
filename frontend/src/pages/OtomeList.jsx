@@ -3,26 +3,15 @@ import Pagination from "../components/Pagination";
 import FiltersOtomes from "../components/OtomeList/FiltersOtomes";
 import Loading from '../components/Loading'
 import Error from "../components/Error";
-import { useSearchParams, useNavigate } from 'react-router-dom'
-import { useState } from "react";
+import { useSearchParams } from 'react-router-dom'
+import { Link } from 'react-router-dom'
+import useParamsFilters from "../hooks/useParamsFilters";
 
 export default function OtomeList() {
 
-   const navigate = useNavigate()
-
    const [searchParams, setSearchParams] = useSearchParams() // Obtiene y modifica parametros URL
-   const page = Number(searchParams.get('page') ?? 1) // Obtiene 'page' del parametro de la URL
-
-   const [filters, setFilters] = useState({
-      sort: 'votecount',
-      reverse: true,
-      name: '',
-      plat: [],
-      lang: [],
-      originalLang: [],
-      voice: [],
-      age: 0
-   })
+   const filters = useParamsFilters(searchParams)
+   const { page } = filters
 
    const { otomes, total, loading, error } = useAllOtomes(page, filters) // Obtiene los otomes y el n° total de páginas
 
@@ -30,21 +19,20 @@ export default function OtomeList() {
 
       <h1>Otomes</h1>
 
-      {/* FILTROS */}
-      <FiltersOtomes setFilters={setFilters} />
-
       {!error ?
          <>
             {
                !loading ?
                   <>
-                     {/* LISTADO OTOMES */}
-                     {otomes.map(otome => (
+                     {/* FILTROS */}
+                     <FiltersOtomes setSearchParams={setSearchParams} searchParams={searchParams} />
 
-                        <div key={otome.id}>
+                     {/* LISTADO OTOMES */}
+                     {otomes.map((otome) => (
+                        <Link key={otome.id} to={`/otomes/${otome.id}`}>
                            <img src={otome.image?.url} alt={otome.title} />
-                           <h2 onClick={() => navigate(`/otomes/${otome.id}`)}>{otome.title}</h2>
-                        </div>
+                           <h3>{otome.title}</h3>
+                        </Link>
                      ))}
 
                      {/* PAGINACIÓN */}

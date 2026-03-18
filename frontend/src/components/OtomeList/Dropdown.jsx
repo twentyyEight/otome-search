@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export default function Dropdown({ data, setData, label }) {
+export default function Dropdown({ data, setSearchParams, label, param }) {
 
     // Buscar opciones por su nombre
     const [searchTerm, setSearchTerm] = useState("");
@@ -11,11 +11,18 @@ export default function Dropdown({ data, setData, label }) {
 
     // Guardado de las opciones en un array - Elimina el dato si es que ya está guardado
     const toggle = (value) => {
-        setData(prev =>
-            prev.includes(value)
-                ? prev.filter(v => v !== value)
-                : [...prev, value]
-        )
+        setSearchParams(prev => {
+            const current = prev.getAll(param)
+
+            const updated = current.includes(value)
+                ? current.filter(v => v !== value)
+                : [...current, value]
+
+            prev.delete(param)
+            updated.forEach(v => prev.append(param, v))
+
+            return prev
+        })
     }
 
     return <div>

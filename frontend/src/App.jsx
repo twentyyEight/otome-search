@@ -8,7 +8,8 @@ import Navbar from './components/Navbar'
 import { AuthProvider } from './contexts/auth/AuthProvider'
 import { CollectionProvider } from './contexts/collection/CollectionProvider'
 import ProtectedRoute from './routes/ProtectedRoute'
-import Tags from './pages/TagsPage'
+import TagsPage from './pages/TagsPage'
+import TagPage from './pages/TagPage'
 
 function App() {
 
@@ -24,7 +25,8 @@ function App() {
             <Route path='/otomes' element={<OtomeList />} />
             <Route path='/otomes/:id' element={<OtomeDetail />} />
 
-            <Route path='/tags' element={<Tags />} />
+            <Route path='/tags' element={<TagsPage />} />
+            <Route path='/tags/:id' element={<TagPage />} />
 
             <Route element={<ProtectedRoute />}>
               <Route path='/profile' element={<Profile />} />
