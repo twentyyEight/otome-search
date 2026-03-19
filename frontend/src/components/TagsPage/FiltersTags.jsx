@@ -1,4 +1,8 @@
-export default function FiltersTags({ setSearchParams }) {
+import { useSearchParams } from 'react-router-dom'
+
+export default function FiltersTags() {
+
+    const [_, setSearchParams] = useSearchParams() // Obtiene y modifica parametros URL
 
     const setParam = (key, value) => setSearchParams(prev => {
         prev.set(key, value)

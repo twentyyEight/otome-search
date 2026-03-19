@@ -1,6 +1,13 @@
-export default function buildFilters(values, base) {
+export default function buildFilters(values, id) {
 
     const { name, platforms, voice, languages, original_languages, age } = values
+
+    let base = ['and', ["tag", "=", "g542"]]
+
+    if (id) {
+        if (id.startsWith('p')) base.push(['developer', '=', ['id', '=', id]])
+        if (id.startsWith('g')) base.push(['tag', '=', id])
+    }
 
     // Nombre
     if (name) base.push(["search", "=", name]);

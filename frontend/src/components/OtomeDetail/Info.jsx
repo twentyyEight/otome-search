@@ -43,7 +43,7 @@ export default function Info({ otome }) {
         {otome.olang}
 
         {otome.developers.map((dev) => (
-            <Link to='/devs' key={dev.id}>{dev.name}</Link>
+            <Link to={`/devs/${dev.id}`} key={dev.id}>{dev.name}</Link>
         ))}
 
         <p>{otome.devstatus}</p>

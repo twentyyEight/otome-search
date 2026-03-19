@@ -1,16 +1,16 @@
 import { useEffect, useState } from "react"
-import apiFetch from "../utils/api"
-import buildFilters from "../utils/filters/build"
+import apiFetch from "../../utils/api"
+import buildFilters from "../../utils/filters/build"
 
-export default function useAllOtomes(page, filters) {
+export default function useAllOtomes(page, filters, id) {
 
-    const [loading, setLoading] = useState(true)
-    const [error, setError] = useState(null)
+    const [loadingOtomes, setLoadingOtomes] = useState(true)
+    const [errorOtomes, setErrorOtomes] = useState(null)
 
     const [otomes, setOtomes] = useState([])
     const [total, setTotal] = useState(1)
+    
     let { sort } = filters
-
     const reverse = sort.includes('reverse') ? true : false
     sort = sort.replace("reverse", "")
 
@@ -18,15 +18,14 @@ export default function useAllOtomes(page, filters) {
 
         async function fetchAllOtomes() {
 
-            const base = ['and', ["tag", "=", "g542"]]
-            const filtros = buildFilters(filters, base)
-
             try {
+
+                const filtros = buildFilters(filters, id)
 
                 // Queries para la API
                 const query = {
                     "filters": filtros,
-                    "fields": "title, id, image.url",
+                    "fields": "title, image.url",
                     "results": 100,
                     "page": page,
                     "count": true, // resultados totales
@@ -42,18 +41,18 @@ export default function useAllOtomes(page, filters) {
 
                 setOtomes(data.results) // otomes
 
-                setLoading(false)
-
             } catch (error) {
 
-                setError(error)
-                setLoading(false)
+                setErrorOtomes(error)
+
+            } finally {
+                setLoadingOtomes(false)
             }
         }
 
         fetchAllOtomes();
 
-    }, [page, sort, reverse, filters])
+    }, [page, sort, reverse, filters, id])
 
-    return { otomes, total, loading, error }
+    return { otomes, total, loadingOtomes, errorOtomes }
 }

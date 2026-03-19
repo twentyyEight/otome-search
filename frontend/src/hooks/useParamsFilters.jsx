@@ -1,6 +1,9 @@
 import { useMemo } from "react";
+import { useSearchParams } from 'react-router-dom'
 
-export default function useParamsFilters(searchParams) {
+export default function useParamsFilters() {
+
+   const [searchParams] = useSearchParams() // Obtiene y modifica parametros URL
 
     return useMemo(() => ({
 

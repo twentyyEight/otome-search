@@ -1,6 +1,9 @@
 import { useState } from "react";
+import { useSearchParams } from 'react-router-dom'
 
-export default function Dropdown({ data, setSearchParams, label, param }) {
+export default function Dropdown({ data, label, param }) {
+
+    const [_, setSearchParams] = useSearchParams()
 
     // Buscar opciones por su nombre
     const [searchTerm, setSearchTerm] = useState("");

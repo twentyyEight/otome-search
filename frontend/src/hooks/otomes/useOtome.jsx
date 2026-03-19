@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom";
-import apiFetch from "../utils/api"
+import apiFetch from "../../utils/api"
 
 export default function useOtome() {
 

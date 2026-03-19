@@ -1,4 +1,4 @@
-import apiFetch from "../utils/api.js"
+import apiFetch from "../../utils/api.js"
 import { useEffect, useState } from "react"
 
 export default function useTags(page, name, category) {

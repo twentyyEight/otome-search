@@ -1,7 +1,10 @@
 import { platforms, languages, voiced } from "../../utils/filters/dictionary";
 import Dropdown from "./Dropdown"
+import { useSearchParams } from 'react-router-dom'
 
-export default function FiltersOtomes({ setSearchParams, searchParams }) {
+export default function FiltersOtomes() {
+
+    const [searchParams, setSearchParams] = useSearchParams()
 
     const age = Number(searchParams.get('age') ?? 0)
 
@@ -30,13 +33,13 @@ export default function FiltersOtomes({ setSearchParams, searchParams }) {
             <option value="rating">Peor evaluados</option>
         </select>
 
-        <Dropdown data={platforms} setSearchParams={setSearchParams} label={'Plataformas'} param={'platform'} />
+        <Dropdown data={platforms} label={'Plataformas'} param={'platform'} />
 
-        <Dropdown data={languages} setSearchParams={setSearchParams} label={'Lenguajes'} param={'language'} />
+        <Dropdown data={languages} label={'Lenguajes'} param={'language'} />
 
-        <Dropdown data={languages} setSearchParams={setSearchParams} label={'Lenguaje Original'} param={'original_language'} />
+        <Dropdown data={languages} label={'Lenguaje Original'} param={'original_language'} />
 
-        <Dropdown data={voiced} setSearchParams={setSearchParams} label={'Doblaje'} param={'voice'} />
+        <Dropdown data={voiced} label={'Doblaje'} param={'voice'} />
 
         <label>Edad</label>
         <p>{age}</p>
