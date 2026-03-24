@@ -11,6 +11,7 @@ import ProtectedRoute from './routes/ProtectedRoute'
 import TagsPage from './pages/tags/TagsPage'
 import TagPage from './pages/tags/TagPage'
 import DevPage from './pages/DevPage'
+import HomePage from './pages/HomePage'
 
 function App() {
 
@@ -20,6 +21,8 @@ function App() {
         <CollectionProvider>
           <Navbar />
           <Routes>
+            <Route path='/' element={<HomePage />} />
+
             <Route path='/register' element={<Register />} />
             <Route path='/login' element={<Login />} />
 
