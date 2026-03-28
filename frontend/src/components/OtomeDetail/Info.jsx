@@ -13,9 +13,9 @@ export default function Info({ otome }) {
 
         const data = {
             user_id: userId,
-            otome_id: otome.id,
-            otome_title: otome.title,
-            otome_img: otome.image?.url,
+            id: otome.id,
+            title: otome.title,
+            img: otome.image?.url,
             ...state
         }
 

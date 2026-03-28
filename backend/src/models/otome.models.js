@@ -1,23 +1,23 @@
 import mongoose from "mongoose";
 
-const collectionSchema = new mongoose.Schema({
+const otomeSchema = new mongoose.Schema({
 
     user_id: {
         type: mongoose.Schema.Types.ObjectId,
         required: true 
     },
 
-    otome_id: {
+    id: {
         type: String,
         required: true
     },
 
-    otome_title: {
+    title: {
         type: String,
         required: true
     },
 
-    otome_img: {
+    img: {
         type: String
     },
 
@@ -28,4 +28,4 @@ const collectionSchema = new mongoose.Schema({
     }
 })
 
-export default mongoose.model('collection', collectionSchema)
+export default mongoose.model('Otome', otomeSchema)

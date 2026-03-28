@@ -3,6 +3,8 @@ import bcrypt from 'bcryptjs'
 import { createToken } from '../libs/jwt.js'
 import jwt from "jsonwebtoken";
 import { TOKEN_SECRET } from "../config.js";
+import Otome from '../models/otome.models.js'
+import FavoriteCharacter from '../models/fav_char.models.js'
 
 export const register = async (req, res) => {
 
@@ -97,5 +99,25 @@ export const verifyToken = async (req, res) => {
     } catch (error) {
 
         return res.status(500).json({ message: error.message });
+    }
+}
+
+export const profile = async (req, res) => {
+
+    const { id } = req.body
+
+    try {
+
+        const user = await User.findById(id)
+        if (!user) return res.status(404).json({ message: 'Usuario no encontrado' })
+
+        const otomes = await Otome.find({ user_id: id })
+
+        const characters = await FavoriteCharacter.find({ user_id: id })
+
+        return res.status(200).json({ name: user.name, otomes, characters })
+
+    } catch (error) {
+        return res.json({ message: error.message })
     }
 }

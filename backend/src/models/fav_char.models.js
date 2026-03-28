@@ -22,4 +22,4 @@ const favoriteCharacterSchema = new mongoose.Schema({
     }
 })
 
-export default mongoose.model('favoriteCharacter', favoriteCharacterSchema)
+export default mongoose.model('FavoriteCharacter', favoriteCharacterSchema)
