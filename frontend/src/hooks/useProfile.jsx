@@ -1,39 +1,22 @@
 import { useEffect, useState } from "react";
+import dbFetch from '../utils/fetching/dbFetch'
+import { useParams } from "react-router-dom";
 
-export default function useProfile(userId) {
+export default function useProfile() {
 
-    const [profileData, setProfileData] = useState({})
+    const [profile, setProfile] = useState({})
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState(false)
 
+    const { name } = useParams()
+
     useEffect(() => {
 
-        async function getProfileData(id) {
+        async function getProfileData(name) {
 
             try {
-
-                const res = await fetch(`http://localhost:3000/api/profile`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ id }),
-                    credentials: 'include'
-                })
-
-                const data = await res.json()
-
-                if (!res.ok) throw { status: res.status, message: data.message }
-
-                const collections = data.collections
-
-                const collections_by_state = collections.reduce((res, collection) => {
-
-                    const state = collection.state
-                    if (!res[state]) res[state] = []
-                    res[state].push(collection)
-                    return res
-                }, {})
-
-                setProfileData({ name: data.name, collections: collections_by_state, characters: data.characters })
+                const res = await dbFetch(`profile/${name}`)
+                setProfile(res)
 
             } catch (error) {
 
@@ -45,9 +28,9 @@ export default function useProfile(userId) {
             }
         }
 
-        getProfileData(userId)
+        getProfileData(name)
 
-    }, [userId])
+    }, [name])
 
-    return { profileData, loading, error }
+    return { profile, loading, error }
 }

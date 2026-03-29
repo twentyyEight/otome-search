@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import apiFetch from "../../utils/api"
+import apiFetch from "../../utils/fetching/apiFetch"
 import buildFilters from "../../utils/filters/build"
 
 export default function useAllOtomes(page, filters, id) {

@@ -14,25 +14,22 @@ export const register = async (req, res) => {
 
         const password_hash = await bcrypt.hash(password, 10)
 
-        const new_user = new User({
+        const new_user = await User.create({
             name,
             email,
             password: password_hash
         })
 
-        const saved_user = await new_user.save()
-
-        const token = await createToken({ id: saved_user._id })
+        const token = await createToken({ id: new_user._id, name: new_user.name })
         res.cookie('token', token, {
             httpOnly: true,
             secure: true,
             sameSite: "lax"
         });
 
-        return res.status(200).json({ id: saved_user._id });
+        return res.status(200).json({ id: new_user._id, name: new_user.name });
 
     } catch (error) {
-
         console.log(error)
     }
 }
@@ -48,7 +45,7 @@ export const login = async (req, res) => {
         const isMatch = await bcrypt.compare(password, user.password);
         if (!isMatch) throw { status: 400, message: 'Contraseña incorrecta' };
 
-        const token = await createToken({ id: user._id });
+        const token = await createToken({ id: user._id, name: user.name });
         res.cookie('token', token, {
             httpOnly: true,
             secure: false, // CAMBIAR A TRUE EN PRODUCCION
@@ -56,7 +53,7 @@ export const login = async (req, res) => {
             maxAge: 86400000
         });
 
-        return res.status(200).json({ id: user._id });
+        return res.status(200).json({ id: user._id, name: user.name });
 
     } catch (err) {
         res.status(err.status || 500).json({ message: err.message || 'Error interno' });
@@ -91,9 +88,7 @@ export const verifyToken = async (req, res) => {
             const userFound = await User.findById(user.id)
             if (!userFound) return res.status(401).json({ message: 'Usuario no encontrado' })
 
-            return res.status(200).json({
-                id: userFound._id
-            });
+            return res.status(200).json({ id: userFound._id, name: userFound.name });
         });
 
     } catch (error) {
@@ -104,18 +99,36 @@ export const verifyToken = async (req, res) => {
 
 export const profile = async (req, res) => {
 
-    const { id } = req.body
+    const { name } = req.params
 
     try {
 
-        const user = await User.findById(id)
+        const user = await User.findOne({ name: name })
         if (!user) return res.status(404).json({ message: 'Usuario no encontrado' })
+
+        const id = user._id
 
         const otomes = await Otome.find({ user_id: id })
 
+        const playing = otomes.filter(otome => otome.state === 0)
+        const finished = otomes.filter(otome => otome.state === 1)
+        const stalled = otomes.filter(otome => otome.state === 2)
+        const dropped = otomes.filter(otome => otome.state === 3)
+        const wishlist = otomes.filter(otome => otome.state === 4)
+
         const characters = await FavoriteCharacter.find({ user_id: id })
 
-        return res.status(200).json({ name: user.name, otomes, characters })
+        return res.status(200).json({
+            name,
+            otomes: {
+                playing,
+                finished,
+                stalled,
+                dropped,
+                wishlist
+            },
+            characters
+        })
 
     } catch (error) {
         return res.json({ message: error.message })

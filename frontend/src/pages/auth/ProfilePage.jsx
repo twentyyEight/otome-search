@@ -1,4 +1,3 @@
-import { useAuth } from "../../contexts/auth/useAuth"
 import useProfile from "../../hooks/useProfile"
 import Error from "../../components/Error"
 import Loading from "../../components/Loading"
@@ -6,59 +5,43 @@ import { Link } from 'react-router-dom'
 
 export default function Profile() {
 
-    const { userId } = useAuth()
-    const { profileData, loading, error } = useProfile(userId)
-    const { name, collections, characters } = profileData
+    const { profile, loading, error } = useProfile()
 
-    const collections_state = [
-        { key: 0, label: 'Jugando' },
-        { key: 1, label: 'Completados' },
-        { key: 2, label: 'En pausa' },
-        { key: 3, label: 'Abandonados' },
-    ]
+    if (loading) return <Loading />
+    if (error) return <Error />
+
+    const { name, otomes, characters } = profile
+
+    const states = ['Playing', 'Finished', 'Wishlist', 'Stalled', 'Dropped']
+
+    console.log(otomes)
 
     return <>
-        {!error ?
-            <>
-                {!loading ?
-                    <>
-                        <h1>Perfil de {name}</h1>
+        <h1>Perfil de {name}</h1>
 
-                        <h2>Personajes favortios</h2>
-                        {characters.map(character => (
+        <h2>Personajes favortios</h2>
+        {characters.map(character => (
 
-                            <div key={character.id}>
-                                <img src={character.img} alt={character.name} />
-                                <p>{character.name}</p>
-                            </div>
-                        ))}
+            <div key={character.id}>
+                <img src={character.img} alt={character.name} />
+                <p>{character.name}</p>
+            </div>
+        ))}
 
-                        {collections_state.map(({ key, label }) => (
+        {states.map(state => (
 
-                            collections[key] &&
+            <div key={state}>
 
-                            <div key={key}>
+                <h2>{state}</h2>
 
-                                <h2>Otomes {label}</h2>
-                                {collections[key].map(collection => (
-
-                                    <Link to={`/otomes/${collection.otome_id}`} key={collection._id}>
-                                        <div>
-                                            <img src={collection.otome_img} alt={collection.otome_title} />
-                                            <h3>{collection.otome_title}</h3>
-                                        </div>
-                                    </Link>
-                                ))}
-
-                            </div>
-                        ))}
-                    </>
-                    :
-                    <Loading />
-                }
-            </>
-            :
-            <Error />
-        }
+                {otomes[state.toLowerCase()].map(otome => (
+                    
+                    <div key={otome._id}>
+                        <img src={otome.img} alt={otome.title} />
+                        <Link to={`/otomes/${otome.id}`}>{otome.title}</Link>
+                    </div>
+                ))}
+            </div>
+        ))}
     </>
 }

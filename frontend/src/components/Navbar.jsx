@@ -3,13 +3,13 @@ import { useAuth } from '../contexts/auth/useAuth'
 
 export default function Navbar() {
 
-    const { isAuth, logout } = useAuth()
+    const { isAuth, logout, user } = useAuth()
 
     return (
         <nav>
             {isAuth ? (
                 <>
-                    <Link to='/profile'>Perfil</Link>
+                    <Link to={`/profile/${user?.name}`}>Perfil</Link>
                     <button onClick={logout}>Cerrar sesión</button>
                 </>
             ) : (

@@ -35,7 +35,7 @@ function App() {
             <Route path='/devs/:id' element={<DevPage />} />
 
             <Route element={<ProtectedRoute />}>
-              <Route path='/profile' element={<Profile />} />
+              <Route path='/profile/:name' element={<Profile />} />
             </Route>
 
           </Routes>

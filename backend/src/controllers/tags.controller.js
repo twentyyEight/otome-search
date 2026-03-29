@@ -2,8 +2,11 @@ import { Tag } from "../models/tag.models.js"
 
 export const getTags = async (req, res) => {
 
+    const { page } = req.body
+
     try {
-        const tags = await Tag.find({ searchable: true })
+        const skip = page * 100 - 100
+        const tags = await Tag.find({ searchable: true }).sort({ name: 1 }).skip(skip).limit(100)
         return res.json(tags)
 
     } catch (error) {

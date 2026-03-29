@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import apiFetch from "../utils/api.js"
+import apiFetch from "../utils/fetching/apiFetch"
 
 export default function useDev(id) {
 
