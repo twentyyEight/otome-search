@@ -9,20 +9,12 @@ export default function OtomePage() {
 
     const { otome, error, loading } = useOtome()
 
-    return (
-        !error ?
-            <>
-                {!loading ?
-                    <>
-                        <Info otome={otome} />
-                        <Releases releases={otome.releases} />
-                        <Characters characters={otome.characters} />
-                    </>
-                    :
-                    <Loading />
-                }
-            </>
-            :
-            <Error />
-    )
+    if (loading) return <Loading />
+    if (error) return <Error />
+
+    return <>
+        <Info otome={otome} />
+        <Releases releases={otome.releases} />
+        <Characters characters={otome.characters} />
+    </>
 }

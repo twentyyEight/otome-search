@@ -7,21 +7,12 @@ export default function HomePage() {
 
     const { images, loading, error } = useImages()
 
-    return (
-        (!error ?
-            <>
-                {!loading ?
-                    <>
-                        <Carousel images={images[0]} />
-                        <Carousel images={images[1]} />
-                        <Carousel images={images[2]} />
-                    </>
-                    :
-                    <Loading />
-                }
-            </>
-            :
-            <Error />
-        )
-    )
+    if (loading) return <Loading />
+    if (error) return <Error />
+
+    return <>
+        <Carousel images={images[0]} />
+        <Carousel images={images[1]} />
+        <Carousel images={images[2]} />
+    </>
 }

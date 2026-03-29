@@ -11,20 +11,11 @@ export default function OtomesPage() {
 
    const { otomes, total, loading, error } = useOtomes(page, filters)
 
+   if (loading) return <Loading />
+   if (error) return <Error />
+
    return <>
-      {!error ?
-         <>
-            {!loading ?
-               <>
-                  <h1>Otomes</h1>
-                  <OtomeList otomes={otomes} page={page} total={total} />
-               </>
-               :
-               <Loading />
-            }
-         </>
-         :
-         <Error />
-      }
+      <h1>Otomes</h1>
+      <OtomeList otomes={otomes} page={page} total={total} />
    </>
 }

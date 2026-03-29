@@ -1,9 +1,11 @@
 import { MdKeyboardDoubleArrowLeft, MdKeyboardDoubleArrowRight } from "react-icons/md";
 import { useSearchParams } from 'react-router-dom'
 
-export default function Pagination({ page, total }) {
+export default function Pagination({ total }) {
 
-   const [_, setSearchParams] = useSearchParams() // Obtiene y modifica parametros URL
+    const [searchParams, setSearchParams] = useSearchParams() // Obtiene y modifica parametros URL
+
+    const page = Number(searchParams.get('page') ?? 1)
 
     const start = Math.min(Math.max(page - 1, 1), total - 2);
     const end = Math.max(Math.min(page + 1, total), 3);

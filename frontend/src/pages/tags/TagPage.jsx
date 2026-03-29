@@ -15,26 +15,17 @@ export default function TagPage() {
     const { tag, loading, error } = useTag(id)
     const { otomes, total, loadingOtomes, errorOtomes } = useAllOtomes(page, filters, id)
 
-    return <>
-        {!error && !errorOtomes ?
-            <>
-                {!loading && !loadingOtomes ?
-                    <>
-                        <h1>{tag.name}</h1>
-                        <p>{tag.description}</p>
+    if (loading || loadingOtomes) return <Loading />
+    if (error || errorOtomes) return <Error />
 
-                        <OtomeList
-                            otomes={otomes}
-                            page={page}
-                            total={total} 
-                        />
-                    </>
-                    :
-                    <Loading />
-                }
-            </>
-            :
-            <Error />
-        }
+    return <>
+        <h1>{tag.name}</h1>
+        <p>{tag.description}</p>
+
+        <OtomeList
+            otomes={otomes}
+            page={page}
+            total={total}
+        />
     </>
 }

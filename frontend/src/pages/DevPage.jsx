@@ -15,22 +15,13 @@ export default function DevPage() {
     const { dev, loading, error } = useDev(id)
     const { otomes, total, loadingOtome, errorOtome } = useAllOtomes(page, filters, id)
 
-    return <>
-        {!error && !errorOtome ?
-            <>
-                {!loading && !loadingOtome ?
-                    <>
-                        <h1>{dev.name}</h1>
-                        <p>{dev.description}</p>
+    if (loading || loadingOtome) return <Loading />
+    if (error || errorOtome) return <Error />
 
-                        <OtomeList otomes={otomes} total={total} />
-                    </>
-                    :
-                    <Loading />
-                }
-            </>
-            :
-            <Error />
-        }
+    return <>
+        <h1>{dev.name}</h1>
+        <p>{dev.description}</p>
+
+        <OtomeList otomes={otomes} total={total} />
     </>
 }
