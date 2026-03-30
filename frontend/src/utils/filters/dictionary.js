@@ -1,4 +1,4 @@
-export const platforms = {
+export const platforms_list = {
     "win": "Windows",
     "mac": "macOS",
     "lin": 'Linux',
@@ -18,7 +18,7 @@ export const platforms = {
     "xxs": "Xbox X/S"
 }
 
-export const languages = {
+export const languages_list = {
     "ja": 'Japonés',
     'en': 'Inglés',
     'es': 'Español',
@@ -54,7 +54,7 @@ export const languages = {
     'tr': 'Turco'
 }
 
-export const voiced = { 
+export const voiced_list = { 
     1: 'Sin doblaje', 
     3: 'Parcial', 
     4: 'Completo' 

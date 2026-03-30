@@ -13,7 +13,7 @@ export default function useTags() {
     const [searchParams] = useSearchParams()
     const page = Number(searchParams.get('page') ?? 1)
     const name = searchParams.get('name') ?? null
-    const type = searchParams.getAll('type') ?? null
+    const types = searchParams.getAll('type') ?? null
 
     useEffect(() => {
 
@@ -23,7 +23,7 @@ export default function useTags() {
 
                 let query = `tags?page=${page}`
                 if (name) query += `&name=${name}`
-                if (type.length > 0) query += type.map(t => `&type=${t}`).join('')
+                if (types.length > 0) query += types.map(type => `&type=${type}`).join('')
 
                 const res = await dbFetch(query)
                 setTags(res.tags)
@@ -41,7 +41,7 @@ export default function useTags() {
 
         fetchTags(page)
 
-    }, [page, name, type])
+    }, [page, name, types])
 
     return { tags, total, loading, error }
 }

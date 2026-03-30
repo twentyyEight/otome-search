@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useSearchParams } from 'react-router-dom'
 
-export default function Dropdown({ data, label, param }) {
+export default function Dropdown({ data, label, param, query }) {
 
     const [_, setSearchParams] = useSearchParams()
 
@@ -33,7 +33,7 @@ export default function Dropdown({ data, label, param }) {
         <label>{label}</label>
 
         {/* Búsqueda de las opciones */}
-        {label !== 'Doblaje' &&
+        {label !== 'Voiced' &&
             <input
                 type="search"
                 value={searchTerm}
@@ -51,6 +51,7 @@ export default function Dropdown({ data, label, param }) {
 
                     <input type="checkbox"
                         name={alias}
+                        checked={query.includes(alias)}
                         onChange={() => toggle(alias)}
                     />
                 </div>

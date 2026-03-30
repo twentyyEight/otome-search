@@ -1,16 +1,19 @@
 import { useEffect, useState } from "react"
 import apiFetch from "../../utils/fetching/apiFetch"
 import buildFilters from "../../utils/filters/build"
+import useParamsFilters from "../../hooks/useParamsFilters";
 
-export default function useAllOtomes(page, filters, id) {
+export default function useOtomes(id) {
 
     const [loadingOtomes, setLoadingOtomes] = useState(true)
     const [errorOtomes, setErrorOtomes] = useState(null)
 
     const [otomes, setOtomes] = useState([])
     const [total, setTotal] = useState(1)
-    
-    let { sort } = filters
+
+    const filters = useParamsFilters()
+    let { page, sort } = filters
+
     const reverse = sort.includes('reverse') ? true : false
     sort = sort.replace("reverse", "")
 

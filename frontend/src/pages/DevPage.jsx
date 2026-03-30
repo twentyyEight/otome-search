@@ -3,7 +3,7 @@ import Error from "../components/Error"
 import Loading from "../components/Loading"
 import OtomeList from '../components/OtomeList/Base'
 import useParamsFilters from "../hooks/useParamsFilters"
-import useAllOtomes from "../hooks/otomes/useOtomes"
+import useOtomes from "../hooks/otomes/useOtomes"
 import { useParams } from "react-router-dom";
 
 export default function DevPage() {
@@ -13,7 +13,7 @@ export default function DevPage() {
     const { id } = useParams()
 
     const { dev, loading, error } = useDev(id)
-    const { otomes, total, loadingOtome, errorOtome } = useAllOtomes(page, filters, id)
+    const { otomes, total, loadingOtome, errorOtome } = useOtomes(page, filters, id)
 
     if (loading || loadingOtome) return <Loading />
     if (error || errorOtome) return <Error />
