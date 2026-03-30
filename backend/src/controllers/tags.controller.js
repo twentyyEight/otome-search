@@ -48,7 +48,18 @@ export const getTagCategories = async (req, res) => {
 
     try {
         const categories = await Tag.find({ parents: [] })
-        return res.json(categories)
+
+        const result = await Promise.all(
+            
+            categories.map(async (categorie) => {
+                const cat = categorie.toObject()
+                const tags = await Tag.find({ parents: cat.id })
+                return { ...cat, tags }
+            })
+        )
+
+        return res.json(result)
+
     } catch (error) {
         return res.status(500).json({ message: error.message })
     }

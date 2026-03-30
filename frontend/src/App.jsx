@@ -12,6 +12,7 @@ import TagsPage from './pages/tags/TagsPage'
 import TagPage from './pages/tags/TagPage'
 import DevPage from './pages/DevPage'
 import HomePage from './pages/HomePage'
+import TagsCategories from './pages/tags/TagsCategoriesPage'
 
 function App() {
 
@@ -30,6 +31,7 @@ function App() {
             <Route path='/otomes/:id' element={<OtomePage />} />
 
             <Route path='/tags' element={<TagsPage />} />
+            <Route path='/tags/categories' element={<TagsCategories />} />
             <Route path='/tags/:id' element={<TagPage />} />
 
             <Route path='/devs/:id' element={<DevPage />} />

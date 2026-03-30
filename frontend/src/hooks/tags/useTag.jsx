@@ -1,27 +1,27 @@
 import { useEffect, useState } from "react"
-import apiFetch from "../../utils/fetching/apiFetch";
+import dbFetch from "../../utils/fetching/dbFetch";
+import { useParams } from "react-router-dom";
 
-export default function useTag(id) {
+export default function useTag() {
 
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState(false)
 
     const [tag, setTag] = useState(null)
+    const [childTags, setChildTags] = useState([])
+
+    const { id } = useParams()
 
     useEffect(() => {
 
-        async function fetchTag(id) {
+        async function fetchTag() {
 
             try {
 
-                const query_tag = {
-                    "filters": ['id', '=', id],
-                    "fields": "name, description"
-                }
+                const res = await dbFetch(`tags/${id}`)
 
-                const res_tag = await apiFetch('tag', query_tag)
-
-                setTag(res_tag.results[0])
+                setTag(res.info)
+                setChildTags(res.childTags)
 
             } catch (error) {
                 setError(true)
@@ -32,10 +32,10 @@ export default function useTag(id) {
             }
         }
 
-        fetchTag(id)
+        fetchTag()
 
     }, [id])
 
-    return { tag, loading, error }
+    return { tag, childTags, loading, error }
 
 }
