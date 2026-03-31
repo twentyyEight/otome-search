@@ -1,11 +1,11 @@
-import useCategories from "../../hooks/tags/useCategories"
+import useTagsCategories from "../../hooks/tags/useTagsCategories"
 import Loading from "../../components/Loading"
 import Error from "../../components/Error"
 import { Link } from "react-router-dom"
 
 export default function TagsCategories() {
 
-    const { categories, loading, error } = useCategories()
+    const { categories, loading, error } = useTagsCategories()
 
     if (loading) return <Loading />
     if (error) return <Error />

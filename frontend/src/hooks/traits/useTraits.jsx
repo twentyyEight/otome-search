@@ -1,32 +1,30 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState } from "react";
 import dbFetch from '../../utils/fetching/dbFetch'
 import { useSearchParams } from 'react-router-dom'
 
-export default function useTags() {
+export default function useTraits() {
 
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState(false)
 
-    const [tags, setTags] = useState(null)
-    const [total, setTotal] = useState(0)
+    const [traits, setTraits] = useState([])
+    const [total, setTotal] = useState(1)
 
     const [searchParams] = useSearchParams()
     const page = Number(searchParams.get('page') ?? 1)
     const name = searchParams.get('name') ?? null
-    const types = searchParams.getAll('type') ?? null
 
     useEffect(() => {
 
-        async function fetchTags(page) {
+        async function fetchTraits() {
 
             try {
-
-                let query = `tags?page=${page}`
+                let query = `traits?page=${page}`
                 if (name) query += `&name=${name}`
-                if (types.length > 0) query += types.map(type => `&type=${type}`).join('')
 
                 const res = await dbFetch(query)
-                setTags(res.tags)
+
+                setTraits(res.traits)
                 setTotal(Math.ceil(res.total / 100))
 
             } catch (error) {
@@ -39,9 +37,9 @@ export default function useTags() {
             }
         }
 
-        fetchTags(page)
+        fetchTraits()
+    }, [page, name])
 
-    }, [page, name, types])
+    return { traits, total, loading, error }
 
-    return { tags, total, loading, error }
 }

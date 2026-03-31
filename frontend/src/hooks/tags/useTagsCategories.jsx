@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import dbFetch from "../../utils/fetching/dbFetch";
 
-export default function useCategories() {
+export default function useTagsCategories() {
 
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState(false)

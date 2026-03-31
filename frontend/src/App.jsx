@@ -13,6 +13,9 @@ import TagPage from './pages/tags/TagPage'
 import DevPage from './pages/DevPage'
 import HomePage from './pages/HomePage'
 import TagsCategories from './pages/tags/TagsCategoriesPage'
+import TraitsCategories from './pages/traits/TraitsCategoriesPage'
+import TraitsPage from './pages/traits/TraitsPage'
+import TraitPage from './pages/traits/TraitPage'
 
 function App() {
 
@@ -33,6 +36,10 @@ function App() {
             <Route path='/tags' element={<TagsPage />} />
             <Route path='/tags/categories' element={<TagsCategories />} />
             <Route path='/tags/:id' element={<TagPage />} />
+
+            <Route path='/traits' element={<TraitsPage />} />
+            <Route path='/traits/categories' element={<TraitsCategories />} />
+            <Route path='traits/:id' element={<TraitPage />} />
 
             <Route path='/devs/:id' element={<DevPage />} />
 
