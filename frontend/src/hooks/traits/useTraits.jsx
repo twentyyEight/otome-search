@@ -12,17 +12,15 @@ export default function useTraits() {
 
     const [searchParams] = useSearchParams()
     const page = Number(searchParams.get('page') ?? 1)
-    const name = searchParams.get('name') ?? null
+    const name = searchParams.get('name') ?? ""
+
 
     useEffect(() => {
 
         async function fetchTraits() {
 
             try {
-                let query = `traits?page=${page}`
-                if (name) query += `&name=${name}`
-
-                const res = await dbFetch(query)
+                const res = await dbFetch(`traits?page=${page}&name=${name}`)
 
                 setTraits(res.traits)
                 setTotal(Math.ceil(res.total / 100))

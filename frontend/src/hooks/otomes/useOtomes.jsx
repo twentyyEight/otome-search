@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import apiFetch from "../../utils/fetching/apiFetch"
 import buildFilters from "../../utils/filters/build"
-import useParamsFilters from "../../hooks/useParamsFilters";
+import useParamsFilters from "./useParamsFilters";
 import { useParams } from "react-router-dom";
 
 export default function useOtomes() {

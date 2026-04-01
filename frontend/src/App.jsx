@@ -16,6 +16,8 @@ import TagsCategories from './pages/tags/TagsCategoriesPage'
 import TraitsCategories from './pages/traits/TraitsCategoriesPage'
 import TraitsPage from './pages/traits/TraitsPage'
 import TraitPage from './pages/traits/TraitPage'
+import CharactersPage from './pages/characters/CharactersPage'
+import CharacterPage from './pages/characters/CharacterPage'
 
 function App() {
 
@@ -40,6 +42,9 @@ function App() {
             <Route path='/traits' element={<TraitsPage />} />
             <Route path='/traits/categories' element={<TraitsCategories />} />
             <Route path='traits/:id' element={<TraitPage />} />
+
+            <Route path='/characters' element={<CharactersPage />} />
+            <Route path='/characters/:id' element={<CharacterPage />} />
 
             <Route path='/devs/:id' element={<DevPage />} />
 

@@ -2,7 +2,7 @@ import useDev from "../hooks/useDev"
 import Error from "../components/Error"
 import Loading from "../components/Loading"
 import OtomeList from '../components/OtomeList/Base'
-import useParamsFilters from "../hooks/useParamsFilters"
+import useParamsFilters from "../hooks/otomes/useParamsFilters"
 import useOtomes from "../hooks/otomes/useOtomes"
 import { useParams } from "react-router-dom";
 

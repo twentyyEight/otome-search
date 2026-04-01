@@ -2,16 +2,14 @@ import { Trait } from "../models/trait.models.js"
 
 export const getTraits = async (req, res) => {
 
-    const { page, name } = req.query
+    const { page } = req.query
+    const name = (req.query && req.query.name) || ''
 
     try {
         const skip = page * 100 - 100
 
-        let filters = { applicable: true }
-        if (name) filters.name = { $regex: `^${name}`, $options: 'i' }
-
         const traits = await Trait
-            .find(filters)
+            .find({ applicable: true, name: { $regex: `^${name}`, $options: 'i' } })
             .sort({ name: 1 })
             .skip(skip)
             .limit(100)
@@ -25,7 +23,7 @@ export const getTraits = async (req, res) => {
 }
 
 export const getTrait = async (req, res) => {
-    
+
     const { id } = req.params
 
     try {
@@ -58,5 +56,24 @@ export const getTraitsCategories = async (req, res) => {
 
     } catch (error) {
         return res.status(500).json({ message: error.message })
+    }
+}
+
+export const getTraitsSuggestions = async (req, res) => {
+
+    const input = (req.body && req.body.input) || ''
+
+    try {
+        const suggestions = await Trait
+            .find({ name: { $regex: `^${input}`, $options: 'i' } })
+            .sort({ name: 1 })
+            .limit(10)
+            .select('name id')
+
+        return res.json(suggestions)
+
+    } catch (error) {
+
+        return res.status(500).json({ message: 'Error searching suggestions' })
     }
 }

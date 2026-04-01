@@ -1,7 +1,7 @@
 import { platforms_list, languages_list, voiced_list } from "../../utils/filters/dictionary";
 import Dropdown from "./Dropdown"
 import { useSearchParams } from 'react-router-dom'
-import useParamsFilters from "../../hooks/useParamsFilters";
+import useParamsFilters from "../../hooks/otomes/useParamsFilters";
 
 export default function FiltersOtomes() {
 
@@ -43,14 +43,15 @@ export default function FiltersOtomes() {
 
         <Dropdown data={voiced_list} label={'Voiced'} param={'voice'} query={voice} />
 
-        <label>Edad</label>
-        <p>{age}</p>
+        <label>Age Rating</label>
+        <p>+{age}</p>
         <input
             type="range"
             min={0}
             max={18}
-            value={age}
-            onChange={(e) => setParam('age', e.target.value)}
+            defaultValue={age}
+            onMouseUp={(e) => setParam('age', e.target.value)}
+            onTouchEnd={(e) => setParam('age', e.target.value)}
         />
     </div>
 }
