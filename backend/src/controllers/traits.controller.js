@@ -2,14 +2,23 @@ import { Trait } from "../models/trait.models.js"
 
 export const getTraits = async (req, res) => {
 
-    const { page } = req.query
-    const name = (req.query && req.query.name) || ''
+    /* OBTENCIÓN Y VALIDACIÓN DE QUERIES DE LA URL */
 
+    // Valida que el número sea un entero y mayor a 0
+    let { page = 1, name } = req.query
+    if (!Number.isFinite(page) || page < 1) page = 1
+
+    // Limpieza de caracteres que podrian producir un ataque regex
+    name = (name || '').trim()
+    const safe_name = name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+
+    /* CONSTRUCCIÓN FILTROS BD */
+    const skip = (page - 1) * 100
+
+    /* LLAMADA A BD*/
     try {
-        const skip = page * 100 - 100
-
         const traits = await Trait
-            .find({ applicable: true, name: { $regex: `^${name}`, $options: 'i' } })
+            .find({ applicable: true, name: { $regex: `^${safe_name}`, $options: 'i' } })
             .sort({ name: 1 })
             .skip(skip)
             .limit(100)
@@ -17,6 +26,7 @@ export const getTraits = async (req, res) => {
         const total = await Trait.countDocuments({ applicable: true })
 
         return res.json({ traits, total })
+
     } catch (error) {
         return res.status(500).json({ message: error.message })
     }
@@ -24,15 +34,24 @@ export const getTraits = async (req, res) => {
 
 export const getTrait = async (req, res) => {
 
-    const { id } = req.params
+    /* OBTENCIÓN Y VALIDACIÓN DE ID DE LA URL */
+    let { id } = req.params
 
+    // Validación de input para evitar requests malformados / inyección
+    id = (id || '').trim()
+    if (!/^i?\d+$/.test(id)) return res.status(400).json({ message: 'Invalid trait id format' })
+    
+    const trait_id = Number(id.replace(/^i/, ''))
+    if (!Number.isInteger(trait_id) || trait_id < 1) return res.status(400).json({ message: 'Invalid trait id' })
+
+    /* LLAMADA A LA BD */
     try {
-        const trait_id = Number(id.replace('i', ''))
+        const trait_info = await Trait.findOne({ id: trait_id, applicable: true })
+        if (!trait_info) return res.status(404).json({ message: 'Trait not found' })
 
-        const traitInfo = await Trait.findOne({ id: trait_id })
-        const childTraits = await Trait.find({ parents: trait_id })
+        const childTraits = await Trait.find({ parents: trait_id, applicable: true })
 
-        return res.json({ info: traitInfo, childTraits })
+        return res.json({ info: trait_info, childTraits })
     } catch (error) {
         return res.status(500).json({ message: error.message })
     }
@@ -61,11 +80,13 @@ export const getTraitsCategories = async (req, res) => {
 
 export const getTraitsSuggestions = async (req, res) => {
 
-    const input = (req.body && req.body.input) || ''
+    // Limpieza de caracteres que podrian producir un ataque regex
+    const name = String(req.query.name || '').trim()
+    const safe_name = name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
 
     try {
         const suggestions = await Trait
-            .find({ name: { $regex: `^${input}`, $options: 'i' } })
+            .find({ name: { $regex: `^${safe_name}`, $options: 'i' } })
             .sort({ name: 1 })
             .limit(10)
             .select('name id')
