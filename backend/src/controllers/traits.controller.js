@@ -5,7 +5,9 @@ export const getTraits = async (req, res) => {
     /* OBTENCIÓN Y VALIDACIÓN DE QUERIES DE LA URL */
 
     // Valida que el número sea un entero y mayor a 0
-    let { page = 1, name } = req.query
+    let { page, name } = req.query
+
+    page = Number(page)
     if (!Number.isFinite(page) || page < 1) page = 1
 
     // Limpieza de caracteres que podrian producir un ataque regex
@@ -81,7 +83,7 @@ export const getTraitsCategories = async (req, res) => {
 export const getTraitsSuggestions = async (req, res) => {
 
     // Limpieza de caracteres que podrian producir un ataque regex
-    const name = String(req.query.name || '').trim()
+    const name = (req.body.input || '').trim()
     const safe_name = name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
 
     try {

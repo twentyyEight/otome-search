@@ -12,7 +12,7 @@ export default function useOtome() {
 
     useEffect(() => {
 
-        async function fetchOtome(id) {
+        async function fetchOtome() {
 
             try {
                 // Query para el otome
@@ -77,7 +77,7 @@ export default function useOtome() {
             }
         }
 
-        fetchOtome(id)
+        fetchOtome()
 
     }, [id])
 

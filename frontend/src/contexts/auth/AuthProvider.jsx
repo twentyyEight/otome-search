@@ -8,6 +8,8 @@ export function AuthProvider({ children }) {
     const [loading, setLoading] = useState(true)
     const [user, setUser] = useState(null)
 
+    console.log(isAuth)
+
     const signup = async (user) => {
 
         try {
@@ -58,12 +60,15 @@ export function AuthProvider({ children }) {
             try {
                 const res = await dbFetch('verify')
 
+                if (!res.ok) throw new Error(res.status)
+
                 setIsAuth(true)
                 setUser(res)
 
             } catch (error) {
 
                 setIsAuth(false)
+                setUser(null)
                 console.error(error)
 
             } finally {

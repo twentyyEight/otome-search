@@ -1,16 +1,16 @@
 import { useEffect, useState } from "react"
 import dbFetch from '../../utils/fetching/dbFetch'
-import useTagsParams from "./useTagsParams"
+import useDevsParams from "./useDevsParams"
 
 export default function useTags() {
 
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState(false)
 
-    const [tags, setTags] = useState(null)
+    const [devs, setDevs] = useState([])
     const [total, setTotal] = useState(0)
 
-    const url = useTagsParams()
+    const url = useDevsParams()
 
     useEffect(() => {
 
@@ -19,7 +19,7 @@ export default function useTags() {
             try {
                 const res = await dbFetch(url)
 
-                setTags(res.tags)
+                setDevs(res.devs)
                 setTotal(Math.ceil(res.total / 100))
 
             } catch (error) {
@@ -36,5 +36,5 @@ export default function useTags() {
 
     }, [url])
 
-    return { tags, total, loading, error }
+    return { devs, total, loading, error }
 }

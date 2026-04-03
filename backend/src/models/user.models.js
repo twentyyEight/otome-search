@@ -4,21 +4,21 @@ const userSchema = new mongoose.Schema({
 
     name: {
         type: String,
-        required: true,
-        unique: true,
+        required: [true, 'Name is required'],
+        unique: [true, "A user with this name already exists"],
         trim: true,
-        min: 4
+        minlength: [4, "Name must be at least 3 characters"]
     },
     
     email: {
         type: String,
-        required: true,
-        unique: true
+        required: [true, 'Email is required'],
+        unique: [true, "A user with this email already exists"]
     },
 
     password: {
         type: String,
-        required: true,
+        required: [true, 'Password is required'],
         min: 8
     }
 })

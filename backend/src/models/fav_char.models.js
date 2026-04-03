@@ -4,17 +4,17 @@ const favoriteCharacterSchema = new mongoose.Schema({
 
     user_id: {
         type: mongoose.Schema.Types.ObjectId,
-        require: true
+        require: [true, 'User id is required']
     },
 
     id: {
         type: String,
-        require: true
+        require: [true, 'Character id is required']
     },
 
     name: {
         type: String,
-        require: true
+        require: [true, 'Character name is required']
     },
 
     img: {

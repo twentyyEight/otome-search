@@ -4,8 +4,8 @@ import { useSearchParams } from 'react-router-dom'
 
 export default function FiltersCharacters() {
 
-    const [input, setInput] = useState('')
-    const { suggestions, loading, error } = useSuggestions(input)
+    const [trait, setTrait] = useState('')
+    const { suggestions, loading, error } = useSuggestions(trait, 'traits')
     const [_, setSearchParams] = useSearchParams()
 
     const setName = (value) => setSearchParams(prev => {
@@ -125,8 +125,8 @@ export default function FiltersCharacters() {
         <label htmlFor="traits">Traits</label>
         <input
             type="text" id="traits"
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
+            value={trait}
+            onChange={(e) => setTrait(e.target.value)}
             placeholder="Type trait name..."
         />
 

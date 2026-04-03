@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react"
 import apiFetch from "../../utils/fetching/apiFetch"
-import buildFilters from "../../utils/filters/build"
-import useParamsFilters from "./useParamsFilters";
 import { useParams } from "react-router-dom";
+import useOtomesParams from "./useOtomesParams";
 
 export default function useOtomes() {
 
@@ -12,31 +11,14 @@ export default function useOtomes() {
     const [otomes, setOtomes] = useState([])
     const [total, setTotal] = useState(1)
 
-    const filters = useParamsFilters()
-    let { page, sort } = filters
     const { id } = useParams()
-
-    const reverse = sort.includes('reverse') ? true : false
-    sort = sort.replace("reverse", "")
+    const query = useOtomesParams(id)
 
     useEffect(() => {
 
         async function fetchAllOtomes() {
 
             try {
-
-                const filtros = buildFilters(filters, id)
-
-                // Queries para la API
-                const query = {
-                    "filters": filtros,
-                    "fields": "title, image.url",
-                    "results": 100,
-                    "page": page,
-                    "count": true, // resultados totales
-                    "sort": sort,
-                    "reverse": reverse
-                }
 
                 // LLamada a la API
                 const data = await apiFetch('vn', query)
@@ -57,7 +39,7 @@ export default function useOtomes() {
 
         fetchAllOtomes();
 
-    }, [page, sort, reverse, filters, id])
+    }, [query])
 
     return { otomes, total, loadingOtomes, errorOtomes }
 }

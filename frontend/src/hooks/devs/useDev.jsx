@@ -1,27 +1,30 @@
 import { useEffect, useState } from "react";
-import apiFetch from "../utils/fetching/apiFetch"
+import apiFetch from "../../utils/fetching/apiFetch"
+import { useParams } from "react-router-dom";
 
-export default function useDev(id) {
+export default function useDev() {
 
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState(false)
 
     const [dev, setDev] = useState(null)
 
+    const { id } = useParams()
+
     useEffect(() => {
 
-        async function fetchDev(id) {
+        async function fetchDev() {
 
             try {
 
-                const query_dev = {
+                const query = {
                     "filters": ["id", "=", id],
                     "fields": "name, description, extlinks.url, extlinks.label"
                 }
 
-                const res_dev = await apiFetch('producer', query_dev)
+                const res = await apiFetch('producer', query)
 
-                setDev(res_dev.results[0])
+                setDev(res.results[0])
 
             } catch (error) {
                 setError(true)
@@ -32,7 +35,7 @@ export default function useDev(id) {
             }
         }
 
-        fetchDev(id)
+        fetchDev()
     }, [id])
 
     return { dev, loading, error }

@@ -10,7 +10,7 @@ import { CollectionProvider } from './contexts/collection/CollectionProvider'
 import ProtectedRoute from './routes/ProtectedRoute'
 import TagsPage from './pages/tags/TagsPage'
 import TagPage from './pages/tags/TagPage'
-import DevPage from './pages/DevPage'
+import DevPage from './pages/devs/DevPage'
 import HomePage from './pages/HomePage'
 import TagsCategories from './pages/tags/TagsCategoriesPage'
 import TraitsCategories from './pages/traits/TraitsCategoriesPage'
@@ -18,6 +18,7 @@ import TraitsPage from './pages/traits/TraitsPage'
 import TraitPage from './pages/traits/TraitPage'
 import CharactersPage from './pages/characters/CharactersPage'
 import CharacterPage from './pages/characters/CharacterPage'
+import DevsPage from './pages/devs/DevsPage'
 
 function App() {
 
@@ -46,7 +47,8 @@ function App() {
             <Route path='/characters' element={<CharactersPage />} />
             <Route path='/characters/:id' element={<CharacterPage />} />
 
-            <Route path='/devs/:id' element={<DevPage />} />
+            <Route path='/developers' element={<DevsPage />} />
+            <Route path='/developers/:id' element={<DevPage />} />
 
             <Route element={<ProtectedRoute />}>
               <Route path='/profile/:name' element={<Profile />} />

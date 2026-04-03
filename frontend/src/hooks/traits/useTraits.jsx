@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import dbFetch from '../../utils/fetching/dbFetch'
-import { useSearchParams } from 'react-router-dom'
+import useTraitsParams from "./useTraitsParams";
 
 export default function useTraits() {
 
@@ -10,17 +10,16 @@ export default function useTraits() {
     const [traits, setTraits] = useState([])
     const [total, setTotal] = useState(1)
 
-    const [searchParams] = useSearchParams()
-    const page = Number(searchParams.get('page') ?? 1)
-    const name = searchParams.get('name') ?? ""
-
+    const url = useTraitsParams()
 
     useEffect(() => {
 
         async function fetchTraits() {
 
             try {
-                const res = await dbFetch(`traits?page=${page}&name=${name}`)
+                const res = await dbFetch(url)
+
+                console.log(res)
 
                 setTraits(res.traits)
                 setTotal(Math.ceil(res.total / 100))
@@ -36,8 +35,7 @@ export default function useTraits() {
         }
 
         fetchTraits()
-    }, [page, name])
+    }, [url])
 
     return { traits, total, loading, error }
-
 }

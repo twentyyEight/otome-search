@@ -3,9 +3,10 @@ import { Tag } from "../models/tag.models.js"
 export const getTags = async (req, res) => {
 
     /* OBTENCIÓN Y VALIDACIÓN DE QUERIES DE LA URL */
+    let { page, name, type } = req.query
 
     // Valida que el número sea un entero y mayor a 0
-    let { page = 1, name, type } = req.query
+    page = Number(page)
     if (!Number.isFinite(page) || page < 1) page = 1
 
     // Limpieza de caracteres que podrian producir un ataque regex
@@ -80,5 +81,27 @@ export const getTagCategories = async (req, res) => {
 
     } catch (error) {
         return res.status(500).json({ message: error.message })
+    }
+}
+
+export const getTagsSuggestions = async (req, res) => {
+
+    // Limpieza de caracteres que podrian producir un ataque regex
+    const name = (req.body.input || '').trim()
+    const safe_name = name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+    console.log(safe_name)
+
+    try {
+        const suggestions = await Tag
+            .find({ name: { $regex: `^${safe_name}`, $options: 'i' } })
+            .sort({ name: 1 })
+            .limit(10)
+            .select('name id')
+
+        return res.json(suggestions)
+
+    } catch (error) {
+
+        return res.status(500).json({ message: 'Error searching suggestions' })
     }
 }

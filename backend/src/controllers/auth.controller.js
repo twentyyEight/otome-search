@@ -11,7 +11,6 @@ export const register = async (req, res) => {
     const { name, email, password } = req.body
 
     try {
-
         const password_hash = await bcrypt.hash(password, 10)
 
         const new_user = await User.create({
@@ -104,17 +103,17 @@ export const profile = async (req, res) => {
     try {
 
         const user = await User.findOne({ name: name })
-        if (!user) return res.status(404).json({ message: 'Usuario no encontrado' })
+        if (!user) return res.status(404).json({ message: 'User not found' })
 
         const id = user._id
 
         const otomes = await Otome.find({ user_id: id })
 
-        const playing = otomes.filter(otome => otome.state === 0)
-        const finished = otomes.filter(otome => otome.state === 1)
-        const stalled = otomes.filter(otome => otome.state === 2)
-        const dropped = otomes.filter(otome => otome.state === 3)
-        const wishlist = otomes.filter(otome => otome.state === 4)
+        const { playing, finished, stalled, dropped, wishlist } = otomes.reduce((acc, otome) => {
+            const states = ['playing', 'finished', 'stalled', 'dropped', 'wishlist']
+            acc[states[otome.state]].push(otome)
+            return acc
+        }, { playing: [], finished: [], stalled: [], dropped: [], wishlist: [] })
 
         const characters = await FavoriteCharacter.find({ user_id: id })
 

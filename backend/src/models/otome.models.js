@@ -4,17 +4,17 @@ const otomeSchema = new mongoose.Schema({
 
     user_id: {
         type: mongoose.Schema.Types.ObjectId,
-        required: true 
+        required: [true, 'User id is required'] 
     },
 
     id: {
         type: String,
-        required: true
+        required: [true, 'Otome id is required']
     },
 
     title: {
         type: String,
-        required: true
+        required: [true, 'Otome title is required']
     },
 
     img: {
@@ -24,7 +24,7 @@ const otomeSchema = new mongoose.Schema({
     state: {
         type: Number,
         enum: [0,1,2,3,4],
-        required: true
+        required: [true, 'State is required']
     }
 })
 

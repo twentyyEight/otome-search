@@ -21,6 +21,7 @@ export default function useCharacter() {
                     'filters': ["id", "=", id],
                     'fields': 'name, image.url, vns.title, traits.name',
                 }
+                
                 const res = await apiFetch('character', query)
 
                 setCharacter(res.results[0])

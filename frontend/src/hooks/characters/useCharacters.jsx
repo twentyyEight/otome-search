@@ -1,6 +1,6 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import apiFetch from "../../utils/fetching/apiFetch"
-import { useSearchParams } from 'react-router-dom'
+import useCharactersParams from "./useCharactersParams";
 
 export default function useCharacters() {
 
@@ -10,35 +10,13 @@ export default function useCharacters() {
     const [characters, setCharacters] = useState([])
     const [total, setTotal] = useState(1)
 
-    const [searchParams] = useSearchParams()
-
-    const { page, name, roles, sexes, traits } = useMemo(() => ({
-        page: Number(searchParams.get('page') ?? 1),
-        name: searchParams.get('name') ?? '',
-        roles: searchParams.getAll('role') ?? [],
-        sexes: searchParams.getAll('sex') ?? [],
-        traits: searchParams.getAll('trait') ?? []
-    }), [searchParams])
+    const query = useCharactersParams()
 
     useEffect(() => {
 
         async function fetchCharacters() {
 
             try {
-
-                let filtros = ['and', ['vn', '=', ['tag', '=', 'g542']], ['search', '=', name]]
-                if (roles.length > 0) roles.map(role => filtros.push(["role", "=", role]))
-                if (sexes.length > 0) sexes.map(sex => filtros.push(["sex", "=", sex]))
-                if (traits.length > 0) traits.map(trait => filtros.push(["trait", "=", ["id", "=", trait]]))
-
-                const query = {
-                    'filters': filtros,
-                    'fields': 'name, image.url, vns.title',
-                    'results': 100,
-                    'sort': 'name',
-                    'count': true,
-                    'page': page
-                }
                 const res = await apiFetch('character', query)
 
                 setCharacters(res.results)
@@ -55,7 +33,7 @@ export default function useCharacters() {
         }
 
         fetchCharacters()
-    }, [name, page, roles, sexes, traits])
+    }, [query])
 
     return { characters, total, loading, error }
 }

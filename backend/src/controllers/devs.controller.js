@@ -3,9 +3,10 @@ import { Developer } from '../models/dev.models.js'
 export const getDevs = async (req, res) => {
 
     /* OBTENCIÓN Y VALIDACIÓN DE QUERIES DE URL */
+    let { page, name, lang, type } = req.query
 
     // Valida que el número sea un entero y mayor a 0
-    let { page = 1, name, lang, type } = req.query
+    page = Number(page)
     if (!Number.isFinite(page) || page < 1) page = 1
 
     // Limpieza de caracteres que podrian producir un ataque regex
