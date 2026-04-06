@@ -1,10 +1,11 @@
 import User from "../models/user.models.js"
+import OtomeStateList from "../models/lists/otome.state.models.js"
+import OtomeList from "../models/lists/otome.list.models.js"
+import FavoriteCharacterList from '../models/lists/favorite.character.list.models.js'
 import bcrypt from 'bcryptjs'
 import { createToken } from '../libs/jwt.js'
 import jwt from "jsonwebtoken";
 import { TOKEN_SECRET } from "../config.js";
-import Otome from '../models/otome.models.js'
-import FavoriteCharacter from '../models/fav_char.models.js'
 
 export const register = async (req, res) => {
 
@@ -96,40 +97,40 @@ export const verifyToken = async (req, res) => {
     }
 }
 
-export const profile = async (req, res) => {
+// export const profile = async (req, res) => {
 
-    const { name } = req.params
+//     const { name } = req.params
 
-    try {
+//     try {
 
-        const user = await User.findOne({ name: name })
-        if (!user) return res.status(404).json({ message: 'User not found' })
+//         const user = await User.findOne({ name: name })
+//         if (!user) return res.status(404).json({ message: 'User not found' })
 
-        const id = user._id
+//         const id = user._id
 
-        const otomes = await Otome.find({ user_id: id })
+//         const otomes = await Otome.find({ user_id: id })
 
-        const { playing, finished, stalled, dropped, wishlist } = otomes.reduce((acc, otome) => {
-            const states = ['playing', 'finished', 'stalled', 'dropped', 'wishlist']
-            acc[states[otome.state]].push(otome)
-            return acc
-        }, { playing: [], finished: [], stalled: [], dropped: [], wishlist: [] })
+//         const { playing, finished, stalled, dropped, wishlist } = otomes.reduce((acc, otome) => {
+//             const states = ['playing', 'finished', 'stalled', 'dropped', 'wishlist']
+//             acc[states[otome.state]].push(otome)
+//             return acc
+//         }, { playing: [], finished: [], stalled: [], dropped: [], wishlist: [] })
 
-        const characters = await FavoriteCharacter.find({ user_id: id })
+//         const characters = await FavoriteCharacter.find({ user_id: id })
 
-        return res.status(200).json({
-            name,
-            otomes: {
-                playing,
-                finished,
-                stalled,
-                dropped,
-                wishlist
-            },
-            characters
-        })
+//         return res.status(200).json({
+//             name,
+//             otomes: {
+//                 playing,
+//                 finished,
+//                 stalled,
+//                 dropped,
+//                 wishlist
+//             },
+//             characters
+//         })
 
-    } catch (error) {
-        return res.json({ message: error.message })
-    }
-}
+//     } catch (error) {
+//         return res.json({ message: error.message })
+//     }
+// }
