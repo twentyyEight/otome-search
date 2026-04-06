@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
-import dbFetch from "../../utils/fetching/dbFetch";
 import apiFetch from "../../utils/fetching/apiFetch";
+import dbFetch from '../../utils/fetching/dbFetch'
 import { useParams } from "react-router-dom";
 
 export default function useTrait() {
@@ -20,7 +20,12 @@ export default function useTrait() {
 
             try {
 
-                const query = {
+                const query_trait = {
+                    "filters": ["id", "=", id],
+                    "fields": "name, description"
+                }
+
+                const query_characters = {
                     "filters": [
                         "and",
                         ["trait", "=", id],
@@ -31,11 +36,12 @@ export default function useTrait() {
                     "results": 100
                 }
 
-                const trait = await dbFetch(`traits/${id}`)
-                const characters = await apiFetch('character', query)
+                const trait = await apiFetch('trait', query_trait)
+                const characters = await apiFetch('character', query_characters)
+                const child_traits = await dbFetch(`traits/childs/${id}`)
 
-                setTrait(trait.info)
-                setChildTraits(trait.childTraits)
+                setTrait(trait.results[0])
+                setChildTraits(child_traits)
                 setCharacters(characters.results)
 
             } catch (error) {

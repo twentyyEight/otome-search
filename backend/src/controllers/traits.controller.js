@@ -34,7 +34,7 @@ export const getTraits = async (req, res) => {
     }
 }
 
-export const getTrait = async (req, res) => {
+export const getChildTraits = async (req, res) => {
 
     /* OBTENCIÓN Y VALIDACIÓN DE ID DE LA URL */
     let { id } = req.params
@@ -48,12 +48,8 @@ export const getTrait = async (req, res) => {
 
     /* LLAMADA A LA BD */
     try {
-        const trait_info = await Trait.findOne({ id: trait_id, applicable: true })
-        if (!trait_info) return res.status(404).json({ message: 'Trait not found' })
-
-        const childTraits = await Trait.find({ parents: trait_id, applicable: true })
-
-        return res.json({ info: trait_info, childTraits })
+        const childTraits = await Trait.find({ parents: trait_id }).select('id name -_id')
+        return res.json(childTraits)
     } catch (error) {
         return res.status(500).json({ message: error.message })
     }

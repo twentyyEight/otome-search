@@ -16,16 +16,16 @@ export default function TraitPage() {
 
         {childTraits.map(trait => (
 
-            <Link key={trait._id} to={`/traits/i${trait.id}`}>{trait.name}</Link>
+            <Link key={trait.id} to={`/traits/i${trait.id}`}>{trait.name}</Link>
         ))}
 
         {characters?.map(character => (
 
             <div key={character.id}>
-                <img src={character.image.url} alt={character.name} />
+                <img src={character.image?.url} alt={character.name} />
                 <p>{character.name}</p>
                 {character.vns.map(otome => (
-                    <Link key={otome.id} to={`/otomes/${otome.id}`}>{otome.title}</Link>
+                    <Link key={crypto.randomUUID()} to={`/otomes/${otome.id}`}>{otome.title}</Link>
                 ))}
             </div>
         ))}

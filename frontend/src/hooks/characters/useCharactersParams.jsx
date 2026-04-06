@@ -1,7 +1,7 @@
 import { useSearchParams } from "react-router-dom"
 import { useMemo } from "react"
 
-export default function useCharactersParams() {
+export default function useCharactersParams(id, fields = 'name, image.url, vns.title') {
 
     const [searchParams] = useSearchParams()
 
@@ -15,6 +15,10 @@ export default function useCharactersParams() {
 
         let filters = ['and', ['vn', '=', ['tag', '=', 'g542']]]
 
+        // if (id) {
+        //     if (id.starsWith(''))
+        // }
+
         if (name.trim()) filters.push(['search', '=', name])
         if (roles.length > 0) roles.map(role => filters.push(["role", "=", role]))
         if (sexes.length > 0) sexes.map(sex => filters.push(["sex", "=", sex]))
@@ -22,12 +26,12 @@ export default function useCharactersParams() {
 
         return {
             'filters': filters,
-            'fields': 'name, image.url, vns.title',
+            'fields': fields,
             'results': 100,
             'sort': 'name',
             'count': true,
             'page': page
         }
 
-    }, [searchParams])
+    }, [searchParams, fields])
 }
