@@ -12,8 +12,10 @@ export default async function dbFetch(endpoint, { method = 'GET', body } = {}) {
 
     try {
         const res = await fetch(`http://localhost:3000/api/${endpoint}`, options)
-
         const data = await res.json()
+
+        if (!res.ok) throw { status: res.status, message: data.message }
+            
         return data
         
     } catch (error) {
