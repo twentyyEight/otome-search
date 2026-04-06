@@ -2,13 +2,15 @@ import Loading from "../../components/Loading";
 import Error from "../../components/Error";
 import { Link } from "react-router-dom";
 import useTrait from "../../hooks/traits/useTrait";
+import useCharacters from "../../hooks/characters/useCharacters";
 
 export default function TraitPage() {
 
-    const { trait, childTraits, characters, loading, error } = useTrait()
+    const { trait, childTraits, loading, error } = useTrait()
+    const { characters, loading: loadingCharacters, error: errorCharacters } = useCharacters()
 
-    if (loading) return <Loading />
-    if (error) return <Error />
+    if (loading || loadingCharacters) return <Loading />
+    if (error || errorCharacters) return <Error />
 
     return <>
         <h1>{trait.name}</h1>

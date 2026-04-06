@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import apiFetch from "../../utils/fetching/apiFetch"
 import useCharactersParams from "./useCharactersParams";
+import { useParams } from "react-router-dom";
 
 export default function useCharacters() {
 
@@ -10,7 +11,8 @@ export default function useCharacters() {
     const [characters, setCharacters] = useState([])
     const [total, setTotal] = useState(1)
 
-    const query = useCharactersParams()
+    const { id } = useParams()
+    const query = useCharactersParams(id)
 
     useEffect(() => {
 

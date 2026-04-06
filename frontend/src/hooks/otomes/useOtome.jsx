@@ -34,41 +34,13 @@ export default function useOtome() {
                     "results": 100
                 }
 
-                // Query para los personajes del otome
-                const query_characters = {
-                    "filters": ["vn", "=", ["id", "=", id]],
-                    "fields": "name, description, image.url, sex, vns.role, traits.group_id, traits.name",
-                    results: 100
-                }
-
                 // Llamada a la API
                 const data_otome = await apiFetch('vn', query_otome)
                 const data_releases = await apiFetch('release', query_releases)
-                const data_characters = await apiFetch('character', query_characters)
                 const state = await dbFetch(`states/${id}`)
 
-                // Actores de voces de cada personaje
-                const voice_actors = data_otome.results[0].va
-
-                // Se dejan solo los "traits" que hablen de la personalidad del personaje
-                // Busca el nombre del actor de voz del personaje en base al id del personaje
-                const characters = data_characters.results.map(char => ({
-                    ...char,
-                    traits: char.traits.filter(trait => trait.group_id == 'i39'),
-                    voice_actor: voice_actors.find(va => va.character.id === char.id)?.staff.name,
-                    role: char.vns.find(vn => vn.id == id)?.role
-                }))
-
-                // Separa los personajes por roles
-                const characters_by_role = characters.reduce((res, char) => {
-                    const role = char.role
-                    if (!res[role]) res[role] = []
-                    res[role].push(char)
-                    return res
-                }, {})
-
                 // Recepción resultados
-                setOtome({ ...data_otome.results[0], releases: data_releases.results, characters: characters_by_role, state })
+                setOtome({ ...data_otome.results[0], releases: data_releases.results, state })
 
                 setLoading(false)
 
