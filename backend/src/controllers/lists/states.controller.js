@@ -30,6 +30,26 @@ export const addOtomeState = async (req, res) => {
     }
 }
 
+export const getOtomeState = async (req, res) => {
+
+    const { id } = req.params
+    const { id: user_id } = req.user
+
+    try {
+        const result = await OtomeStateList.findOne({ user_id, 'otomes.id': id }, { 'otomes.$': 1 })
+
+        if (!result || !result.otomes.length) return res.json("")
+
+        const state = result?.otomes[0]?.state;
+
+        return res.status(200).json(state)
+
+    } catch (error) {
+
+        return res.status(error.status || 500).json({ message: error.message })
+    }
+}
+
 export const deleteOtomeState = async (req, res) => {
 
     const { id } = req.params

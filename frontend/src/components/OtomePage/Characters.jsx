@@ -1,10 +1,10 @@
 import { useAuth } from "../../contexts/auth/useAuth"
-import { useCollection } from '../../contexts/collection/useCollection'
+import { useList } from '../../contexts/list/useList'
 
 export default function Characters({ characters }) {
 
-    const { isAuth, userId } = useAuth()
-    const { saveCharacter } = useCollection()
+    const { isAuth } = useAuth()
+    const { addCharacter } = useList()
 
     const characters_roles = [
         { key: 'main', label: 'Protagonista(s)' },
@@ -13,17 +13,7 @@ export default function Characters({ characters }) {
         { key: 'appears', label: 'Terciarios' },
     ]
 
-    const onSubmitCharacters = (id, name, img) => {
-
-        const data = {
-            user_id: userId,
-            id,
-            name,
-            img
-        }
-
-        saveCharacter(data)
-    }
+    const onSubmitCharacters = (id) => addCharacter(id)
 
     return <>
         <h2>Personajes</h2>
@@ -41,7 +31,7 @@ export default function Characters({ characters }) {
                         <h4>{char.name}</h4>
 
                         {isAuth &&
-                            <button onClick={() => onSubmitCharacters(char.id, char.name, char.image?.url)}>
+                            <button onClick={() => onSubmitCharacters(char.id)}>
                                 Agregar a favoritos
                             </button>
                         }

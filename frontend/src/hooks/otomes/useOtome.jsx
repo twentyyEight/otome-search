@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom";
 import apiFetch from "../../utils/fetching/apiFetch"
+import dbFetch from "../../utils/fetching/dbFetch";
 
 export default function useOtome() {
 
@@ -44,6 +45,7 @@ export default function useOtome() {
                 const data_otome = await apiFetch('vn', query_otome)
                 const data_releases = await apiFetch('release', query_releases)
                 const data_characters = await apiFetch('character', query_characters)
+                const state = await dbFetch(`states/${id}`)
 
                 // Actores de voces de cada personaje
                 const voice_actors = data_otome.results[0].va
@@ -66,7 +68,7 @@ export default function useOtome() {
                 }, {})
 
                 // Recepción resultados
-                setOtome({ ...data_otome.results[0], releases: data_releases.results, characters: characters_by_role })
+                setOtome({ ...data_otome.results[0], releases: data_releases.results, characters: characters_by_role, state })
 
                 setLoading(false)
 

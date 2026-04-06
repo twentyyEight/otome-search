@@ -1,9 +1,9 @@
 import useOtome from "../../hooks/otomes/useOtome.jsx"
 import Loading from "../../components/Loading.jsx"
 import Error from "../../components/Error.jsx"
-import Info from '../../components/OtomeDetail/Info.jsx'
-import Releases from "../../components/OtomeDetail/Releases.jsx"
-import Characters from "../../components/OtomeDetail/Characters.jsx"
+import Info from '../../components/OtomePage/Info.jsx'
+import Releases from "../../components/OtomePage/Releases.jsx"
+import Characters from "../../components/OtomePage/Characters.jsx"
 
 export default function OtomePage() {
 

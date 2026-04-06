@@ -2,7 +2,7 @@ import useDevs from '../../hooks/devs/useDevs'
 import Error from '../../components/Error'
 import Loading from '../../components/Loading'
 import { Link } from "react-router-dom"
-import Pagination from '../../components/OtomeList/Pagination'
+import Pagination from '../../components/Pagination'
 
 export default function DevsPage() {
 

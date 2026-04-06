@@ -2,7 +2,7 @@ import Loading from "../../components/Loading";
 import Error from "../../components/Error";
 import useTag from "../../hooks/tags/useTag"
 import useOtomes from "../../hooks/otomes/useOtomes";
-import OtomeList from "../../components/OtomeList/Base";
+import OtomeList from "../../components/OtomesPage/Base";
 import { Link } from "react-router-dom";
 
 export default function TagPage() {

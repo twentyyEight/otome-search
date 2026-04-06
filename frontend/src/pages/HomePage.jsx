@@ -1,5 +1,5 @@
 import useImages from "../hooks/useImages"
-import Carousel from "../components/Home/Carousel"
+import Carousel from "../components/HomePage/Carousel"
 import Error from "../components/Error"
 import Loading from "../components/Loading"
 

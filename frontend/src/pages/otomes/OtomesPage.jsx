@@ -1,4 +1,4 @@
-import OtomeList from "../../components/OtomeList/Base"
+import OtomeList from "../../components/OtomesPage/Base"
 import useOtomes from '../../hooks/otomes/useOtomes'
 import Loading from '../../components/Loading';
 import Error from '../../components/Error';

@@ -2,7 +2,7 @@ import { Link } from "react-router-dom"
 import Loading from "../../components/Loading";
 import Error from "../../components/Error";
 import useTraits from "../../hooks/traits/useTraits";
-import Pagination from '../../components/OtomeList/Pagination'
+import Pagination from '../../components/Pagination'
 import { useSearchParams } from 'react-router-dom'
 
 export default function TraitsPage() {

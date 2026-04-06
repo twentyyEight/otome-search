@@ -2,7 +2,7 @@ import useCharacters from "../../hooks/characters/useCharacters"
 import Loading from "../../components/Loading.jsx"
 import Error from "../../components/Error.jsx"
 import { Link } from "react-router-dom"
-import Pagination from '../../components/OtomeList/Pagination'
+import Pagination from '../../components/Pagination'
 import FiltersCharacters from "../../components/CharactersPage/FiltersCharacters.jsx"
 
 export default function CharactersPage() {

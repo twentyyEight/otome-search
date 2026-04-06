@@ -6,7 +6,7 @@ import Login from './pages/auth/LoginPage'
 import Profile from './pages/auth/ProfilePage'
 import Navbar from './components/Navbar'
 import { AuthProvider } from './contexts/auth/AuthProvider'
-import { CollectionProvider } from './contexts/collection/CollectionProvider'
+import { ListProvider } from './contexts/list/ListProvider'
 import ProtectedRoute from './routes/ProtectedRoute'
 import TagsPage from './pages/tags/TagsPage'
 import TagPage from './pages/tags/TagPage'
@@ -25,7 +25,7 @@ function App() {
   return (
     <BrowserRouter>
       <AuthProvider>
-        <CollectionProvider>
+        <ListProvider>
           <Navbar />
           <Routes>
             <Route path='/' element={<HomePage />} />
@@ -55,7 +55,7 @@ function App() {
             </Route>
 
           </Routes>
-        </CollectionProvider>
+        </ListProvider>
       </AuthProvider>
     </BrowserRouter>
   )

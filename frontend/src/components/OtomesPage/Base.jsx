@@ -1,5 +1,5 @@
-import Pagination from "./Pagination";
-import FiltersOtomes from "../../components/OtomeList/FiltersOtomes";
+import Pagination from "../Pagination";
+import FiltersOtomes from "./FiltersOtomes";
 import { Link } from "react-router-dom";;
 
 export default function OtomeList({ otomes, total }) {

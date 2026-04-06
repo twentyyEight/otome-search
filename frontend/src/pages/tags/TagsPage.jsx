@@ -2,7 +2,7 @@ import useTags from "../../hooks/tags/useTags"
 import Error from "../../components/Error"
 import Loading from "../../components/Loading"
 import { Link } from "react-router-dom"
-import Pagination from '../../components/OtomeList/Pagination'
+import Pagination from '../../components/Pagination'
 import FiltersTags from "../../components/TagsPage/FiltersTags"
 
 export default function TagsPage() {

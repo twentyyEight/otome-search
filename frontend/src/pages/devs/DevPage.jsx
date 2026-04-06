@@ -1,7 +1,7 @@
 import useDev from "../../hooks/devs/useDev"
 import Error from "../../components/Error"
 import Loading from "../../components/Loading"
-import OtomeList from '../../components/OtomeList/Base'
+import OtomeList from '../../components/OtomesPage/Base'
 import useOtomes from "../../hooks/otomes/useOtomes"
 
 export default function DevPage() {
