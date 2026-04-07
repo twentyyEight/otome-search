@@ -1,17 +1,28 @@
 import { useSearchParams } from "react-router-dom"
+import { useMemo } from "react"
 
 export default function useTraitsParams() {
 
     const [searchParams] = useSearchParams()
 
-    {/* OBTENCIÓN PARAMETROS URL */}
-    const page = Number(searchParams.get('page') ?? 1)
-    const name = searchParams.get('name') ?? ""
+    return useMemo(() => {
 
-    {/* CONSTRUCCIÓN QUERIES URL */}
-    let url = `traits?page=${page}`
+        {/* OBTENCIÓN PARAMETROS URL */ }
+        const page = Number(searchParams.get('page') ?? 1)
+        const name = searchParams.get('name') ?? ""
 
-    if (name.trim() !== '') url += `&name=${name}`
+        {/* CONSTRUCCIÓN QUERY API */ }
+        let query = {
+            "fields": "name, group_id, group_name",
+            "results": 100,
+            "sort": "name",
+            "page": page,
+            "count": true
+        }
 
-    return url
+        if (name.trim() !== '') query.search = name
+
+        return query
+
+    }, [searchParams])
 }

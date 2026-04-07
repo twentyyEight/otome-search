@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 export default function TagPage() {
 
     const { tag, childTags, loading, error } = useTag()
-    const { otomes, total, loadingOtomes, errorOtomes } = useOtomes()
+    const { otomes, total, loading: loadingOtomes, error: errorOtomes } = useOtomes()
 
     if (loading || loadingOtomes) return <Loading />
     if (error || errorOtomes) return <Error />

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import dbFetch from '../../utils/fetching/dbFetch'
+import apiFetch from '../../utils/fetching/apiFetch'
 import useTraitsParams from "./useTraitsParams";
 
 export default function useTraits() {
@@ -10,19 +10,17 @@ export default function useTraits() {
     const [traits, setTraits] = useState([])
     const [total, setTotal] = useState(1)
 
-    const url = useTraitsParams()
+    const query = useTraitsParams()
 
     useEffect(() => {
 
         async function fetchTraits() {
 
             try {
-                const res = await dbFetch(url)
+                const res = await apiFetch('trait', query)
 
-                console.log(res)
-
-                setTraits(res.traits)
-                setTotal(Math.ceil(res.total / 100))
+                setTraits(res.results)
+                setTotal(Math.ceil(res.count / 100))
 
             } catch (error) {
 
@@ -35,7 +33,7 @@ export default function useTraits() {
         }
 
         fetchTraits()
-    }, [url])
+    }, [query])
 
     return { traits, total, loading, error }
 }

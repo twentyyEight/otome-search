@@ -26,6 +26,32 @@ export const addCharacter = async (req, res) => {
     }
 }
 
+export const getCharacters = async (req, res) => {
+
+    const { id } = req.user
+
+    try {
+        const characters = await FavoriteCharacterList.findOne({ user_id: id }).select('favoriteCharacters -_id')
+        return res.json(characters)
+    } catch (error) {
+        return res.status(error.status || 500).json({ message: error.message || 'Error interno' })
+    }
+}
+
+export const getCharacter = async (req, res) => {
+
+    const { id } = req.params
+    const { id: user_id } = req.user 
+
+    try {
+        const character = await FavoriteCharacterList.findOne({ user_id, 'favoriteCharacters.id': id })
+        return res.json(!!character)
+
+    } catch (error) {
+        return res.status(error.status || 500).json({ message: error.message || 'Error interno' })
+    }
+}
+
 export const deleteCharacter = async (req, res) => {
 
     const { id } = req.params

@@ -5,8 +5,8 @@ import useOtomesParams from "./useOtomesParams";
 
 export default function useOtomes() {
 
-    const [loadingOtomes, setLoadingOtomes] = useState(true)
-    const [errorOtomes, setErrorOtomes] = useState(null)
+    const [loading, setLoading] = useState(true)
+    const [error, setError] = useState(null)
 
     const [otomes, setOtomes] = useState([])
     const [total, setTotal] = useState(1)
@@ -30,10 +30,11 @@ export default function useOtomes() {
 
             } catch (error) {
 
-                setErrorOtomes(error)
+                setError(true)
+                console.error(error)
 
             } finally {
-                setLoadingOtomes(false)
+                setLoading(false)
             }
         }
 
@@ -41,5 +42,5 @@ export default function useOtomes() {
 
     }, [query])
 
-    return { otomes, total, loadingOtomes, errorOtomes }
+    return { otomes, total, loading, error }
 }

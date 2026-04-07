@@ -14,13 +14,16 @@ export default function TraitsPage() {
     if (error) return <Error />
 
     return <>
-        <input 
-        type="text" 
-        placeholder="Search trait by name..."
-        onChange={(e) => setSearchParams({ name: e.target.value })} />
+        <input
+            type="text"
+            placeholder="Search trait by name..."
+            onChange={(e) => setSearchParams({ name: e.target.value })} />
 
         {traits.map(trait => (
-            <Link key={trait._id} to={`i${trait.id}`}>{trait.name}</Link>
+            <>
+                <Link key={trait.id} to={`${trait.id}`}>{trait.name}</Link>
+                <Link key={crypto.randomUUID()} to={`${trait.group_id}`}>{(trait.group_name)}</Link>
+            </>
         ))}
 
         {total > 1 && <Pagination total={total} />}
