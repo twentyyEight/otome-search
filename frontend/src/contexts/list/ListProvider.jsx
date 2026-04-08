@@ -30,20 +30,8 @@ export function ListProvider({ children }) {
         }
     }
 
-    const addCharacter = async (character) => {
-        setLoading(true)
-        try {
-            const res = await dbFetch('characters', { method: 'POST', body: character })
-            console.log(res)
-        } catch (error) {
-            console.error(error)
-        } finally {
-            setLoading(false)
-        }
-    }
-
     return (
-        <ListContext.Provider value={{ addOtomeState, addCharacter, deleteOtomeState, loading }}>
+        <ListContext.Provider value={{ addOtomeState, deleteOtomeState, loading }}>
             {children}
         </ListContext.Provider>
     )

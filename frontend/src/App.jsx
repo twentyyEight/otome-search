@@ -19,6 +19,7 @@ import TraitPage from './pages/traits/TraitPage'
 import CharactersPage from './pages/characters/CharactersPage'
 import CharacterPage from './pages/characters/CharacterPage'
 import DevsPage from './pages/devs/DevsPage'
+import { CharacterProvider } from './contexts/character/CharacterProvider'
 
 function App() {
 
@@ -26,35 +27,37 @@ function App() {
     <BrowserRouter>
       <AuthProvider>
         <ListProvider>
-          <Navbar />
-          <Routes>
-            <Route path='/' element={<HomePage />} />
+          <CharacterProvider>
+            <Navbar />
+            <Routes>
+              <Route path='/' element={<HomePage />} />
 
-            <Route path='/register' element={<Register />} />
-            <Route path='/login' element={<Login />} />
+              <Route path='/register' element={<Register />} />
+              <Route path='/login' element={<Login />} />
 
-            <Route path='/otomes' element={<OtomesPage />} />
-            <Route path='/otomes/:id' element={<OtomePage />} />
+              <Route path='/otomes' element={<OtomesPage />} />
+              <Route path='/otomes/:id' element={<OtomePage />} />
 
-            <Route path='/tags' element={<TagsPage />} />
-            <Route path='/tags/categories' element={<TagsCategories />} />
-            <Route path='/tags/:id' element={<TagPage />} />
+              <Route path='/tags' element={<TagsPage />} />
+              <Route path='/tags/categories' element={<TagsCategories />} />
+              <Route path='/tags/:id' element={<TagPage />} />
 
-            <Route path='/traits' element={<TraitsPage />} />
-            <Route path='/traits/categories' element={<TraitsCategories />} />
-            <Route path='traits/:id' element={<TraitPage />} />
+              <Route path='/traits' element={<TraitsPage />} />
+              <Route path='/traits/categories' element={<TraitsCategories />} />
+              <Route path='traits/:id' element={<TraitPage />} />
 
-            <Route path='/characters' element={<CharactersPage />} />
-            <Route path='/characters/:id' element={<CharacterPage />} />
+              <Route path='/characters' element={<CharactersPage />} />
+              <Route path='/characters/:id' element={<CharacterPage />} />
 
-            <Route path='/developers' element={<DevsPage />} />
-            <Route path='/developers/:id' element={<DevPage />} />
+              <Route path='/developers' element={<DevsPage />} />
+              <Route path='/developers/:id' element={<DevPage />} />
 
-            <Route element={<ProtectedRoute />}>
-              <Route path='/profile/:name' element={<Profile />} />
-            </Route>
+              <Route element={<ProtectedRoute />}>
+                <Route path='/profile/:name' element={<Profile />} />
+              </Route>
 
-          </Routes>
+            </Routes>
+          </CharacterProvider>
         </ListProvider>
       </AuthProvider>
     </BrowserRouter>

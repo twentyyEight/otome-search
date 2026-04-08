@@ -21,7 +21,7 @@ export default function useCharactersParams(id) {
 
             if (id.startsWith('v')) {
                 filters.push(["vn", "=", ["id", "=", id]])
-                fields = 'name, description, image.url, sex, vns.role, traits.group_id, traits.name'
+                fields = 'name, description, image.url, sex, gender, vns.role, traits.group_id, traits.name, traits.group_name'
             }
         }
 

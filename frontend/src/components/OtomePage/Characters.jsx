@@ -1,50 +1,28 @@
-import { useAuth } from "../../contexts/auth/useAuth"
-import { useList } from '../../contexts/list/useList'
+import charactersFormarter from "../../utils/characters.formatter.js"
+import Character from "./Character.jsx"
 
-export default function Characters({ characters }) {
-
-    const { isAuth } = useAuth()
-    const { addCharacter } = useList()
+export default function Characters({ characters, otome_id, vas }) {
 
     const characters_roles = [
-        { key: 'main', label: 'Protagonista(s)' },
-        { key: 'primary', label: 'Principales' },
-        { key: 'side', label: 'Secundarios' },
-        { key: 'appears', label: 'Terciarios' },
+        { key: 'main', label: 'Protagonist(s)' },
+        { key: 'primary', label: 'Main Character(s)' },
+        { key: 'side', label: 'Side Character(s)' },
+        { key: 'appears', label: 'Make an appearance' },
     ]
 
-    const onSubmitCharacters = (id) => addCharacter(id)
+    const characters_ordered = charactersFormarter(characters, otome_id, vas)
 
     return <>
-        <h2>Personajes</h2>
+        <h2>Characters</h2>
         {characters_roles.map(({ key, label }) => (
 
-            characters[key] &&
+            characters_ordered[key] &&
 
             <div key={key}>
 
                 <h3>{label}</h3>
-                {characters[key].map(char => (
 
-                    <div key={char.id}>
-                        <img src={char.image?.url} alt={char.name} />
-                        <h4>{char.name}</h4>
-
-                        {isAuth &&
-                            <button onClick={() => onSubmitCharacters(char.id)}>
-                                Agregar a favoritos
-                            </button>
-                        }
-
-                        <p>{char.voice_actor && 'Actor de voz: ' + char.voice_actor}</p>
-                        <p>Sexo: {char.sex[0]}</p>
-
-                        {char.traits.map(trait => <p key={trait.id}>{trait.name}</p>)}
-
-                        <p>{char.description}</p>
-                    </div>
-                ))}
-
+                {characters_ordered[key].map(character => <Character key={character.id} character={character} />)}
             </div>
         ))}
     </>

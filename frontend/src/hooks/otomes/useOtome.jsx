@@ -2,21 +2,27 @@ import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom";
 import apiFetch from "../../utils/fetching/apiFetch"
 import dbFetch from "../../utils/fetching/dbFetch";
+import { useAuth } from "../../contexts/auth/useAuth";
+import useCharacters from '../characters/useCharacters'
 
 export default function useOtome() {
+
+    const { id } = useParams()
+
+    const { isAuth } = useAuth()
+    const { characters, loading: loading_characters, error: error_characters } = useCharacters()
 
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState(null)
 
     const [otome, setOtome] = useState(null)
-    const { id } = useParams()
 
     useEffect(() => {
 
         async function fetchOtome() {
 
             try {
-                // Query para el otome
+                /* QUERIES */
                 const query_otome = {
                     "filters": [
                         'and',
@@ -24,36 +30,43 @@ export default function useOtome() {
                         ["id", "=", id], // ID otome
                         ['devstatus', "!=", "2"], // Que el juego no esté cancelado
                     ],
-                    "fields": "title, image.url, olang, devstatus, description, developers.id, developers.name, developers.id, released, rating, va.character.name, va.staff.name, tags.id, tags.name"
+                    "fields": "title, image.url, devstatus, description, developers.name, released, rating, tags.id, tags.name, va.staff.name, va.character.id"
                 }
 
-                // Query para los lanzamientos del otome
                 const query_releases = {
                     "filters": ["vn", "=", ["id", "=", id]],
                     "fields": "title, languages.lang, platforms, released, minage, patch, freeware, official, voiced, notes, extlinks.url, extlinks.name",
                     "results": 100
                 }
 
-                // Llamada a la API
+                /* LLAMADA API Y BD */
                 const data_otome = await apiFetch('vn', query_otome)
                 const data_releases = await apiFetch('release', query_releases)
-                const state = await dbFetch(`states/${id}`)
+                const state = isAuth ? await dbFetch(`states/${id}`) : ""
 
-                // Recepción resultados
-                setOtome({ ...data_otome.results[0], releases: data_releases.results, state })
+                data_otome.results[0].state = state
 
-                setLoading(false)
+                /* ENTREGA RESULTADOS */
+                setOtome({
+                    info: data_otome.results[0],
+                    releases: data_releases.results,
+                    characters: characters
+                })
 
             } catch (error) {
-
-                setError(error)
+                setError(true)
+                console.error(error)
+            } finally {
                 setLoading(false)
             }
         }
 
         fetchOtome()
 
-    }, [id])
+    }, [id, isAuth, characters])
 
-    return { otome, error, loading }
+    const isLoading = loading || loading_characters
+    const isError = error || error_characters
+
+    return { otome, error: isError, loading: isLoading }
 }
