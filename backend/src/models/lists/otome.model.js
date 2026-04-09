@@ -1,5 +1,12 @@
 import mongoose from 'mongoose';
-import { otomeSchema } from './otome.models.js'
+
+const otomeSchema = new mongoose.Schema({
+
+    id: {
+        type: 'String',
+        required: [true, 'Otome id is required']
+    }
+})
 
 const otomeListSchema = new mongoose.Schema({
 
@@ -10,7 +17,8 @@ const otomeListSchema = new mongoose.Schema({
 
     name: { 
         type: String, 
-        required: true 
+        required: true,
+        min: [3, 'Name must be at least 3 characters'] 
     },
 
     otomes: [otomeSchema]

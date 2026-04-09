@@ -10,8 +10,6 @@ export default function TagsCategories() {
     if (loading) return <Loading />
     if (error) return <Error />
 
-    console.log(categories)
-
     return <>
         <h1>Tags by categories</h1>
 

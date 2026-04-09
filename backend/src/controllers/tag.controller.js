@@ -1,4 +1,4 @@
-import { Tag } from "../models/tag.models.js"
+import { Tag } from "../models/tag.model.js"
 
 export const getTags = async (req, res) => {
 

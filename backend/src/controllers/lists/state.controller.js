@@ -1,4 +1,4 @@
-import OtomeStateList from "../../models/lists/otome.state.models.js"
+import StateList from "../../models/lists/state.model.js"
 
 export const addOtomeState = async (req, res) => {
 

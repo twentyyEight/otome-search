@@ -1,12 +1,12 @@
-import { ListContext } from './ListContext'
+import { StateContext } from './StateContext'
 import dbFetch from '../../utils/fetching/dbFetch'
 import { useState } from 'react'
 
-export function ListProvider({ children }) {
+export function StateProvider({ children }) {
 
     const [loading, setLoading] = useState(false)
 
-    const addOtomeState = async (otome) => {
+    const addState = async (otome) => {
         setLoading(true)
         try {
             const res = await dbFetch('states', { method: 'POST', body: otome })
@@ -18,7 +18,7 @@ export function ListProvider({ children }) {
         }
     }
 
-    const deleteOtomeState = async (id) => {
+    const deleteState = async (id) => {
         setLoading(true)
         try {
             const res = await dbFetch(`states/${id}`, { method: 'DELETE' })
@@ -31,8 +31,8 @@ export function ListProvider({ children }) {
     }
 
     return (
-        <ListContext.Provider value={{ addOtomeState, deleteOtomeState, loading }}>
+        <StateContext.Provider value={{ addState, deleteState, loading }}>
             {children}
-        </ListContext.Provider>
+        </StateContext.Provider>
     )
 }

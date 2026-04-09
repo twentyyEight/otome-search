@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import { getTags, getTag, getTagCategories, getTagsSuggestions } from '../controllers/tags.controller.js'
+import { getTags, getTag, getTagCategories, getTagsSuggestions } from '../controllers/tag.controller.js'
 
 const router = Router()
 

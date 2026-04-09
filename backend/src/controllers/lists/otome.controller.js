@@ -1,4 +1,4 @@
-import OtomeList from '../../models/lists/otome.list.models.js'
+import OtomeList from '../../models/lists/otome.model.js'
 
 export const createOtomeList = async (req, res) => {
 
@@ -79,8 +79,7 @@ export const getOtomeList = async (req, res) => {
 
 export const addToOtomeList = async (req, res) => {
 
-    const { id: otome_id } = req.body
-    const { id: list_id } = req.params
+    const { id: list_id, otome_id } = req.params
     const { id: user_id } = req.user
 
     try {
@@ -107,8 +106,7 @@ export const addToOtomeList = async (req, res) => {
 
 export const deleteFromOtomeList = async (req, res) => {
 
-    const { id: otome_id } = req.body
-    const { id: list_id } = req.params
+    const { id: list_id, otome_id } = req.params
     const { id: user_id } = req.user
 
     try {
@@ -117,7 +115,7 @@ export const deleteFromOtomeList = async (req, res) => {
             { $pull: { otomes: { id: otome_id } } }
         );
 
-        if (result.matchedCount === 0) return res.status(404).json({ message: 'List not found' })
+        if (result.matchedCount === 0) return res.status(404).json({ message: 'Otome not found' })
 
         return res.status(200).json({ message: 'Otome deleted successfully' })
 

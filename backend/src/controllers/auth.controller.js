@@ -1,7 +1,4 @@
-import User from "../models/user.models.js"
-import OtomeStateList from "../models/lists/otome.state.models.js"
-import OtomeList from "../models/lists/otome.list.models.js"
-import FavoriteCharacterList from '../models/lists/favorite.character.list.models.js'
+import User from "../models/user.model.js"
 import bcrypt from 'bcryptjs'
 import { createToken } from '../libs/jwt.js'
 import jwt from "jsonwebtoken";

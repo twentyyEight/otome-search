@@ -1,10 +1,11 @@
-import { useList } from '../../contexts/list/useList'
 import Lists from './modals/ListsModal'
 import { useState } from 'react'
+import { useContext } from 'react'
+import { StateContext } from '../../contexts/state/StateContext'
 
 export default function Actions({ st, id }) {
 
-    const { addOtomeState, deleteOtomeState, loading } = useList()
+    const { addState, deleteState, loading } = useContext(StateContext)
 
     const [state, setState] = useState(st)
     const [open, setOpen] = useState(false)
@@ -13,8 +14,8 @@ export default function Actions({ st, id }) {
 
         const value = e.target.value
 
-        if (value !== '') addOtomeState({ id: id, state: value })
-        else deleteOtomeState(id)
+        if (value !== '') addState({ id: id, state: value })
+        else deleteState(id)
         setState(value)
     }
 

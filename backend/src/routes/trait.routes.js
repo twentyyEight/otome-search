@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import { getTraitsCategories, getTraits, getChildTraits, getTraitsSuggestions } from '../controllers/traits.controller.js'
+import { getTraitsCategories, getTraits, getChildTraits, getTraitsSuggestions } from '../controllers/trait.controller.js'
 
 const router = Router()
 

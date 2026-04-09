@@ -1,4 +1,4 @@
-import { Developer } from '../models/dev.models.js'
+import { Developer } from '../models/dev.model.js'
 
 export const getDevs = async (req, res) => {
 

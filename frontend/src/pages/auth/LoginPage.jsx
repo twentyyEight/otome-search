@@ -1,10 +1,11 @@
 import { useForm } from 'react-hook-form'
-import { useAuth } from '../../contexts/auth/useAuth'
+import { useContext } from 'react'
+import { AuthContext } from '../../contexts/auth/AuthContext'
 
 export default function Login() {
 
     const { register, handleSubmit, formState: { errors } } = useForm()
-    const { login } = useAuth()
+    const { login } = useContext(AuthContext)
 
     const onSubmit = async (data) => login(data)
 

@@ -1,10 +1,11 @@
-import { useAuth } from "../../contexts/auth/useAuth"
+import { useContext } from "react"
+import { AuthContext } from "../../contexts/auth/AuthContext"
 import { Link } from 'react-router-dom'
 import Actions from "./Actions"
 
 export default function Info({ otome }) {
 
-    const { isAuth } = useAuth()
+    const { isAuth } = useContext(AuthContext)
 
     return <>
         <img src={otome.image?.url} alt={otome.title} />

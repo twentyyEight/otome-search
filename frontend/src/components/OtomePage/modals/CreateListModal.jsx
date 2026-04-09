@@ -16,7 +16,11 @@ export default function CreateList() {
 
             <DialogContent>
                 <form onSubmit={handleSubmit(onSubmit)}>
-                    <input type="text" placeholder="List name..." />
+                    <input
+                        type="text"
+                        placeholder="List name..."
+                        {...register("name", { required: "Name must be at least 3 characters" })} />
+                    {errors.name && <p>{errors.name.message}</p>}
                 </form>
             </DialogContent>
 

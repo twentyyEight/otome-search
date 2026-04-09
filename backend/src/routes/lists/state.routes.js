@@ -1,6 +1,6 @@
 import { Router } from 'express'
 import { auth } from '../../middlewares/auth.middleware.js'
-import { addOtomeState, deleteOtomeState, getOtomeState } from '../../controllers/lists/states.controller.js'
+import { addOtomeState, deleteOtomeState, getOtomeState } from '../../controllers/lists/state.controller.js'
 
 const router = Router()
 

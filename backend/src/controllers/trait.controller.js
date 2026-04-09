@@ -1,4 +1,4 @@
-import { Trait } from "../models/trait.models.js"
+import { Trait } from "../models/trait.model.js"
 
 export const getTraits = async (req, res) => {
 

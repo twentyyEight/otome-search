@@ -1,11 +1,12 @@
 import { CharacterContext } from "./CharacterContext";
-import { useAuth } from '../auth/useAuth'
 import dbFetch from "../../utils/fetching/dbFetch";
 import { useState, useEffect } from "react";
+import { useContext } from "react";
+import { AuthContext } from '../auth/AuthContext'
 
 export function CharacterProvider({ children }) {
 
-    const { isAuth } = useAuth()
+    const { isAuth } = useContext(AuthContext)
 
     const [loading, setLoading] = useState(false)
     const [favorites, setFavorites] = useState(false)
