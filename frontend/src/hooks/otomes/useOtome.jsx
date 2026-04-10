@@ -2,14 +2,15 @@ import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom";
 import apiFetch from "../../utils/fetching/apiFetch"
 import dbFetch from "../../utils/fetching/dbFetch";
-import { useAuth } from "../../contexts/auth/useAuth";
 import useCharacters from '../characters/useCharacters'
+import { useContext } from "react";
+import { AuthContext } from '../../contexts/auth/AuthContext'
 
 export default function useOtome() {
 
     const { id } = useParams()
 
-    const { isAuth } = useAuth()
+    const { isAuth } = useContext(AuthContext)
     const { characters, loading: loading_characters, error: error_characters } = useCharacters()
 
     const [loading, setLoading] = useState(true)

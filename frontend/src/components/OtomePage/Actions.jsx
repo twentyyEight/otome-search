@@ -1,11 +1,13 @@
-import Lists from './modals/ListsModal'
+import ListsModal from '../lists/ListsModal'
 import { useState } from 'react'
 import { useContext } from 'react'
 import { StateContext } from '../../contexts/state/StateContext'
+import { OtomeContext } from '../../contexts/otome/OtomeContext'
 
 export default function Actions({ st, id }) {
 
     const { addState, deleteState, loading } = useContext(StateContext)
+    const { createOtomeList, getOtomeLists, lists, loading: otome_loading, addToOtomeList, deleteFromOtomeList } = useContext(OtomeContext)
 
     const [state, setState] = useState(st)
     const [open, setOpen] = useState(false)
@@ -39,7 +41,19 @@ export default function Actions({ st, id }) {
             </select>
 
             <button onClick={() => setOpen(true)}>Add to a list</button>
-            <Lists open={open} setOpen={setOpen} />
+            <ListsModal
+                open={open}
+                setOpen={setOpen}
+                otome_id={id}
+                context={{ 
+                    lists, 
+                    getLists: getOtomeLists, 
+                    createList: createOtomeList, 
+                    loading: otome_loading,
+                    addToList: addToOtomeList,
+                    deleteFromList: deleteFromOtomeList
+                }}
+            />
         </>
     )
 }

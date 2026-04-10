@@ -6,7 +6,7 @@ import Login from './pages/auth/LoginPage'
 import Profile from './pages/auth/ProfilePage'
 import Navbar from './components/Navbar'
 import { AuthProvider } from './contexts/auth/AuthProvider'
-import { ListProvider } from './contexts/list/ListProvider'
+import { StateProvider } from './contexts/state/StateProvider'
 import ProtectedRoute from './routes/ProtectedRoute'
 import TagsPage from './pages/tags/TagsPage'
 import TagPage from './pages/tags/TagPage'
@@ -20,45 +20,48 @@ import CharactersPage from './pages/characters/CharactersPage'
 import CharacterPage from './pages/characters/CharacterPage'
 import DevsPage from './pages/devs/DevsPage'
 import { CharacterProvider } from './contexts/character/CharacterProvider'
+import { OtomeProvider } from './contexts/otome/OtomeProvider'
 
 function App() {
 
   return (
     <BrowserRouter>
       <AuthProvider>
-        <ListProvider>
+        <StateProvider>
           <CharacterProvider>
-            <Navbar />
-            <Routes>
-              <Route path='/' element={<HomePage />} />
+            <OtomeProvider>
+              <Navbar />
+              <Routes>
+                <Route path='/' element={<HomePage />} />
 
-              <Route path='/register' element={<Register />} />
-              <Route path='/login' element={<Login />} />
+                <Route path='/register' element={<Register />} />
+                <Route path='/login' element={<Login />} />
 
-              <Route path='/otomes' element={<OtomesPage />} />
-              <Route path='/otomes/:id' element={<OtomePage />} />
+                <Route path='/otomes' element={<OtomesPage />} />
+                <Route path='/otomes/:id' element={<OtomePage />} />
 
-              <Route path='/tags' element={<TagsPage />} />
-              <Route path='/tags/categories' element={<TagsCategories />} />
-              <Route path='/tags/:id' element={<TagPage />} />
+                <Route path='/tags' element={<TagsPage />} />
+                <Route path='/tags/categories' element={<TagsCategories />} />
+                <Route path='/tags/:id' element={<TagPage />} />
 
-              <Route path='/traits' element={<TraitsPage />} />
-              <Route path='/traits/categories' element={<TraitsCategories />} />
-              <Route path='traits/:id' element={<TraitPage />} />
+                <Route path='/traits' element={<TraitsPage />} />
+                <Route path='/traits/categories' element={<TraitsCategories />} />
+                <Route path='traits/:id' element={<TraitPage />} />
 
-              <Route path='/characters' element={<CharactersPage />} />
-              <Route path='/characters/:id' element={<CharacterPage />} />
+                <Route path='/characters' element={<CharactersPage />} />
+                <Route path='/characters/:id' element={<CharacterPage />} />
 
-              <Route path='/developers' element={<DevsPage />} />
-              <Route path='/developers/:id' element={<DevPage />} />
+                <Route path='/developers' element={<DevsPage />} />
+                <Route path='/developers/:id' element={<DevPage />} />
 
-              <Route element={<ProtectedRoute />}>
-                <Route path='/profile/:name' element={<Profile />} />
-              </Route>
+                <Route element={<ProtectedRoute />}>
+                  <Route path='/profile/:name' element={<Profile />} />
+                </Route>
 
-            </Routes>
+              </Routes>
+            </OtomeProvider>
           </CharacterProvider>
-        </ListProvider>
+        </StateProvider>
       </AuthProvider>
     </BrowserRouter>
   )

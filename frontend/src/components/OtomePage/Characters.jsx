@@ -1,5 +1,5 @@
 import charactersFormarter from "../../utils/characters.formatter.js"
-import Character from "./Character.jsx"
+import CharacterCard from '../characters/CharacterCard.jsx'
 
 export default function Characters({ characters, otome_id, vas }) {
 
@@ -22,7 +22,7 @@ export default function Characters({ characters, otome_id, vas }) {
 
                 <h3>{label}</h3>
 
-                {characters_ordered[key].map(character => <Character key={character.id} character={character} />)}
+                {characters_ordered[key].map(character => <CharacterCard key={character.id} character={character} />)}
             </div>
         ))}
     </>

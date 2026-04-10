@@ -7,15 +7,15 @@ export const addOtomeState = async (req, res) => {
 
     try {
 
-        const exists = await OtomeStateList.findOne({ user_id, 'otomes.id': id })
+        const exists = await StateList.findOne({ user_id, 'otomes.id': id })
 
         if (exists) {
-            await OtomeStateList.updateOne(
+            await StateList.updateOne(
                 { user_id, 'otomes.id': id },
                 { $set: { 'otomes.$.state': Number(state) } }
             )
         } else {
-            await OtomeStateList.updateOne(
+            await StateList.updateOne(
                 { user_id },
                 { $push: { otomes: { id, state: Number(state) } } },
                 { upsert: true, runValidators: true }
@@ -36,7 +36,7 @@ export const getOtomeState = async (req, res) => {
     const { id: user_id } = req.user
 
     try {
-        const result = await OtomeStateList.findOne({ user_id, 'otomes.id': id }, { 'otomes.$': 1 })
+        const result = await StateList.findOne({ user_id, 'otomes.id': id }, { 'otomes.$': 1 })
 
         if (!result || !result.otomes.length) return res.json("")
 
@@ -56,7 +56,7 @@ export const deleteOtomeState = async (req, res) => {
     const { id: user_id } = req.user
 
     try {
-        await OtomeStateList.updateOne(
+        await StateList.updateOne(
             { user_id },
             { $pull: { otomes: { id } } },
         )

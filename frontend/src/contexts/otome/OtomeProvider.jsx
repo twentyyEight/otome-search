@@ -1,17 +1,17 @@
-import { CharacterContext } from "./CharacterContext";
+import { OtomeContext } from "./OtomeContext";
 import dbFetch from "../../utils/fetching/dbFetch";
 import { useState } from "react";
 
-export function CharacterProvider({ children }) {
+export function OtomeProvider({ children }) {
 
     const [loading, setLoading] = useState(false)
     const [lists, setLists] = useState([])
 
-    const createCharacterList = async (name) => {
+    const createOtomeList = async (name) => {
         setLoading(true)
 
         try {
-            const res = await dbFetch('characters/lists', { method: 'POST', body: name })
+            const res = await dbFetch('otomes/lists', { method: 'POST', body: name })
             console.log(res)
         } catch (error) {
             console.error(error)
@@ -20,11 +20,11 @@ export function CharacterProvider({ children }) {
         }
     }
 
-    const deleteCharacterList = async (id) => {
+    const deleteOtomeList = async (id) => {
         setLoading(true)
 
         try {
-            const res = await dbFetch(`characters/lists/${id}`)
+            const res = await dbFetch(`otomes/lists/${id}`)
             console.log(res)
         } catch (error) {
             console.error(error)
@@ -33,12 +33,12 @@ export function CharacterProvider({ children }) {
         }
     }
 
-    const getCharacterLists = async () => {
+    const getOtomeLists = async () => {
 
         setLoading(true)
 
         try {
-            const res = await dbFetch('characters/lists')
+            const res = await dbFetch('otomes/lists')
             setLists(res)
         } catch (error) {
             console.error(error)
@@ -47,11 +47,11 @@ export function CharacterProvider({ children }) {
         }
     }
 
-    const addToCharacterList = async (id, character_id) => {
+    const addToOtomeList = async (id, otome_id) => {
         setLoading(true)
 
         try {
-            const res = await dbFetch(`characters/lists/${id}/character/${character_id}`, { method: 'POST' })
+            const res = await dbFetch(`otomes/lists/${id}/otome/${otome_id}`, { method: 'POST' })
             console.log(res)
         } catch (error) {
             console.error(error)
@@ -60,11 +60,11 @@ export function CharacterProvider({ children }) {
         }
     }
 
-    const deleteFromCharacterList = async (id, character_id) => {
+    const deleteFromOtomeList = async (id, otome_id) => {
         setLoading(true)
 
         try {
-            const res = await dbFetch(`characters/lists/${id}/character/${character_id}`, { method: 'DELETE' })
+            const res = await dbFetch(`otomes/lists/${id}/otome/${otome_id}`, { method: 'DELETE' })
             console.log(res)
         } catch (error) {
             console.error(error)
@@ -74,9 +74,18 @@ export function CharacterProvider({ children }) {
     }
 
 
-    return(
-        <CharacterContext.Provider value={{ loading, createCharacterList, deleteCharacterList, getCharacterLists, addToCharacterList, deleteFromCharacterList, lists }}>
+    return (
+        <OtomeContext.Provider
+            value={{
+                loading,
+                createOtomeList,
+                deleteOtomeList,
+                getOtomeLists,
+                addToOtomeList,
+                deleteFromOtomeList,
+                lists
+            }}>
             {children}
-        </CharacterContext.Provider>
+        </OtomeContext.Provider>
     )
 }
