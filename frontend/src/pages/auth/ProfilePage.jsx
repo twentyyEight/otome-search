@@ -17,7 +17,7 @@ export default function Profile() {
     console.log(otomes)
 
     return <>
-        <h1>Perfil de {name}</h1>
+        <h1>{name}'s profile</h1>
 
         <h2>Personajes favortios</h2>
         {characters.map(character => (

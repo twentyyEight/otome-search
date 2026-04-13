@@ -2,7 +2,8 @@ import StateList from "../../models/lists/state.model.js"
 
 export const addOtomeState = async (req, res) => {
 
-    const { id, state } = req.body
+    const { id } = req.params
+    const { state } = req.body
     const { id: user_id } = req.user
 
     try {

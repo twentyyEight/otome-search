@@ -4,7 +4,7 @@ import { addOtomeState, deleteOtomeState, getOtomeState } from '../../controller
 
 const router = Router()
 
-router.post('/states', auth, addOtomeState)
+router.post('/states/:id', auth, addOtomeState)
 router.get('/states/:id', auth, getOtomeState)
 router.delete('/states/:id', auth, deleteOtomeState)
 

@@ -1,39 +1,30 @@
-function clasification(arr, key) {
-
-    const arr_reduced = arr.reduce((obj, item) => {
-        const { [key]: _, ...rest } = item  // extrae y descarta el campo key
-        if (!obj[item[key]]) obj[item[key]] = []
-        obj[item[key]].push(rest)
-        return obj
-    }, {})
-
-    return arr_reduced
-}
-
-
 export default function charactersFormarter(characters, otome_id, vas) {
 
-    /* Reorden de propiedades */
-    // const characters = fetched_characters.map(({ character: { traits, vns, ...data }, staff }) => {
+    const roles = [
+        { key: 'main', label: 'Protagonist' },
+        { key: 'primary', label: 'Main Character' },
+        { key: 'side', label: 'Side Character' },
+        { key: 'appears', label: 'Makes an appearance' }
+    ]
 
-    //     return {
-    //         ...data,
-    //         role: vns.find(vn => vn.id === otome_id).role,
-    //         voice_actor: staff,
-    //         traits: clasification(traits, 'group_name')
-    //     }
-    // })
+    /* Reorden de propiedades */
     const new_characters = characters.map(({ vns, traits, ...character }) => {
+
+        const role_key = vns.find(vn => vn.id === otome_id)?.role
+
         return {
             ...character,
-            role: vns.find(vn => vn.id === otome_id).role,
+            role: roles.find(role => role.key === role_key)?.label,
             voice: vas.find(va => va.character.id === character.id)?.staff ?? null,
-            traits: clasification(traits, 'group_name')
+            traits: traits.reduce((obj, trait) => {
+                if (!obj[trait.group_name]) obj[trait.group_name] = []
+                obj[trait.group_name].push(trait)
+                return obj
+            }, {})
         }
-    })
+    }).sort((a, b) =>
+        roles.findIndex(role => role.label === a.role) - roles.findIndex(role => role.label === b.role)
+    )
 
-    /* Clasifica cada character por su role */
-    const grouped_by_role = clasification(new_characters, 'role')
-
-    return grouped_by_role
+    return new_characters
 }

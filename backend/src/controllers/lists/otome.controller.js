@@ -50,7 +50,7 @@ export const getOtomeLists = async (req, res) => {
 
     try {
 
-        const lists = await OtomeList.find({ user_id: id }).select('name')
+        const lists = await OtomeList.find({ user_id: id }).select('name otomes.id')
         return res.json(lists)
 
     } catch (error) {

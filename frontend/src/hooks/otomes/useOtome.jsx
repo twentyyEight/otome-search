@@ -49,7 +49,7 @@ export default function useOtome() {
 
                 /* ENTREGA RESULTADOS */
                 setOtome({
-                    info: data_otome.results[0],
+                    ...data_otome.results[0],
                     releases: data_releases.results,
                     characters: characters
                 })
@@ -68,6 +68,8 @@ export default function useOtome() {
 
     const isLoading = loading || loading_characters
     const isError = error || error_characters
+
+    console.log(otome)
 
     return { otome, error: isError, loading: isLoading }
 }

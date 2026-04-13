@@ -1,13 +1,10 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
+
 import OtomePage from './pages/otomes/OtomePage'
 import OtomesPage from './pages/otomes/OtomesPage'
 import Register from './pages/auth/RegisterPage'
 import Login from './pages/auth/LoginPage'
 import Profile from './pages/auth/ProfilePage'
-import Navbar from './components/Navbar'
-import { AuthProvider } from './contexts/auth/AuthProvider'
-import { StateProvider } from './contexts/state/StateProvider'
-import ProtectedRoute from './routes/ProtectedRoute'
 import TagsPage from './pages/tags/TagsPage'
 import TagPage from './pages/tags/TagPage'
 import DevPage from './pages/devs/DevPage'
@@ -19,17 +16,23 @@ import TraitPage from './pages/traits/TraitPage'
 import CharactersPage from './pages/characters/CharactersPage'
 import CharacterPage from './pages/characters/CharacterPage'
 import DevsPage from './pages/devs/DevsPage'
-import { CharacterProvider } from './contexts/character/CharacterProvider'
-import { OtomeProvider } from './contexts/otome/OtomeProvider'
+
+import Navbar from './components/Navbar'
+
+import ProtectedRoute from './routes/ProtectedRoute'
+
+import { AuthProvider } from './contexts/auth/AuthProvider'
+import { StateProvider } from './contexts/state/StateProvider'
+import { ListProvider } from './contexts/list/ListProvider'
 
 function App() {
 
   return (
     <BrowserRouter>
       <AuthProvider>
-        <StateProvider>
-          <CharacterProvider>
-            <OtomeProvider>
+        <ListProvider type={'otome'}>
+          <ListProvider type={'character'}>
+            <StateProvider>
               <Navbar />
               <Routes>
                 <Route path='/' element={<HomePage />} />
@@ -59,9 +62,9 @@ function App() {
                 </Route>
 
               </Routes>
-            </OtomeProvider>
-          </CharacterProvider>
-        </StateProvider>
+            </StateProvider>
+          </ListProvider>
+        </ListProvider>
       </AuthProvider>
     </BrowserRouter>
   )

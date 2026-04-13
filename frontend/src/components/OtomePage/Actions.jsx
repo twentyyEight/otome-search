@@ -1,22 +1,18 @@
-import ListsModal from '../lists/ListsModal'
-import { useState } from 'react'
-import { useContext } from 'react'
+import ListsBtn from '../lists/ListsBtn'
+import { useState, useContext } from 'react'
 import { StateContext } from '../../contexts/state/StateContext'
-import { OtomeContext } from '../../contexts/otome/OtomeContext'
+import { ListProvider } from '../../contexts/list/ListProvider'
 
 export default function Actions({ st, id }) {
 
     const { addState, deleteState, loading } = useContext(StateContext)
-    const { createOtomeList, getOtomeLists, lists, loading: otome_loading, addToOtomeList, deleteFromOtomeList } = useContext(OtomeContext)
-
     const [state, setState] = useState(st)
-    const [open, setOpen] = useState(false)
 
     const handleState = (e) => {
 
         const value = e.target.value
 
-        if (value !== '') addState({ id: id, state: value })
+        if (value !== '') addState(id, value)
         else deleteState(id)
         setState(value)
     }
@@ -40,20 +36,9 @@ export default function Actions({ st, id }) {
                 <option value={4}>Plan to play</option>
             </select>
 
-            <button onClick={() => setOpen(true)}>Add to a list</button>
-            <ListsModal
-                open={open}
-                setOpen={setOpen}
-                otome_id={id}
-                context={{ 
-                    lists, 
-                    getLists: getOtomeLists, 
-                    createList: createOtomeList, 
-                    loading: otome_loading,
-                    addToList: addToOtomeList,
-                    deleteFromList: deleteFromOtomeList
-                }}
-            />
+            <ListProvider type="otome">
+                <ListsBtn id={id} />
+            </ListProvider>
         </>
     )
 }

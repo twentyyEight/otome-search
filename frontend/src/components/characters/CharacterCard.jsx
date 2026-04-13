@@ -1,45 +1,33 @@
-import { useContext, useState } from "react"
-import { CharacterContext } from '../../contexts/character/CharacterContext'
-import { AuthContext } from "../../contexts/auth/AuthContext"
+import { useState } from "react"
 import CharacterModal from "./CharacterModal"
-import ListsModal from "../lists/ListsModal"
+import ListsBtn from "../lists/ListsBtn"
+import { ListProvider } from "../../contexts/list/ListProvider"
+import { useAuth } from '../../contexts/auth/useAuth'
 
 export default function CharacterCard({ character }) {
 
-    const { loading, createCharacterList, getCharacterLists, lists, addToCharacterList, deleteFromCharacterList } = useContext(CharacterContext)
-    const { isAuth } = useContext(AuthContext)
+    const { isAuth } = useAuth()
 
-    const [openMoreInfo, setOpenMoreInfo] = useState(false)
-    const [openAddToList, setOpenAddToList] = useState(false)
+    const [openModal, setOpenModal] = useState(false)
 
     return (
         <>
             <div>
-                {loading && <p>Loading...</p>}
-
                 <img src={character.image.url} alt={character.name} />
                 <h4>{character.name}</h4>
                 {character.voice && <p>Voiced by: {character.voice.name}</p>}
-                {character.sex && <p>Sex: {character.sex[0]}</p>}
-                {character.gender && <p>Gender: {character.gender[0]}</p>}
+                {<p>Role: {character.role}</p>}
 
-                <button onClick={() => setOpenMoreInfo(true)}>More info.</button>
-                {isAuth && <button onClick={() => setOpenAddToList(true)}>Add to a List</button>}
+                <button onClick={() => setOpenModal(true)}>More info.</button>
+
+                {isAuth &&
+                    <ListProvider type="character">
+                        <ListsBtn id={character.id} />
+                    </ListProvider>
+                }
             </div>
 
-            <CharacterModal character={character} open={openMoreInfo} setOpen={setOpenMoreInfo} />
-            <ListsModal
-                open={openAddToList}
-                setOpen={setOpenAddToList}
-                context={{ 
-                    lists, 
-                    getLists: getCharacterLists, 
-                    createList: createCharacterList, 
-                    loading,
-                    addToList: addToCharacterList,
-                    deleteFromList: deleteFromCharacterList 
-                }}
-            />
+            <CharacterModal character={character} open={openModal} setOpen={setOpenModal} />
         </>
     )
 }

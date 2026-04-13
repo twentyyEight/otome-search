@@ -6,10 +6,10 @@ export function StateProvider({ children }) {
 
     const [loading, setLoading] = useState(false)
 
-    const addState = async (otome) => {
+    const addState = async (id, state) => {
         setLoading(true)
         try {
-            const res = await dbFetch('states', { method: 'POST', body: otome })
+            const res = await dbFetch(`states/${id}`, { method: 'POST', body: state })
             console.log(res)
         } catch (error) {
             console.error(error)

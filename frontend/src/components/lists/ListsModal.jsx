@@ -4,33 +4,38 @@ import IconButton from '@mui/material/IconButton';
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 import DialogContent from '@mui/material/DialogContent';
 import DialogActions from '@mui/material/DialogActions';
-import CreateListModal from './CreateListModal'
-import { useState, useEffect } from 'react';
 
-export default function ListsModal({ open, setOpen, context, otome_id }) {
+import { useEffect, useContext } from 'react';
+import { ListsContext } from '../../contexts/list/ListContext'
 
-    const { lists, getLists, createList, loading, addToList, deleteFromList } = context
+export default function ListsModal({ open, setOpen, id, handleCreateList }) {
+
+    const { lists, getLists, addToList, deleteFromList, loading, type } = useContext(ListsContext)
 
     const handleClose = () => setOpen(false)
-    const [openCreateModal, setOpenCreateModal] = useState(false)
 
     useEffect(() => {
-        if (open && lists?.length === 0) {
-            getLists()
+
+        if (!open) return
+
+        const fetchLists = async () => {
+            await getLists()
         }
-    }, [open, getLists, lists])
+        fetchLists()
+
+    }, [open, getLists])
 
 
     const handleLists = (value, checked) => {
-        if (checked) addToList(value, otome_id)
-        else deleteFromList(value, otome_id)
+        if (checked) addToList(value, id)
+        else deleteFromList(value, id)
     }
 
     return (
         <>
             <Dialog open={open} onClose={handleClose}>
 
-                <DialogTitle>Your Lists</DialogTitle>
+                <DialogTitle>Your {type} lists</DialogTitle>
 
                 <IconButton onClick={handleClose}>
                     <CloseRoundedIcon />
@@ -43,26 +48,22 @@ export default function ListsModal({ open, setOpen, context, otome_id }) {
                             <input
                                 type="checkbox"
                                 id={list._id}
+                                checked={list[`${type}s`]?.some(item => item.id === id)}
                                 value={list._id}
-                                onChange={(e) => handleLists(e.target.value, e.target.checked)} />
+                                onChange={(e) => handleLists(e.target.value, e.target.checked)} 
+                            />
+
                             <label htmlFor={list._id}>{list.name}</label>
                         </div>
                     ))}
                 </DialogContent>
 
                 <DialogActions>
-                    <button onClick={() => setOpenCreateModal(true)}>
+                    <button onClick={handleCreateList}>
                         Create list
                     </button>
                 </DialogActions>
             </Dialog>
-
-            <CreateListModal
-                open={openCreateModal}
-                setOpen={setOpenCreateModal}
-                loading={loading}
-                createList={createList}
-                getLists={getLists} />
         </>
     )
 }
