@@ -4,8 +4,8 @@ import Error from "../../components/Error.jsx"
 import { useAuth } from "../../contexts/auth/useAuth.jsx"
 import Actions from "../../components/OtomePage/Actions.jsx"
 import { Link } from "react-router-dom"
-import charactersFormarter from "../../utils/characters.formatter.js"
-import descriptionsFormatter from "../../utils/fetching/descriptions.formatter.js"
+import charactersFormarter from "../../utils/formatters/characters.formatter.js"
+import descriptionsFormatter from "../../utils/formatters/descriptions.formatter.js"
 import CharacterCard from '../../components/characters/CharacterCard.jsx'
 
 export default function OtomePage() {

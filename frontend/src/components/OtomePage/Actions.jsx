@@ -1,12 +1,16 @@
-import ListsBtn from '../lists/ListsBtn'
 import { useState, useContext } from 'react'
+
 import { StateContext } from '../../contexts/state/StateContext'
 import { ListProvider } from '../../contexts/list/ListProvider'
+
+import ListsManager from '../lists/ListsManager'
 
 export default function Actions({ st, id }) {
 
     const { addState, deleteState, loading } = useContext(StateContext)
+
     const [state, setState] = useState(st)
+    const [openModal, setOpenModal] = useState(false)
 
     const handleState = (e) => {
 
@@ -36,8 +40,10 @@ export default function Actions({ st, id }) {
                 <option value={4}>Plan to play</option>
             </select>
 
+            <button onClick={() => setOpenModal(true)}>Add to list</button>
+
             <ListProvider type="otome">
-                <ListsBtn id={id} />
+                <ListsManager open={openModal} setOpen={setOpenModal} id={id} />
             </ListProvider>
         </>
     )

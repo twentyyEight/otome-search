@@ -3,14 +3,13 @@ import { useParams } from "react-router-dom";
 import apiFetch from "../../utils/fetching/apiFetch"
 import dbFetch from "../../utils/fetching/dbFetch";
 import useCharacters from '../characters/useCharacters'
-import { useContext } from "react";
-import { AuthContext } from '../../contexts/auth/AuthContext'
+import { useAuth } from '../../contexts/auth/useAuth'
 
 export default function useOtome() {
 
     const { id } = useParams()
 
-    const { isAuth } = useContext(AuthContext)
+    const { isAuth } = useAuth()
     const { characters, loading: loading_characters, error: error_characters } = useCharacters()
 
     const [loading, setLoading] = useState(true)
@@ -31,7 +30,7 @@ export default function useOtome() {
                         ["id", "=", id], // ID otome
                         ['devstatus', "!=", "2"], // Que el juego no esté cancelado
                     ],
-                    "fields": "title, image.url, devstatus, description, developers.name, released, rating, tags.id, tags.name, va.staff.name, va.character.id"
+                    "fields": "title, image.url, devstatus, description, developers.name, released, rating, tags.id, tags.name, va.staff.name, va.character.id, tags.spoiler, tags.lie, relations.relation, relations.relation_official, relations.title, staff.note, staff.name, staff.eid, editions.eid, editions.name"
                 }
 
                 const query_releases = {
@@ -68,8 +67,6 @@ export default function useOtome() {
 
     const isLoading = loading || loading_characters
     const isError = error || error_characters
-
-    console.log(otome)
 
     return { otome, error: isError, loading: isLoading }
 }

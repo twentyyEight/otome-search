@@ -14,6 +14,7 @@ export function ListProvider({ children, type }) {
         try {
             const res = await dbFetch(path, { method: 'POST', body: name })
             console.log(res)
+            return res
         } catch (error) {
             console.error(error)
         } finally {

@@ -8,10 +8,13 @@ export default async function apiFetch(endpoint, body) {
         });
 
         const data = await res.json()
+
+        if (!res.ok) throw new Error(data.message)
+
         return data
 
     } catch (error) {
         console.error(error)
-        return error
+        throw error
     }
 }
