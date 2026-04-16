@@ -16,6 +16,7 @@ import TraitPage from './pages/traits/TraitPage'
 import CharactersPage from './pages/characters/CharactersPage'
 import CharacterPage from './pages/characters/CharacterPage'
 import DevsPage from './pages/devs/DevsPage'
+import StaffPage from './pages/staff/StaffPage'
 
 import Navbar from './components/Navbar'
 
@@ -56,6 +57,8 @@ function App() {
 
                 <Route path='/developers' element={<DevsPage />} />
                 <Route path='/developers/:id' element={<DevPage />} />
+
+                <Route path='/staff/:id' element={<StaffPage />} />
 
                 <Route element={<ProtectedRoute />}>
                   <Route path='/profile/:name' element={<Profile />} />
