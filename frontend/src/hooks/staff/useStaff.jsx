@@ -35,7 +35,7 @@ export default function useStaff() {
                 const res_staff = await apiFetch('staff', query_staff)
                 const res_vn = await apiFetch('vn', query_vn)
 
-                const main = staffFormatter(res_staff.results, res_vn.results)
+                const main = await staffFormatter(res_staff.results, res_vn.results)
 
                 setStaff(main)
 
