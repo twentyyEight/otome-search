@@ -23,12 +23,12 @@ export default function StaffPage() {
                 ))
             }
             <p>{staff.description}</p>
-            {staff.extlinks.map(link => <Link key={link.id} to={link.url}>{link.label}</Link>)}
+            {staff.extlinks?.map(link => <Link key={link.id} to={link.url}>{link.label}</Link>)}
 
             <h2>Works</h2>
 
             <h3>Credits</h3>
-            {staff.roles.others.map(o => (
+            {staff.roles.others?.map(o => (
                 <div key={crypto.randomUUID()}>
                     <img src={o.otome.image} alt={o.otome.title} />
                     <p>{o.otome.title}</p>
@@ -39,7 +39,7 @@ export default function StaffPage() {
             ))}
 
             <h3>Voiced characters</h3>
-            {staff.roles.voice.map(v => (
+            {staff.roles.voice?.map(v => (
                 <div key={crypto.randomUUID()}>
                     <img src={v.character.image} alt={v.character.name} />
                     <p>{v.character.name}</p>

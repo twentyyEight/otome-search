@@ -8,7 +8,8 @@ import devsRoutes from './routes/dev.routes.js'
 import charactersRoutes from './routes/lists/character.routes.js'
 import otomesRoutes from './routes/lists/otome.routes.js'
 import statesRoutes from './routes/lists/state.routes.js'
-
+import staffRoutes from './routes/staff.routes.js'
+ 
 const app = express()
 
 app.use(cors({
@@ -26,5 +27,6 @@ app.use('/api', devsRoutes)
 app.use('/api', charactersRoutes)
 app.use('/api', otomesRoutes)
 app.use('/api', statesRoutes)
+app.use('/api', staffRoutes)
 
 export default app
