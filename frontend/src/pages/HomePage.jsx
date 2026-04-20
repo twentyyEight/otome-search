@@ -1,7 +1,7 @@
 import useImages from "../hooks/useImages"
 import Carousel from "../components/HomePage/Carousel"
-import Error from "../components/Error"
-import Loading from "../components/Loading"
+import Error from "../components/ui/Error"
+import Loading from "../components/ui/Loading"
 
 export default function HomePage() {
 

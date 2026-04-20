@@ -1,17 +1,15 @@
-import Loading from "../../components/Loading";
-import Error from "../../components/Error";
+import Loading from "../../components/ui/Loading";
+import Error from "../../components/ui/Error";
 import useTag from "../../hooks/tags/useTag"
-import useOtomes from "../../hooks/otomes/useOtomes";
-import OtomeList from "../../components/OtomesPage/Base";
 import { Link } from "react-router-dom";
+import OtomesPage from "../otomes/OtomesPage"
 
 export default function TagPage() {
 
     const { tag, childTags, loading, error } = useTag()
-    const { otomes, total, loading: loadingOtomes, error: errorOtomes } = useOtomes()
 
-    if (loading || loadingOtomes) return <Loading />
-    if (error || errorOtomes) return <Error />
+    if (loading) return <Loading />
+    if (error) return <Error />
 
     return <>
         <h1>{tag.name}</h1>
@@ -29,6 +27,6 @@ export default function TagPage() {
             </div>
         }
 
-        {otomes.length > 0 && <OtomeList otomes={otomes} total={total} />}
+        <OtomesPage />
     </>
 }

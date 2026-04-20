@@ -9,6 +9,6 @@ export default async function apiFetchSchema() {
 
     } catch (error) {
         console.error(error)
-        throw error
+        return null
     }
 }

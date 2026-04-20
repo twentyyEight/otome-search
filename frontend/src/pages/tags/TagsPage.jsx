@@ -1,9 +1,9 @@
 import useTags from "../../hooks/tags/useTags"
-import Error from "../../components/Error"
-import Loading from "../../components/Loading"
+import Error from "../../components/ui/Error"
+import Loading from "../../components/ui/Loading"
 import { Link } from "react-router-dom"
-import Pagination from '../../components/Pagination'
-import FiltersTags from "../../components/TagsPage/FiltersTags"
+import Pagination from '../../components/ui/Pagination'
+import FiltersTags from "../../components/filters/TagsFilters"
 
 export default function TagsPage() {
 
@@ -16,7 +16,7 @@ export default function TagsPage() {
         <FiltersTags />
 
         {tags.map(tag => (
-            <Link to={`/tags/g${tag.id}`} key={tag._id}>{tag.name}</Link>
+            <Link to={`/tags/${tag.id}`} key={tag._id}>{tag.name}</Link>
         ))}
 
         {total > 1 && <Pagination total={total} />}

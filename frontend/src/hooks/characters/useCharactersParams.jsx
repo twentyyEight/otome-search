@@ -28,7 +28,7 @@ export default function useCharactersParams(id) {
         if (name.trim()) filters.push(['search', '=', name])
         if (roles.length > 0) roles.map(role => filters.push(["role", "=", role]))
         if (sexes.length > 0) sexes.map(sex => filters.push(["sex", "=", sex]))
-        if (traits.length > 0) traits.map(trait => filters.push(["trait", "=", ["id", "=", trait]]))
+        if (traits.length > 0) traits.map(trait => filters.push(["trait", "=", trait]))
 
         return {
             'filters': filters,

@@ -1,7 +1,7 @@
-import Error from "../../components/Error"
-import Loading from "../../components/Loading"
+import Error from "../../components/ui/Error"
+import Loading from "../../components/ui/Loading"
 import { Link } from "react-router-dom"
-import Pagination from '../../components/Pagination'
+import Pagination from '../../components/ui/Pagination'
 import useStaffs from '../../hooks/staff/useStaffs'
 
 export default function StaffsPage() {

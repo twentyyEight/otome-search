@@ -1,6 +1,6 @@
 import useOtome from "../../hooks/otomes/useOtome.jsx"
-import Loading from "../../components/Loading.jsx"
-import Error from "../../components/Error.jsx"
+import Loading from "../../components/ui/Loading.jsx"
+import Error from "../../components/ui/Error.jsx"
 import { useAuth } from "../../contexts/auth/useAuth.jsx"
 import Actions from "../../components/OtomePage/Actions.jsx"
 import { Link } from "react-router-dom"

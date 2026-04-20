@@ -1,6 +1,6 @@
 import useProfile from "../../hooks/useProfile"
-import Error from "../../components/Error"
-import Loading from "../../components/Loading"
+import Error from "../../components/ui/Error"
+import Loading from "../../components/ui/Loading"
 import { Link } from 'react-router-dom'
 
 export default function Profile() {
@@ -13,8 +13,6 @@ export default function Profile() {
     const { name, otomes, characters } = profile
 
     const states = ['Playing', 'Finished', 'Wishlist', 'Stalled', 'Dropped']
-
-    console.log(otomes)
 
     return <>
         <h1>{name}'s profile</h1>

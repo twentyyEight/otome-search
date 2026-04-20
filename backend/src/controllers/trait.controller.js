@@ -42,13 +42,10 @@ export const getChildTraits = async (req, res) => {
     // Validación de input para evitar requests malformados / inyección
     id = (id || '').trim()
     if (!/^i?\d+$/.test(id)) return res.status(400).json({ message: 'Invalid trait id format' })
-    
-    const trait_id = Number(id.replace(/^i/, ''))
-    if (!Number.isInteger(trait_id) || trait_id < 1) return res.status(400).json({ message: 'Invalid trait id' })
 
     /* LLAMADA A LA BD */
     try {
-        const childTraits = await Trait.find({ parents: trait_id }).select('id name -_id')
+        const childTraits = await Trait.find({ parents: id }).select('id name -_id')
         return res.json(childTraits)
     } catch (error) {
         return res.status(500).json({ message: error.message })

@@ -1,7 +1,9 @@
-import OtomeList from "../../components/OtomesPage/Base"
 import useOtomes from '../../hooks/otomes/useOtomes'
-import Loading from '../../components/Loading';
-import Error from '../../components/Error';
+import Loading from '../../components/ui/Loading';
+import Error from '../../components/ui/Error';
+import FiltersOtomes from '../../components/filters/OtomesFilters';
+import Pagination from '../../components/ui/Pagination';
+import { Link } from "react-router-dom";
 
 export default function OtomesPage() {
 
@@ -11,7 +13,18 @@ export default function OtomesPage() {
    if (error) return <Error />
 
    return <>
-      <h1>Otomes</h1>
-      <OtomeList otomes={otomes} total={total} />
+      {/* FILTROS */}
+      <FiltersOtomes />
+
+      {/* PAGINACIÓN */}
+      {total > 1 && <Pagination total={total} />}
+
+      {/* LISTADO OTOMES */}
+      {otomes.map((otome) => (
+         <Link key={otome.id} to={`/otomes/${otome.id}`}>
+            <img src={otome.image?.url} alt={otome.title} />
+            <h3>{otome.title}</h3>
+         </Link>
+      ))}
    </>
 }

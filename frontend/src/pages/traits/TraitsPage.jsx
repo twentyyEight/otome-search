@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom"
-import Loading from "../../components/Loading";
-import Error from "../../components/Error";
+import Loading from "../../components/ui/Loading";
+import Error from "../../components/ui/Error";
 import useTraits from "../../hooks/traits/useTraits";
-import Pagination from '../../components/Pagination'
+import Pagination from '../../components/ui/Pagination'
 import { useSearchParams } from 'react-router-dom'
 
 export default function TraitsPage() {

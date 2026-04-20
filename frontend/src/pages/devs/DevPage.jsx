@@ -1,21 +1,19 @@
 import useDev from "../../hooks/devs/useDev"
-import Error from "../../components/Error"
-import Loading from "../../components/Loading"
-import OtomeList from '../../components/OtomesPage/Base'
-import useOtomes from "../../hooks/otomes/useOtomes"
+import Error from "../../components/ui/Error"
+import Loading from "../../components/ui/Loading"
+import OtomesPage from "../otomes/OtomesPage"
 
 export default function DevPage() {
 
     const { dev, loading, error } = useDev()
-    const { otomes, total, loading: loadingOtomes, error: errorOtomes } = useOtomes()
 
-    if (loading || loadingOtomes) return <Loading />
-    if (error || errorOtomes) return <Error />
+    if (loading) return <Loading />
+    if (error) return <Error />
 
     return <>
         <h1>{dev.name}</h1>
         <p>{dev.description}</p>
 
-        <OtomeList otomes={otomes} total={total} />
+        <OtomesPage />
     </>
 }

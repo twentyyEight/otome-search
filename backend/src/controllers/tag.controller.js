@@ -47,14 +47,11 @@ export const getTag = async (req, res) => {
 
     // Validación de input para evitar requests malformados / inyección
     id = (id || '').trim()
-    if (!/^i?\d+$/.test(id)) return res.status(400).json({ message: 'Invalid trait id format' })
-
-    const tag_id = Number(id.replace(/^g/, ''))
-    if (!Number.isInteger(tag_id) || tag_id < 1) return res.status(400).json({ message: 'Invalid tag id' })
+    if (!/^g?\d+$/.test(id)) return res.status(400).json({ message: 'Invalid tag id format' })
 
     try {
-        const tagInfo = await Tag.findOne({ id: tag_id })
-        const childTags = await Tag.find({ parents: tag_id })
+        const tagInfo = await Tag.findOne({ id })
+        const childTags = await Tag.find({ parents: id })
 
         return res.json({ info: tagInfo, childTags })
 

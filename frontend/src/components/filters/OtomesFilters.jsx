@@ -1,18 +1,18 @@
 import { platforms_list, languages_list, voiced_list } from "../../utils/dictionary";
-import Dropdown from "./Dropdown"
+import Dropdown from "../OtomesPage/Dropdown"
 import { useSearchParams } from 'react-router-dom'
 import { useMemo, useState } from "react";
-import useSuggestions from "../../hooks/useSuggestions";
+import SearchNameInput from '../ui/filters/SearchNameInput'
+import Suggestions from "../ui/filters/Suggestions";
+import useSetParams from "../../hooks/useSetParams";
 
 export default function FiltersOtomes() {
 
     const [searchParams, setSearchParams] = useSearchParams()
 
-    const [tag, setTag] = useState('')
-    const { suggestions, loading, error } = useSuggestions(tag, 'tags')
+    const { setParams } = useSetParams()
 
-    let { name, platforms, languages, original_languages, voice, age, sort } = useMemo(() => ({
-        name: searchParams.get('name') ?? '',
+    let { platforms, languages, original_languages, voice, age, sort } = useMemo(() => ({
         platforms: searchParams.getAll('platform') ?? [],
         languages: searchParams.getAll('lang') ?? [],
         original_languages: searchParams.getAll('original_lang') ?? [],
@@ -21,22 +21,21 @@ export default function FiltersOtomes() {
         sort: searchParams.get('sort') ?? 'votecount reverse'
     }), [searchParams])
 
-    const setParam = (key, value) => setSearchParams(prev => {
-        prev.set(key, value)
+    const ages = [0, 3, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18]
+    const [range, setRange] = useState(age)
+
+    const setAge = (age) => setSearchParams(prev => {
+        prev.delete('age')
+        prev.append('age', age)
         return prev
     })
 
     return <div>
 
-        <input
-            type="text"
-            placeholder="Buscar por nombre..."
-            value={name}
-            onChange={(e) => setParam('name', e.target.value)}
-        />
+        <SearchNameInput />
 
-        <label>Ordenar por</label>
-        <select onChange={(e) => setParam('sort', e.target.value)} value={sort}>
+        <label htmlFor="sort">Ordenar por</label>
+        <select onChange={(e) => setParams('sort', e.target.value)} value={sort} id="sort" name="sort">
             <option value="votecount reverse">Más populares</option>
             <option value="votecount">Menos populares</option>
             <option value="title">Título (A-Z)</option>
@@ -55,34 +54,21 @@ export default function FiltersOtomes() {
 
         <Dropdown data={voiced_list} label={'Voiced'} param={'voice'} query={voice} />
 
-        <label>Age Rating</label>
-        <p>+{age}</p>
+        <label htmlFor="age">Age Rating</label>
+        <p>+{ages[range]}</p>
         <input
             type="range"
+            id="age" name="age"
             min={0}
-            max={18}
-            defaultValue={age}
-            onMouseUp={(e) => setParam('age', e.target.value)}
-            onTouchEnd={(e) => setParam('age', e.target.value)}
+            max={ages.length - 1}
+            value={range}
+            onChange={(e) => setRange(Number(e.target.value))}
+            onMouseUp={() => setAge(ages[range])}
+            onTouchEnd={() => setAge(ages[range])}
         />
 
         <label htmlFor="tags">Tags</label>
-        <input
-            type="text" id="tags"
-            placeholder="Type tag name..."
-            value={tag}
-            onChange={(e) => setTag(e.target.value)}
-        />
-
-        {loading && <p>Loading suggestions...</p>}
-        {error && <p>Error searching suggestions</p>}
-        {!loading && !error && suggestions.length > 0 && (
-            <ul>
-                {suggestions.map((item) => (
-                    <li key={item.id} onClick={() => setParam('tag', `g${item.id}`)}>{item.name}</li>
-                ))}
-            </ul>
-        )}
+        <Suggestions endpoint={'tag'} />
 
     </div>
 }
