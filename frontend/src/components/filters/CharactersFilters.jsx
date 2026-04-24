@@ -1,8 +1,11 @@
 import SearchNameInput from '../ui/filters/SearchNameInput'
 import Checkbox from '../ui/filters/Checkbox'
 import Suggestions from '../ui/filters/Suggestions'
+import useCharactersParams from '../../hooks/characters/useCharactersParams'
 
 export default function FiltersCharacters() {
+
+    const { traits } = useCharactersParams()
 
     const ROLES = [
         { value: 'main', label: 'Protagonist' },
@@ -25,18 +28,18 @@ export default function FiltersCharacters() {
         <fieldset>
             <legend>Role</legend>
             {ROLES.map(({ value, label }) => (
-                <Checkbox key={crypto.randomUUID()} param_name={"role"} value={value} label={label} />
+                <Checkbox key={value} param_name={"role"} value={value} label={label} />
             ))}
         </fieldset>
 
         <fieldset>
             <legend>Sex</legend>
             {SEX.map(({ value, label }) => (
-                <Checkbox key={crypto.randomUUID()} param_name={"sex"} value={value} label={label} />
+                <Checkbox key={value} param_name={"sex"} value={value} label={label} />
             ))}
         </fieldset>
 
         <label htmlFor="traits">Traits</label>
-        <Suggestions endpoint={'trait'} />
+        <Suggestions endpoint={'trait'} items={traits} />
     </>
 }

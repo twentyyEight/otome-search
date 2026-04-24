@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react"
 import apiFetch from "../../utils/fetching/apiFetch"
-import { useParams } from "react-router-dom";
 import useOtomesParams from "./useOtomesParams";
 
 export default function useOtomes() {
@@ -11,8 +10,7 @@ export default function useOtomes() {
     const [otomes, setOtomes] = useState([])
     const [total, setTotal] = useState(1)
 
-    const { id } = useParams()
-    const query = useOtomesParams(id)
+    const { query } = useOtomesParams()
 
     useEffect(() => {
 

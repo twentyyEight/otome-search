@@ -1,61 +1,43 @@
 import { useState } from "react";
-import { useSearchParams } from 'react-router-dom'
+import useSetParams from "../../hooks/useSetParams";
 
-export default function Dropdown({ data, label, param, query }) {
+export default function Dropdown({ data, param, query }) {
 
-    const [_, setSearchParams] = useSearchParams()
+    const { setParams } = useSetParams()
 
     // Buscar opciones por su nombre
     const [searchTerm, setSearchTerm] = useState("");
 
-    const searchResults = Object.entries(data).filter(([f]) =>
-        f.toLowerCase().includes(searchTerm.toLowerCase())
-    );
+    const searchResults = data.filter(item =>
+        item.label.toLowerCase().includes(searchTerm.toLowerCase())
+    )
 
-    // Guardado de las opciones en un array - Elimina el dato si es que ya está guardado
-    const toggle = (value) => {
-        setSearchParams(prev => {
-            const current = prev.getAll(param)
+    return (
+        <>
+            {/* Búsqueda de las opciones */}
+            {param !== 'voice' &&
+                <input
+                    id={param} name={param}
+                    type="search"
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                />
+            }
 
-            const updated = current.includes(value)
-                ? current.filter(v => v !== value)
-                : [...current, value]
-
-            prev.delete(param)
-            updated.forEach(v => prev.append(param, v))
-
-            return prev
-        })
-    }
-
-    return <div>
-
-        <label>{label}</label>
-
-        {/* Búsqueda de las opciones */}
-        {label !== 'Voiced' &&
-            <input
-                type="search"
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-            />
-        }
-
-        {/* Opciones */}
-        <div>
-            {searchResults.map(([alias, name]) => (
+            {/* Opciones */}
+            {searchResults.map((data) => (
 
                 <div key={crypto.randomUUID()}>
 
-                    <label htmlFor={alias}>{name}</label>
-
                     <input type="checkbox"
-                        name={alias}
-                        checked={query.includes(alias)}
-                        onChange={() => toggle(alias)}
+                        name={data.id} id={data.id}
+                        checked={query.includes(String(data.id))}
+                        onChange={() => setParams(param, data.id)}
                     />
+
+                    <label htmlFor={data.id}>{data.label}</label>
                 </div>
             ))}
-        </div>
-    </div>
+        </>
+    )
 }

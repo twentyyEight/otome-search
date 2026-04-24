@@ -12,7 +12,7 @@ export default function useCharacters() {
     const [total, setTotal] = useState(1)
 
     const { id } = useParams()
-    const query = useCharactersParams(id)
+    const { query } = useCharactersParams(id)
 
     useEffect(() => {
 

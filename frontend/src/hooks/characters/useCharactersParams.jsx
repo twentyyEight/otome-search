@@ -31,12 +31,15 @@ export default function useCharactersParams(id) {
         if (traits.length > 0) traits.map(trait => filters.push(["trait", "=", trait]))
 
         return {
-            'filters': filters,
-            'fields': fields,
-            'results': 100,
-            'sort': 'name',
-            'count': true,
-            'page': page
+            traits,
+            query: {
+                'filters': filters,
+                'fields': fields,
+                'results': 100,
+                'sort': 'name',
+                'count': true,
+                'page': page
+            }
         }
 
     }, [searchParams, id])

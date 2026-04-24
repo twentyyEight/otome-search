@@ -1,26 +1,27 @@
-import { platforms_list, languages_list, voiced_list } from "../../utils/dictionary";
 import Dropdown from "../OtomesPage/Dropdown"
 import { useSearchParams } from 'react-router-dom'
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import SearchNameInput from '../ui/filters/SearchNameInput'
 import Suggestions from "../ui/filters/Suggestions";
 import useSetParams from "../../hooks/useSetParams";
+import useApiSchema from "../../hooks/useApiSchema";
+import useOtomesParams from "../../hooks/otomes/useOtomesParams";
+import Loading from '../ui/Loading'
+import Error from '../ui/Error'
 
 export default function FiltersOtomes() {
 
-    const [searchParams, setSearchParams] = useSearchParams()
+    const [_, setSearchParams] = useSearchParams()
 
     const { setParams } = useSetParams()
+    const { schema: { enums }, loading, error } = useApiSchema()
+    const { params: { platforms, languages, original_languages, voice, age, tags, sort } } = useOtomesParams()
 
-    let { platforms, languages, original_languages, voice, age, sort } = useMemo(() => ({
-        platforms: searchParams.getAll('platform') ?? [],
-        languages: searchParams.getAll('lang') ?? [],
-        original_languages: searchParams.getAll('original_lang') ?? [],
-        voice: searchParams.getAll('voice') ?? [],
-        age: Number(searchParams.get('age') ?? 0),
-        sort: searchParams.get('sort') ?? 'votecount reverse'
-    }), [searchParams])
-
+    const VOICED = [
+        { id: 1, label: 'Not voiced' },
+        { id: 3, label: 'Partially voiced' },
+        { id: 4, label: 'Fully voiced' }
+    ]
     const ages = [0, 3, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18]
     const [range, setRange] = useState(age)
 
@@ -29,6 +30,9 @@ export default function FiltersOtomes() {
         prev.append('age', age)
         return prev
     })
+
+    if (loading) return <Loading />
+    if (error) return <Error />
 
     return <div>
 
@@ -46,13 +50,17 @@ export default function FiltersOtomes() {
             <option value="rating">Peor evaluados</option>
         </select>
 
-        <Dropdown data={platforms_list} label={'Platforms'} param={'platform'} query={platforms} />
+        <label htmlFor="platform">Platforms</label>
+        <Dropdown data={enums.platform} param={'platform'} query={platforms} />
 
-        <Dropdown data={languages_list} label={'Languages'} param={'lang'} query={languages} />
+        <label htmlFor="lang">Language</label>
+        <Dropdown data={enums.language} param={'lang'} query={languages} />
 
-        <Dropdown data={languages_list} label={'Original Language'} param={'original_lang'} query={original_languages} />
+        <label htmlFor="original_lang">Original Language</label>
+        <Dropdown data={enums.language} param={'original_lang'} query={original_languages} />
 
-        <Dropdown data={voiced_list} label={'Voiced'} param={'voice'} query={voice} />
+        <label>Voiced</label>
+        <Dropdown data={VOICED} param={'voice'} query={voice} />
 
         <label htmlFor="age">Age Rating</label>
         <p>+{ages[range]}</p>
@@ -68,7 +76,7 @@ export default function FiltersOtomes() {
         />
 
         <label htmlFor="tags">Tags</label>
-        <Suggestions endpoint={'tag'} />
+        <Suggestions endpoint={'tag'} items={tags} />
 
     </div>
 }
