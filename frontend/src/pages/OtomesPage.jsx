@@ -16,7 +16,7 @@ export default function OtomesPage() {
 
     return (
         <>
-            <FiltersOtomes schema={schema} />
+            <FiltersOtomes schema={schema.enums} />
 
             {otomes.map((otome) => (
                 <Link key={otome.id} to={`/otomes/${otome.id}`}>

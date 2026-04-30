@@ -1,8 +1,16 @@
+import { useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import useOtomesParams from "../../hooks/otomes/useOtomesParams"
 import useSetParams from '../../hooks/useSetParams'
 import Dropdown from './Dropdown'
-import { useState } from 'react'
+
+const VOICED = [
+    { id: 1, label: 'Not voiced' },
+    { id: 3, label: 'Partially voiced' },
+    { id: 4, label: 'Fully voiced' }
+]
+
+const ages = [0, 3, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18]
 
 export default function FiltersOtomes({ schema }) {
 
@@ -11,19 +19,10 @@ export default function FiltersOtomes({ schema }) {
     const { platforms, languages, original_languages, sort, name, age, voice } = useOtomesParams()
     const setParams = useSetParams()
 
-    const { enums } = schema
-
-    const VOICED = [
-        { id: 1, label: 'Not voiced' },
-        { id: 3, label: 'Partially voiced' },
-        { id: 4, label: 'Fully voiced' }
-    ]
-    const ages = [0, 3, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18]
     const [range, setRange] = useState(ages.findIndex(a => a === age))
 
     const setAge = (age) => setSearchParams(prev => {
-        prev.delete('age')
-        prev.append('age', age)
+        prev.set('age', age)
         return prev
     })
 
@@ -54,13 +53,13 @@ export default function FiltersOtomes({ schema }) {
             </select>
 
             <label htmlFor="platform">Platforms</label>
-            <Dropdown data={enums.platform} param={'platform'} query={platforms} />
+            <Dropdown data={schema.platform} param={'platform'} query={platforms} />
 
             <label htmlFor="lang">Language</label>
-            <Dropdown data={enums.language} param={'lang'} query={languages} />
+            <Dropdown data={schema.language} param={'lang'} query={languages} />
 
             <label htmlFor="original_lang">Original Language</label>
-            <Dropdown data={enums.language} param={'original_lang'} query={original_languages} />
+            <Dropdown data={schema.language} param={'original_lang'} query={original_languages} />
 
             <label>Voiced</label>
             <Dropdown data={VOICED} param={'voice'} query={voice} />

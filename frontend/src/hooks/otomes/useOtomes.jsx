@@ -14,8 +14,6 @@ export default function useOtomes() {
     const params = useOtomesParams()
     const query = useOtomesQuery(params)
 
-    console.log(query)
-
     useEffect(() => {
 
         async function fetchAllOtomes() {
