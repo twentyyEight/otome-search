@@ -19,7 +19,7 @@ export default function OtomesPage() {
             <FiltersOtomes schema={schema.enums} />
 
             {otomes.map((otome) => (
-                <Link key={otome.id} to={`/otomes/${otome.id}`}>
+                <Link key={otome.id} to={`${otome.id}`}>
                     <img src={otome.image?.url} alt={otome.title} />
                     <p>{otome.title}</p>
                 </Link>

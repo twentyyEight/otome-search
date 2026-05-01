@@ -1,6 +1,6 @@
 import { Readable } from 'stream'
 import zlib from 'zlib'
-import Tag from './models/tag.model.js'
+import Tag from '../models/tag.model.js'
 
 async function download() {
     const res = await fetch('https://dl.vndb.org/dump/vndb-tags-latest.json.gz')
@@ -41,7 +41,7 @@ async function saveToDB(data) {
     console.log('Tags saved')
 }
 
-export async function getTags() {
+export async function downloadTags() {
     console.log('Downloading tags...')
     const data = await download()
     await saveToDB(data)

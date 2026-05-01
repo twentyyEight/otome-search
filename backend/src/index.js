@@ -1,10 +1,10 @@
 import app from './app.js'
 import { connectDB } from './db.js'
-import { getTags } from './getTags.js'
+import { downloadTags } from './utils/downloadTags.js'
 
 connectDB()
     .then(() => {
-        getTags()
+        downloadTags()
     })
 
 app.listen(3000, () => {
