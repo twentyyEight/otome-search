@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import apiFetch from "../../utils/apiFetch"
+import apiFetch from "../../utils/fetching/apiFetch"
 import useOtomesParams from "./useOtomesParams"
 import useOtomesQuery from "./useOtomesQuery"
 

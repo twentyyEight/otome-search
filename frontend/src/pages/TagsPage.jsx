@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import useTags from "../hooks/useTags"
+import useTags from "../hooks/tags/useTags"
 import Loading from '../components/Loading'
 import Error from '../components/Error'
 

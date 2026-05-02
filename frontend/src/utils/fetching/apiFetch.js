@@ -6,7 +6,9 @@ export default async function apiFetch(endpoint, body) {
         body: JSON.stringify(body),
     });
 
-    if (!res.ok) throw new Error(res.statusText)
+    const data = await res.json()
 
-    return res.json()
+    if (!res.ok) throw new Error(data.message)
+
+    return data
 }

@@ -1,5 +1,6 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
-import OtomesPage from './pages/OtomesPage'
+import OtomesPage from './pages/otomes/OtomesPage'
+import OtomePage from './pages/otomes/OtomePage'
 import TagsPage from './pages/TagsPage'
 
 function App() {
@@ -8,6 +9,8 @@ function App() {
         <BrowserRouter>
             <Routes>
                 <Route path='/otomes' element={<OtomesPage />} />
+                <Route path='/otomes/:id' element={<OtomePage />} />
+
                 <Route path='/tags' element={<TagsPage />} />
             </Routes>
         </BrowserRouter>

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import apiFetchSchema from "../utils/schemaFetch"
+import apiFetchSchema from "../utils/fetching/schemaFetch"
 
 export default function useSchema() {
 
