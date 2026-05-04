@@ -4,7 +4,7 @@ export const getTags = async (req, res) => {
     try {
         const rootTags = await Tag.find(
             { parents: { $size: 0 } },
-            { _id: 0, id: 1, name: 1 }
+            { _id: 0, name: 1, description: 1, id: 1 }
         )
 
         const rootIds = rootTags.map(tag => tag.id)
@@ -18,8 +18,8 @@ export const getTags = async (req, res) => {
         )
 
         const tags = rootTags.map(root => ({
-            id: root.id,
             name: root.name,
+            description: root.description,
             childs: childTags
                 .filter(child => child.parents.includes(root.id))
                 .map(({ id, name }) => ({ id, name }))
@@ -28,5 +28,20 @@ export const getTags = async (req, res) => {
         res.json(tags)
     } catch (error) {
         res.status(500).json({ message: error.message })
+    }
+}
+
+export const getTag = async (req, res) => {
+
+    let { id } = req.params
+
+    try {
+        const tag = await Tag.findOne({ id }, {_id: 0, name: 1, description: 1})
+        const childs = await Tag.find({ parents: id }, {_id: 0, id: 1, name: 1})
+
+        return res.json({ name: tag.name, description: tag.description, childs })
+
+    } catch (error) {
+        return res.status(500).json({ message: error.message })
     }
 }

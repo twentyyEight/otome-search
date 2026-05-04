@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useSearchParams } from 'react-router-dom'
+import { useSearchParams, Link, useLocation } from 'react-router-dom'
 import useOtomesParams from "../../hooks/otomes/useOtomesParams"
 import useSetParams from '../../hooks/useSetParams'
 import Dropdown from './Dropdown'
@@ -10,11 +10,13 @@ const VOICED = [
     { id: 4, label: 'Fully voiced' }
 ]
 
-const AGES = [0, 3, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18]
+const AGES = [0, 3, 6, 7, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18]
 
 export default function FiltersOtomes({ schema }) {
 
     const [, setSearchParams] = useSearchParams()
+    const location = useLocation()
+
 
     const { platforms, languages, original_languages, sort, name, age, voice } = useOtomesParams()
     const setParams = useSetParams()
@@ -76,6 +78,13 @@ export default function FiltersOtomes({ schema }) {
                 onMouseUp={() => setAge(AGES[range])}
                 onTouchEnd={() => setAge(AGES[range])}
             />
+
+            <Link
+                to={`/tags`}
+                state={{ background: location }}
+            >
+                Browse all tags
+            </Link>
         </div>
     )
 }

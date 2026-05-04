@@ -15,7 +15,7 @@ export default function OtomesPage() {
     if (error_otome || error_schema) return <Error />
 
     return (
-        <>
+        <div>
             <FiltersOtomes schema={schema.enums} />
 
             {otomes.map((otome) => (
@@ -26,6 +26,6 @@ export default function OtomesPage() {
             ))}
 
             {total > 1 && <Pagination total={total} />}
-        </>
+        </div>
     )
 }
