@@ -26,6 +26,7 @@ export default function useOtome() {
                 const data_releases = await apiFetch('release', {
                     "filters": ["vn", "=", ["id", "=", id]],
                     "fields": "title, languages.lang, platforms, released, minage, patch, official, voiced, notes, extlinks{url,label}",
+                    "sort": "released",
                     "results": 100
                 })
 

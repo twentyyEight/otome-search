@@ -10,7 +10,7 @@ const VOICED = [
     { id: 4, label: 'Fully voiced' }
 ]
 
-const ages = [0, 3, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18]
+const AGES = [0, 3, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18]
 
 export default function FiltersOtomes({ schema }) {
 
@@ -19,7 +19,7 @@ export default function FiltersOtomes({ schema }) {
     const { platforms, languages, original_languages, sort, name, age, voice } = useOtomesParams()
     const setParams = useSetParams()
 
-    const [range, setRange] = useState(ages.findIndex(a => a === age))
+    const [range, setRange] = useState(AGES.findIndex(a => a === age))
 
     const setAge = (age) => setSearchParams(prev => {
         prev.set('age', age)
@@ -65,16 +65,16 @@ export default function FiltersOtomes({ schema }) {
             <Dropdown data={VOICED} param={'voice'} query={voice} />
 
             <label htmlFor="age">Age Rating</label>
-            <p>+{ages[range]}</p>
+            <p>+{AGES[range]}</p>
             <input
                 type="range"
                 id="age" name="age"
                 min={0}
-                max={ages.length - 1}
+                max={AGES.length - 1}
                 value={range}
                 onChange={(e) => setRange(Number(e.target.value))}
-                onMouseUp={() => setAge(ages[range])}
-                onTouchEnd={() => setAge(ages[range])}
+                onMouseUp={() => setAge(AGES[range])}
+                onTouchEnd={() => setAge(AGES[range])}
             />
         </div>
     )
