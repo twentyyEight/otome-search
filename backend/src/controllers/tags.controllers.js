@@ -36,12 +36,32 @@ export const getTag = async (req, res) => {
     let { id } = req.params
 
     try {
-        const tag = await Tag.findOne({ id }, {_id: 0, name: 1, description: 1})
+        const tag = await Tag.findOne({ id }, { _id: 0, name: 1, description: 1, id: 1 })
         const childs = await Tag.find({ parents: id }, {_id: 0, id: 1, name: 1})
 
-        return res.json({ name: tag.name, description: tag.description, childs })
+        return res.json({ id: tag.id, name: tag.name, description: tag.description, childs })
 
     } catch (error) {
         return res.status(500).json({ message: error.message })
+    }
+}
+
+export const getTagsSuggestions = async (req, res) => {
+
+    // Limpieza de caracteres que podrian producir un ataque regex
+    const name = (req.body.name || '').trim()
+    const safe_name = name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+
+    try {
+        const suggestions = await Tag
+            .find({ name: { $regex: `^${safe_name}`, $options: 'i' } }, { _id: 0, name: 1, id: 1 })
+            .sort({ name: 1 })
+            .limit(10)
+
+        return res.json(suggestions)
+
+    } catch (error) {
+
+        return res.status(500).json({ message: 'Error searching suggestions' })
     }
 }

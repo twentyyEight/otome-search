@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import dbFetch from "../../utils/fetching/dbFetch";
 
 export default function useTags() {
 
@@ -12,12 +13,8 @@ export default function useTags() {
         async function fetchTags() {
 
             try {
-                const res = await fetch('http://localhost:3000/api/tags')
-                const data = await res.json()
-
-                if (!res.ok) throw new Error(data.message)
-
-                setTags(data)
+                const res = await dbFetch(`tags`)
+                setTags(res)
             } catch (err) {
                 setError(true)
                 console.error(err)
