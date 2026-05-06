@@ -32,7 +32,7 @@ export default function TagsModal() {
         </div>
     ))
 
-    if (!location.state) return <div>{content}</div>  // página normal
+    if (!location.state) return <div>{content}</div>
 
-    return <ModalBase title={"Tags"}>{content}</ModalBase>  // modal
+    return <ModalBase title={"Tags"}>{content}</ModalBase>
 }

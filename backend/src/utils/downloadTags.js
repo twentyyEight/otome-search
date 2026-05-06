@@ -27,8 +27,6 @@ async function saveToDB(data) {
                     id: String(tag.id),
                     name: tag.name,
                     description: tag.description,
-                    category: tag.cat,
-                    aliases: tag.aliases ?? [],
                     parents: (tag.parents ?? []).map(String),
                 },
                 { upsert: true }

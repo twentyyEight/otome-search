@@ -16,14 +16,6 @@ const tagSchema = new mongoose.Schema({
     description: {
         type: String
     },
-
-    category: { 
-        type: String, 
-        enum: ['cont', 'ero', 'tech'], 
-        required: true 
-    },
-    
-    aliases: [{ type: String }],
     
     parents: [{ type: String }],
 })

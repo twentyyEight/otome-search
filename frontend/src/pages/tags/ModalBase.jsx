@@ -7,8 +7,6 @@ export default function TagModal({ title, children }) {
     const location = useLocation();
     const background = location.state?.background
 
-    console.log(location)
-
     {/* DISABLES SCROLL ON BACKGROUND */}
     useEffect(() => {
         const originalStyle = document.body.style.overflow
