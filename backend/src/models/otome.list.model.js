@@ -23,4 +23,4 @@ const otomeListSchema = new mongoose.Schema({
     ]
 });
 
-export default mongoose.model('OtomesList', otomesListSchema)
+export default mongoose.model('OtomeList', otomeListSchema)

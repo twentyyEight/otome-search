@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
-import Loading from '../../components/Loading'
-import Error from '../../components/Error'
-import Pagination from '../../components/Pagination'
+import Loading from '../../components/ui/Loading'
+import Error from '../../components/ui/Error'
+import Pagination from '../../components/ui/Pagination'
 import useOtomes from '../../hooks/otomes/useOtomes'
 import useSchema from "../../hooks/useSchema";
 import FiltersOtomes from "../../components/OtomesPage/FiltersOtomes";

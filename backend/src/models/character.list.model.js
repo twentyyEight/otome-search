@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-const charactersListSchema = new mongoose.Schema({
+const characterListSchema = new mongoose.Schema({
 
     user_id: {
         type: mongoose.Schema.Types.ObjectId,
@@ -24,4 +24,4 @@ const charactersListSchema = new mongoose.Schema({
     ]
 })
 
-export default mongoose.model('CharactersList', charactersListSchema)
+export default mongoose.model('CharacterList', characterListSchema)

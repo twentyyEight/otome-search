@@ -1,7 +1,7 @@
 import { Link, useLocation } from "react-router-dom";
 import useTags from "../../hooks/tags/useTags"
-import Loading from '../../components/Loading'
-import Error from '../../components/Error'
+import Loading from '../../components/ui/Loading'
+import Error from '../../components/ui/Error'
 import ModalBase from './ModalBase'
 
 export default function TagsModal() {

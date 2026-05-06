@@ -2,8 +2,8 @@ import { useState } from "react"
 import { Link } from "react-router-dom"
 import useOtome from "../../hooks/otomes/useOtome"
 import useSchema from '../../hooks/useSchema'
-import Loading from "../../components/Loading"
-import Error from "../../components/Error"
+import Loading from "../../components/ui/Loading"
+import Error from "../../components/ui/Error"
 import FiltersReleases from "../../components/OtomePage/FiltersReleases"
 
 export default function OtomePage() {
