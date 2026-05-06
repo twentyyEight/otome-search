@@ -4,7 +4,7 @@ import Error from '../../components/ui/Error'
 import Pagination from '../../components/ui/Pagination'
 import useOtomes from '../../hooks/otomes/useOtomes'
 import useSchema from "../../hooks/useSchema";
-import FiltersOtomes from "../../components/OtomesPage/FiltersOtomes";
+import OtomesFilter from "../../components/otomes/OtomesFilter";
 
 export default function OtomesPage() {
 
@@ -16,7 +16,7 @@ export default function OtomesPage() {
 
     return (
         <div>
-            <FiltersOtomes schema={schema.enums} />
+            <OtomesFilter schema={schema.enums} />
 
             {otomes.map((otome) => (
                 <Link key={otome.id} to={`${otome.id}`}>

@@ -4,7 +4,7 @@ import useOtome from "../../hooks/otomes/useOtome"
 import useSchema from '../../hooks/useSchema'
 import Loading from "../../components/ui/Loading"
 import Error from "../../components/ui/Error"
-import FiltersReleases from "../../components/OtomePage/FiltersReleases"
+import FiltersReleases from "../../components/otome/FiltersReleases"
 
 export default function OtomePage() {
 
