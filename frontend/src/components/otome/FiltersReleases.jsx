@@ -15,7 +15,6 @@ export default function FiltersReleases({ schema, original, setReleases }) {
     const languages = schema.enums.language.filter(lang => Array.from(languages_otome).includes(lang.id))
 
 
-
     {/* RELEASES FILTERS */ }
     const [selectedPlatforms, setSelectedPlatforms] = useState([])
     const [selectedLanguages, setSelectedLanguages] = useState([])
@@ -58,7 +57,7 @@ export default function FiltersReleases({ schema, original, setReleases }) {
                         id={platform.id}
                         value={platform.id}
                         onChange={(e) => handleFilter('platform', e.target.value)} />
-                    <label htmlFor="">{platform.label}</label>
+                    <label htmlFor={platform.id}>{platform.label}</label>
                 </div>
             )}
 
@@ -70,7 +69,7 @@ export default function FiltersReleases({ schema, original, setReleases }) {
                         id={language.id}
                         value={language.id}
                         onChange={(e) => handleFilter('language', e.target.value)} />
-                    <label htmlFor="">{language.label}</label>
+                    <label htmlFor={language.id}>{language.label}</label>
                 </div>
             )}
         </div>

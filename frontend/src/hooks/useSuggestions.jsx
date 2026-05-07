@@ -8,10 +8,6 @@ export default function useSuggestions(input = '') {
 
     const [suggestions, setSuggestions] = useState([])
 
-    useEffect(() => {
-
-    }, [input])
-
 
     useEffect(() => {
 

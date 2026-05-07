@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-const otomeListSchema = new mongoose.Schema({
+const listSchema = new mongoose.Schema({
 
     user_id: {
         type: mongoose.Schema.Types.ObjectId,
@@ -17,10 +17,11 @@ const otomeListSchema = new mongoose.Schema({
         {
             id: {
                 type: 'String',
+                match: [/^v/, 'Otome id must begin with v'],
                 required: [true, 'Otome id is required']
             }
         }
     ]
 });
 
-export default mongoose.model('OtomeList', otomeListSchema)
+export default mongoose.model('List', listSchema)

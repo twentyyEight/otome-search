@@ -1,19 +1,19 @@
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import dbFetch from '../../utils/fetching/dbFetch'
-import { OtomeListContext } from "./OtomeListContext";
+import { ListContext } from "./ListContext";
 
-export function OtomeListProvider({ children }) {
+export function ListProvider({ children }) {
 
     const [loading, setLoading] = useState(false)
-    const [otomeLists, setOtomeLists] = useState([])
-    const [otomeList, setOtomeList] = useState(null)
+    const [lists, setLists] = useState([])
+    const [list, setList] = useState(null)
 
-    const createOtomeList = async (name) => {
+    const createList = async (name) => {
 
         setLoading(true)
 
         try {
-            const res = await dbFetch('otomes/lists', { method: 'POST', body: name })
+            const res = await dbFetch('lists', { method: 'POST', body: name })
             console.log(res)
             return res
         } catch (error) {
@@ -24,12 +24,12 @@ export function OtomeListProvider({ children }) {
 
     }
 
-    const updateOtomeList = async (name) => {
+    const updateList = async (name) => {
 
         setLoading(true)
 
         try {
-            const res = await dbFetch('otomes/lists', { method: 'PUT', body: name })
+            const res = await dbFetch('lists', { method: 'PUT', body: name })
             console.log(res)
             return res
         } catch (error) {
@@ -40,12 +40,12 @@ export function OtomeListProvider({ children }) {
 
     }
 
-    const deleteOtomeList = async (id) => {
+    const deleteList = async (id) => {
 
         setLoading(true)
 
         try {
-            const res = await dbFetch(`otomes/lists/${id}`, { method: 'DELETE' })
+            const res = await dbFetch(`lists/${id}`, { method: 'DELETE' })
             console.log(res)
         } catch (error) {
             console.error(error)
@@ -54,13 +54,27 @@ export function OtomeListProvider({ children }) {
         }
     }
 
-    const getOtomeLists = async () => {
+    const getLists = useCallback(async () => {
 
         setLoading(true)
 
         try {
-            const res = await dbFetch('otomes/lists')
-            setOtomeLists(res)
+            const res = await dbFetch('lists')
+            setLists(res)
+        } catch (error) {
+            console.error(error)
+        } finally {
+            setLoading(false)
+        }
+    }, [])
+
+    const getList = async (id) => {
+
+        setLoading(true)
+
+        try {
+            const res = await dbFetch(`lists/${id}`)
+            setList(res)
         } catch (error) {
             console.error(error)
         } finally {
@@ -68,26 +82,12 @@ export function OtomeListProvider({ children }) {
         }
     }
 
-    const getOtomeList = async (id) => {
+    const addToList = async (id, otome_id) => {
 
         setLoading(true)
 
         try {
-            const res = await dbFetch(`otomes/lists/${id}`)
-            setOtomeList(res)
-        } catch (error) {
-            console.error(error)
-        } finally {
-            setLoading(false)
-        }
-    }
-
-    const addToOtomeList = async (id, otome_id) => {
-
-        setLoading(true)
-
-        try {
-            const res = await dbFetch(`otomes/lists/${id}/otome/${otome_id}`, { method: 'POST' })
+            const res = await dbFetch(`lists/${id}/otome/${otome_id}`, { method: 'POST' })
             console.log(res)
         } catch (error) {
             console.error(error)
@@ -96,12 +96,12 @@ export function OtomeListProvider({ children }) {
         }
     }
 
-    const deleteToOtomeList = async (id, otome_id) => {
+    const deleteFromList = async (id, otome_id) => {
 
         setLoading(true)
 
         try {
-            const res = await dbFetch(`otomes/lists/${id}/otome/${otome_id}`, { method: 'DELETE' })
+            const res = await dbFetch(`lists/${id}/otome/${otome_id}`, { method: 'DELETE' })
             console.log(res)
         } catch (error) {
             console.error(error)
@@ -111,19 +111,19 @@ export function OtomeListProvider({ children }) {
     }
 
     return (
-        <OtomeListContext.Provider value={{
+        <ListContext.Provider value={{
             loading,
-            otomeList,
-            otomeLists,
-            createOtomeList,
-            updateOtomeList,
-            deleteOtomeList,
-            getOtomeList,
-            getOtomeLists,
-            addToOtomeList,
-            deleteToOtomeList
+            list,
+            lists,
+            createList,
+            updateList,
+            deleteList,
+            getList,
+            getLists,
+            addToList,
+            deleteFromList
         }}>
             {children}
-        </OtomeListContext.Provider>
+        </ListContext.Provider>
     )
 }

@@ -38,16 +38,16 @@ export default function OtomesFilter({ schema }) {
             <SortFilter sort={sort} setParams={setParams} />
 
             <label htmlFor="platform">Platforms</label>
-            <Dropdown data={schema.platform} param={'platform'} query={platforms} />
+            <Dropdown data={schema.platform} param={'platform'} query={platforms} setParams={setParams} />
 
             <label htmlFor="lang">Language</label>
-            <Dropdown data={schema.language} param={'lang'} query={languages} />
+            <Dropdown data={schema.language} param={'lang'} query={languages} setParams={setParams} />
 
             <label htmlFor="original_lang">Original Language</label>
-            <Dropdown data={schema.language} param={'original_lang'} query={original_languages} />
+            <Dropdown data={schema.language} param={'original_lang'} query={original_languages} setParams={setParams} />
 
             <label>Voiced</label>
-            <Dropdown data={VOICED} param={'voice'} query={voice} />
+            <Dropdown data={VOICED} param={'voice'} query={voice} setParams={setParams} />
 
             <AgeFilter age={age} setSearchParams={setSearchParams} />
             <TagsFilter setParams={setParams} searchParams={searchParams} setSearchParams={setSearchParams} />

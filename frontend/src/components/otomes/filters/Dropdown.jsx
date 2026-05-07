@@ -1,12 +1,9 @@
 import { useState } from "react"
-import useSetParams from '../../hooks/useSetParams'
 
-export default function Dropdown({ data, param, query }) {
+export default function Dropdown({ data, param, query, setParams }) {
 
     // Buscar opciones por su nombre
     const [searchTerm, setSearchTerm] = useState("");
-
-    const setParams = useSetParams()
 
     const searchResults = data.filter(item =>
         item.label.toLowerCase().includes(searchTerm.toLowerCase())

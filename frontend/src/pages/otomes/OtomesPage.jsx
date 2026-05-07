@@ -4,7 +4,7 @@ import Error from '../../components/ui/Error'
 import Pagination from '../../components/ui/Pagination'
 import useOtomes from '../../hooks/otomes/useOtomes'
 import useSchema from "../../hooks/useSchema";
-import OtomesFilter from "../../components/otomes/OtomesFilter";
+import OtomesFilter from "../../components/otomes/filters/OtomesFilter";
 
 export default function OtomesPage() {
 

@@ -2,16 +2,20 @@ import { useState } from "react"
 import { Link } from "react-router-dom"
 import useOtome from "../../hooks/otomes/useOtome"
 import useSchema from '../../hooks/useSchema'
+import { useAuth } from '../../contexts/auth/useAuth'
 import Loading from "../../components/ui/Loading"
 import Error from "../../components/ui/Error"
 import FiltersReleases from "../../components/otome/FiltersReleases"
+import ListsModal from "../../components/list/ListsModal"
 
 export default function OtomePage() {
 
+    const { isAuth } = useAuth()
     const { otome, loading: loading_otome, error: error_otome } = useOtome()
     const { schema, loading: loading_schema, error: error_schema } = useSchema()
 
     const [filteredReleases, setFilteredReleases] = useState(null)
+    const [openModal, setOpenModal] = useState(false)
 
     if (loading_otome || loading_schema) return <Loading />
     if (error_otome || error_schema) return <Error />
@@ -20,11 +24,13 @@ export default function OtomePage() {
 
     return (
         <>
+            {isAuth && <ListsModal isOpen={openModal} setIsOpen={setOpenModal} />}
             <img src={otome.image.url} alt={otome.name} />
             <h1>{otome.title}</h1>
             {otome.developers.map(dev => <p key={dev.id}>{dev.name}</p>)}
             <p>{otome.olang}</p>
             <p>{otome.rating} ({otome.votecount})</p>
+            {isAuth && <button onClick={() => setOpenModal(true)}>Add to list</button>}
 
             {/* Otomes relacionados */}
             {Object.keys(otome.relations).length > 0 &&
