@@ -1,12 +1,14 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import useTags from "../../hooks/tags/useTags"
 import Loading from '../../components/ui/Loading'
 import Error from '../../components/ui/Error'
-import ModalBase from './ModalBase'
+import ModalBase from '../../components/ui/ModalBase'
 
 export default function TagsModal() {
 
-    const location = useLocation();
+    const navigate = useNavigate()
+    const location = useLocation()
+    const background = location.state?.background
 
     const { tags, loading, error } = useTags()
 
@@ -22,7 +24,7 @@ export default function TagsModal() {
                     <p key={child.id}>
                         <Link
                             to={`${child.id}`}
-                            state={{ background: location?.state?.background }}
+                            state={{ background: background }}
                         >
                             {child.name}
                         </Link>
@@ -34,5 +36,11 @@ export default function TagsModal() {
 
     if (!location.state) return <div>{content}</div>
 
-    return <ModalBase title={"Tags"}>{content}</ModalBase>
+    return (
+        <ModalBase
+            handleClose={() => navigate(background)}
+        >
+            {content}
+        </ModalBase>
+    )
 }

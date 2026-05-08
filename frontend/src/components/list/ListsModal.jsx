@@ -2,6 +2,7 @@ import { useState, useEffect } from "react"
 import { useParams } from "react-router-dom"
 import CreateListModal from "./CreateListModal"
 import { useList } from '../../contexts/list/useList'
+import ModalBase from "../ui/ModalBase"
 
 export default function ListsModal({ isOpen, setIsOpen }) {
 
@@ -28,17 +29,18 @@ export default function ListsModal({ isOpen, setIsOpen }) {
     return (
         <>
             {isOpen && !openModal &&
-                <div>
-                    <div>
-                        <button onClick={() => setIsOpen(false)}>Close</button>
+                <>
+                    <ModalBase
+                        handleClose={() => setIsOpen(false)}
+                    >
                         {lists?.map(list => (
                             <div key={list._id}>
 
-                                <input 
-                                type="checkbox" 
-                                id={list._id}
-                                checked={list.otomes.some(otome => otome.id === otome_id)} 
-                                onChange={(e) => handleAddition(list._id, e.target.checked)} />
+                                <input
+                                    type="checkbox"
+                                    id={list._id}
+                                    checked={list.otomes.some(otome => otome.id === otome_id)}
+                                    onChange={(e) => handleAddition(list._id, e.target.checked)} />
 
                                 <label htmlFor={list._id}>{list.name}</label>
                             </div>
@@ -47,8 +49,8 @@ export default function ListsModal({ isOpen, setIsOpen }) {
                             setOpenModal(true)
                             setIsOpen(false)
                         }}>Create new list</button>
-                    </div>
-                </div>
+                    </ModalBase>
+                </>
             }
             <CreateListModal isOpen={openModal} setIsOpen={setOpenModal} setShowLists={setIsOpen} />
         </>
