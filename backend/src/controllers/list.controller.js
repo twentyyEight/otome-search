@@ -50,7 +50,7 @@ export const getLists = async (req, res) => {
 
     try {
 
-        const lists = await List.find({ user_id: id }).select('name _id otomes.id')
+        const lists = await List.find({ user_id: id }, { otomes: 1, name: 1 })
         return res.json(lists)
 
     } catch (error) {
@@ -83,7 +83,7 @@ export const addToList = async (req, res) => {
     const { id: user_id } = req.user
 
     try {
-        const exists = await List.findOne({ user_id, 'otomes.id': otome_id })
+        const exists = await List.findOne({ user_id, _id: list_id, 'otomes.id': otome_id })
 
         if (exists) {
             return res.status(409).json({ message: 'Otome is already saved in this list' })

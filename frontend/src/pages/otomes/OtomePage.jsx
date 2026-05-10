@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { Link } from "react-router-dom"
+import { Link, useParams } from "react-router-dom"
 import useOtome from "../../hooks/otomes/useOtome"
 import useSchema from '../../hooks/useSchema'
 import { useAuth } from '../../contexts/auth/useAuth'
@@ -14,6 +14,8 @@ export default function OtomePage() {
     const { otome, loading: loading_otome, error: error_otome } = useOtome()
     const { schema, loading: loading_schema, error: error_schema } = useSchema()
 
+    const { id } = useParams()
+
     const [filteredReleases, setFilteredReleases] = useState(null)
     const [openModal, setOpenModal] = useState(false)
 
@@ -24,7 +26,7 @@ export default function OtomePage() {
 
     return (
         <>
-            {isAuth && <ListsModal isOpen={openModal} setIsOpen={setOpenModal} />}
+            {isAuth && <ListsModal isOpen={openModal} setIsOpen={setOpenModal} otome_id={id} />}
             <img src={otome.image.url} alt={otome.name} />
             <h1>{otome.title}</h1>
             {otome.developers.map(dev => <p key={dev.id}>{dev.name}</p>)}
@@ -81,7 +83,7 @@ export default function OtomePage() {
                             <h3>{role}</h3>
                             {characters.map(character =>
                                 <div key={character.id}>
-                                    <img src={character.image.url} alt={character.name} />
+                                    <img src={character.image?.url} alt={character.name} />
                                     <h4>{character.name}</h4>
                                     <p>{character.sex[0]}</p>
                                     {character.voice && <p>Voiced by: {character.voice}</p>}

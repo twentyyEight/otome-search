@@ -1,4 +1,5 @@
 import User from '../models/user.model.js'
+import List from '../models/list.model.js'
 import bcrypt from 'bcryptjs'
 import jwt from "jsonwebtoken"
 import { TOKEN_SECRET } from "../config.js"
@@ -93,5 +94,28 @@ export const verifyToken = async (req, res) => {
     } catch (error) {
 
         return res.status(500).json({ message: error.message });
+    }
+}
+
+export const profile = async (req, res) => {
+
+    const { name } = req.params
+
+    try {
+
+        const user = await User.findOne({ name })
+        if (!user) return res.status(404).json({ message: 'User not found' })
+
+        const user_id = user._id
+
+        const lists = await List.find({ user_id })
+
+        return res.status(200).json({
+            name,
+            lists
+        })
+
+    } catch (error) {
+        return res.json({ message: error.message })
     }
 }

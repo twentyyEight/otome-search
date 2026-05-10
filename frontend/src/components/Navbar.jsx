@@ -9,13 +9,13 @@ export default function Navbar() {
         <nav>
             {isAuth ? (
                 <>
-                    <Link to={`/profile/${user?.name}`}>Perfil</Link>
-                    <button onClick={logout}>Cerrar sesión</button>
+                    <Link to={`/profile/${user?.name}`}>Profile</Link>
+                    <button onClick={logout}>Log out</button>
                 </>
             ) : (
                 <>
-                    <Link to='/login'>Login</Link>
-                    <Link to='/register'>Registrarse</Link>
+                    <Link to='/login'>Log in</Link>
+                    <Link to='/register'>Register</Link>
                 </>
             )}
         </nav>

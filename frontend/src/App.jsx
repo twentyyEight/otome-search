@@ -5,6 +5,7 @@ import TagsPage from './pages/tags/TagsPage'
 import TagPage from './pages/tags/TagPage'
 import RegisterPage from './pages/auth/RegisterPage'
 import LoginPage from './pages/auth/LoginPage'
+import ProfilePage from './pages/auth/ProfilePage'
 import Navbar from './components/Navbar'
 
 function App() {
@@ -25,6 +26,8 @@ function App() {
 
                 <Route path="/tags" element={<TagsPage />} />
                 <Route path="/tags/:id" element={<TagPage />} />
+
+                <Route path='/profile/:name' element={<ProfilePage />} />
             </Routes>
 
             {state?.background && (

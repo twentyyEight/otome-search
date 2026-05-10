@@ -1,23 +1,20 @@
 import { useState, useEffect } from "react"
-import { useParams } from "react-router-dom"
 import CreateListModal from "./CreateListModal"
 import { useList } from '../../contexts/list/useList'
 import ModalBase from "../ui/ModalBase"
 
-export default function ListsModal({ isOpen, setIsOpen }) {
-
+export default function ListsModal({ isOpen, setIsOpen, otome_id }) {
+    
     const [openModal, setOpenModal] = useState(false)
 
     const { getLists, lists, addToList, deleteFromList } = useList()
-
-    const { id } = useParams()
-    const otome_id = id
 
     useEffect(() => {
         getLists()
     }, [getLists])
 
     const handleAddition = async (id, checked) => {
+        
         if (checked) {
             await addToList(id, otome_id)
         } else {
